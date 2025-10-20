@@ -1,0 +1,155 @@
+/* masonry styles */
+.unsplash_list {
+  display: flex;
+  margin-left: -24px; /* відступ компенсує gutter */
+  width: auto;
+  padding-top: 20px;
+}
+
+.unsplash_column {
+  padding-left: 24px; /* gutter */
+  background-clip: padding-box;
+}
+
+.unsplash_column > li {
+  margin-bottom: 24px;
+  list-style: none;
+}
+// ----------------------------------
+.layout_hover-image {
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.layout_hover-image img {
+  transition: 0.3s ease;
+}
+
+.layout_hover-image:hover img {
+  filter: brightness(70%);
+}
+
+/* Overlay */
+.layout_hover-image .overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #fff;
+}
+
+.layout_hover-image:hover .overlay {
+  opacity: 1;
+}
+
+/* button */
+.download-btn {
+  position: relative;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  background: #f6f6f6fa;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+  }
+}
+.form_like-image {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  max-width: 20px;
+  height: 20px;
+  right: 5px;
+  top: 5px;
+}
+.layout_hover-image .form_like-image {
+  opacity: 0;
+}
+
+.layout_hover-image:hover .form_like-image {
+  opacity: 1;
+}
+// Mobile overlay
+
+.layout_hover-image {
+  .layout_hover-image-mobile {
+    .overlay {
+      opacity: 9999;
+
+      .form_like-image-mobile {
+        opacity: 9999;
+        top: 10px;
+      }
+    }
+  }
+}
+.layout_hover-image-mobile {
+  .overlay-mobile {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .layout_hover-image {
+    .overlay-mobile {
+      display: none;
+    }
+  }
+  .layout_hover-image-mobile {
+    position: relative;
+    height: 50px;
+    background-color: #e4e4e7;
+    border-radius: 0 0 5px 5px;
+
+    .overlay-mobile {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      position: absolute;
+      padding-right: 5px;
+
+      .form_like-image-mobile {
+        left: 6;
+        border-radius: 1px solid grey;
+      }
+      .download-btn {
+        position: inherit;
+        display: flex;
+        width: 100px;
+        height: 25px;
+        z-index: 1;
+        justify-content: center;
+
+        .download-btn-mobile {
+          display: flex;
+          color: #f7b750;
+
+          .download-btn-text {
+            padding: none;
+          }
+          .download-btn-arrow {
+            display: flex;
+            position: inherit;
+            inset: 0;
+            transform: translate(0);
+          }
+        }
+      }
+      .author-mobile {
+        display: none;
+      }
+    }
+  }
+}

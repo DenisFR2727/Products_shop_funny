@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+.filter_panel {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 50px;
+  font-family: "Roboto", sans-serif;
+
+  form {
+    background-color: #99c7fb;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: 0 auto;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 10px;
+
+    .search_product,
+    .select_category,
+    .select_price {
+      font-weight: 600;
+      width: 100%;
+      display: flex;
+      gap: 15px;
+      flex-direction: column;
+      max-width: 250px;
+    }
+    .select_price {
+      font-weight: 600;
+      .select_price-value {
+        display: flex;
+        justify-content: space-between;
+
+        .range_price {
+          font-size: 10px;
+        }
+      }
+    }
+    .search_item-input {
+      border: 1px solid #71717a;
+      background: #ffffff;
+      border-radius: 5px;
+      padding-left: 5px;
+    }
+    .select_item-category {
+      border: 1px solid #71717a;
+      background: #ffffff;
+      border-radius: 5px;
+      padding-left: 5px;
+      height: 25.6px;
+    }
+    .filter_buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      button {
+        width: 200px;
+        height: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        user-select: none;
+        font-weight: 600;
+      }
+      .search_btn-filter {
+        background: #006fee;
+        color: #ffffff;
+      }
+      .reset_btn-filter {
+        background: #7828c8;
+        color: #ffffff;
+      }
+      .search_btn-filter:hover {
+        filter: brightness(90%);
+      }
+      .reset_btn-filter:hover {
+        filter: brightness(90%);
+      }
+    }
+  }
+}
+@media (max-width: 625px) {
+  .filter_panel {
+    padding-top: 10px;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+
+      .search_product,
+      .select_category,
+      .select_price {
+        max-width: 100%;
+        font-weight: 500;
+      }
+      .filter_buttons {
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        button {
+          width: 100%;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

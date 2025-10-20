@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+.z-40 {
+  font-family: "Roboto", sans-serif;
+  max-width: 1920px !important;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 0 !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  background: #fff;
+  width: 100%;
+  z-index: 0;
+}
+@keyframes leftBurger {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes leftBurgerOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.z-30 {
+  position: fixed;
+  left: 0;
+  max-height: 300px;
+  max-width: 200px;
+  width: 100%;
+  padding-left: 2rem;
+  padding-top: 10px;
+  font-family: "Roboto", sans-serif;
+  background: #f2eafa;
+  border-radius: 0 10px 10px 0;
+  border-right: 2px solid #f5a524;
+  border-top: 2px solid #f5a524;
+  border-bottom: 2px solid #f5a524;
+  z-index: 30;
+}
+.w-full {
+  color: #f5a524;
+  cursor: pointer;
+}
+.text-large {
+  cursor: pointer;
+}
+
+.menuOpen {
+  animation: leftBurger 0.5s ease forwards;
+}
+.menuClose {
+  animation: leftBurgerOut 0.5s ease forwards;
+}
+.header_login-nav {
+  color: #a1a1aa !important;
+  font-weight: 600 !important;
+}
+.nav-cart-icon {
+  font-size: 35px;
+  color: #a1a1aa;
+}
+.header-cart {
+  position: relative;
+}
+.nav-cart-count {
+  position: absolute;
+  text-align: center;
+  bottom: -10px;
+  right: -10px;
+  width: 30px;
+  height: 25px;
+  border-radius: 50%;
+  background: #17c964;
+  color: #fff;
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 475px) {
+  .nav-cart-icon {
+    font-size: 25px;
+    color: #a1a1aa;
+  }
+  .nav-cart-count {
+    position: absolute;
+    text-align: center;
+    bottom: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #17c964;
+    color: #fff;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .login-nav {
+    display: none;
+  }
+  .sign-up-nav {
+    display: none;
+  }
+}

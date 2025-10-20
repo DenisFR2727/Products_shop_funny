@@ -1,0 +1,37 @@
+.fullscreen-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  a {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .user_profile-unspalsh {
+      padding-top: 5px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-direction: row-reverse;
+
+      .user_profile-text {
+        font-style: italic;
+      }
+      img {
+        min-width: 30px;
+      }
+    }
+
+    .fullscreen-image_download {
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 4px;
+      background-color: #f4f4f5;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+    }
+  }
+}

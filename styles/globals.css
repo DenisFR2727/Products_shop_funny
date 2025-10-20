@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@config "../tailwind.config.js";
+
+#header {
+  margin: 0 auto;
+  max-width: 1920px;
+  background: #ecedee;
+}
+#page {
+  margin: 0 auto;
+  max-width: 1440px;
+  margin-top: 30px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1.2rem;
+  background: #ecedee;
+  height: fit-content;
+  border-radius: 5px;
+  min-height: 92vh;
+  overflow: hidden;
+}
+#home-page {
+  margin: 0 auto;
+}
+/* body {
+  padding-left: 1rem;
+  padding-right: 1rem;
+} */
+
+.not_found-product {
+  text-align: center;
+
+  h1 {
+    font-size: 25px;
+    font-weight: 700;
+  }
+  p {
+    font-size: 22px;
+    font-weight: 600;
+    padding-top: 20px;
+  }
+  .go_home-link {
+    padding-top: 20px;
+    a {
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: #006fee;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    a:hover {
+      background: #0e8aaa;
+    }
+  }
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ecedee;
+  padding: 2rem;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 10px 0 #060600;
+  max-width: 50rem;
+  width: 100%;
+}
+.fullscreen-image img {
+  background-color: #d4d4d8;
+  width: 100%;
+  margin: 0 auto;
+  cursor: pointer;
+}
+@media (max-width: 520px) {
+  body {
+    padding: 0;
+  }
+  .modal {
+    width: 80%;
+    top: 35%;
+  }
+}

@@ -1,0 +1,23 @@
+.cart-item-add {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #f5a524;
+  margin-top: 15px;
+  background: #006fee;
+  user-select: none;
+}
+.cart-hover-add:hover {
+  filter: brightness(90%);
+}
+.cart-hover-add:active {
+  filter: brightness(90%);
+}
+.disabled-cart-add {
+  color: #f5a524;
+  cursor: not-allowed;
+  pointer-events: none;
+}

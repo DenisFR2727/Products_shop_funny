@@ -1,0 +1,46 @@
+.link {
+  font-size: 22px;
+  font-weight: 700;
+  color: #a1a1aa !important;
+}
+
+.link {
+  position: relative;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  padding: 5px 0;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: #a1a1aa;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+.link:hover,
+.link:active {
+  background: linear-gradient(90deg, #ff8a05, #f9b331);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 18px rgba(248, 190, 42, 0.8);
+}
+.active {
+  background: linear-gradient(90deg, #ff8a05, #f9b331);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
