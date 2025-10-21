@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "../providers";
 import { ReduxProvider } from "../providers/redux-provider";
 import HeaderMain from "@/components/header/header-main";
@@ -29,6 +29,7 @@ export default function RootLayout({
             <Footer />
           </Providers>
         </ReduxProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
