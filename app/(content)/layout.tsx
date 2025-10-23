@@ -25,6 +25,7 @@ export default function RootLayout({
             <div id="header">
               <HeaderMain />
             </div>
+            <div id="overlay-header"></div>
             <div id="page">{children}</div>
             <Footer />
           </Providers>

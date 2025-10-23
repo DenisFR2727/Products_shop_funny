@@ -1,31 +1,26 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   Button,
-  NavbarMenu,
-  NavbarMenuItem,
-  Link as HeroLink,
   NavbarMenuToggle,
 } from "@heroui/react";
 import Link from "next/link";
 import Image from "next/image";
 import NavLink from "./nav-link";
-import { menuItems } from "@/lib/features/links";
 import { TiShoppingCart } from "react-icons/ti";
 import { useAppSelector } from "@/lib/hooks";
 import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
+import NavBarMobile from "./navbar-mobile";
 
 import "./header-main.scss";
 
 export default function HeaderMain() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const isCartItems = useAppSelector(isCartItemsSelector);
-  const router = useRouter();
 
   return (
     <header>
@@ -111,33 +106,8 @@ export default function HeaderMain() {
             </Button>
           </NavbarItem>
         </NavbarContent>
-
         {/* Mobile menu */}
-        <NavbarMenu
-          className={`z-30 ${isMenuOpen ? "menuOpen" : "menuClose"}`}
-          onClick={router.refresh}
-        >
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem
-              key={index}
-              onClick={() => {
-                setIsMenuOpen(false);
-                router.push(item.href);
-              }}
-            >
-              <HeroLink
-                href={item.href}
-                className="w-full link-underline"
-                color={item.label === "Sign Up" ? "primary" : "foreground"}
-                size="lg"
-                as={Link}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.label}
-              </HeroLink>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
+        <NavBarMobile isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       </Navbar>
     </header>
   );
