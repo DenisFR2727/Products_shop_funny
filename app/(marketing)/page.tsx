@@ -1,11 +1,18 @@
 import Link from "next/link";
 import ProductCard from "@/components/products/product-card";
-
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProducts } from "@/lib/api";
 import SlideProducts from "@/components/products/slide/slide-products";
 
 import "./marketing.scss";
+
+export const metadata: Metadata = {
+  title: "Welcome in my shopping site",
+  description:
+    "There you can choose and order products. There is also a view of images that can be downloaded.",
+};
+
 export default async function HomePage() {
   const response = await getProducts();
   const data = response.products;

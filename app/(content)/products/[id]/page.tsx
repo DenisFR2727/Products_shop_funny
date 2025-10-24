@@ -7,6 +7,7 @@ import DetailsNav from "@/components/details/details-nav";
 import AddToCart from "@/components/products/cart/cart-button-add";
 
 import "./details-product.scss";
+import { Metadata } from "next";
 
 export const dynamic = "force-static";
 
@@ -14,6 +15,11 @@ export type PropsId = {
   params: Promise<{
     id: string;
   }>;
+};
+
+export const metadata: Metadata = {
+  title: "Product detail info",
+  description: "Product detail info and add to cart.",
 };
 
 export default async function DetailsProductPage({ params }: PropsId) {
