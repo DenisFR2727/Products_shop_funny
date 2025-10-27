@@ -4,6 +4,7 @@ import { Providers } from "../providers";
 import { ReduxProvider } from "../providers/redux-provider";
 import HeaderMain from "@/components/header/header-main";
 import Footer from "@/components/footer/footer-products";
+import { ThemeContextProvider } from "@/context/themeContext";
 
 import "@/styles/globals.css";
 
@@ -22,12 +23,14 @@ export default function RootLayout({
       <body>
         <ReduxProvider>
           <Providers>
-            <div id="header">
-              <HeaderMain />
-            </div>
-            <div id="overlay-header"></div>
-            <div id="page">{children}</div>
-            <Footer />
+            <ThemeContextProvider>
+              <div id="header">
+                <HeaderMain />
+              </div>
+              <div id="overlay-header"></div>
+              <div id="page">{children}</div>
+              <Footer />
+            </ThemeContextProvider>
           </Providers>
         </ReduxProvider>
         <SpeedInsights />

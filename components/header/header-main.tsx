@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -17,9 +17,13 @@ import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
 import NavBarMobile from "./navbar-mobile";
 
 import "./header-main.scss";
+import { image } from "@heroui/react";
+import { ThemeContext } from "@/context/themeContext";
 
 export default function HeaderMain() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
   const isCartItems = useAppSelector(isCartItemsSelector);
 
   return (
@@ -88,6 +92,23 @@ export default function HeaderMain() {
                 )}
               </div>
             </Link>
+          </NavbarItem>
+          <NavbarItem className="lg:flex">
+            <span className="header_login-nav" onClick={toggleTheme}>
+              {theme === "light_theme" ? (
+                <img
+                  style={{ maxWidth: "30px" }}
+                  src="theme/themes-light.png.png"
+                  alt="theme-light"
+                />
+              ) : (
+                <img
+                  style={{ maxWidth: "30px" }}
+                  src="theme/themes-black.png.png"
+                  alt="theme-black"
+                />
+              )}
+            </span>
           </NavbarItem>
           <NavbarItem className="lg:flex login-nav">
             <Link href="#">
