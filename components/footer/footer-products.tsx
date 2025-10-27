@@ -1,3 +1,4 @@
+"use server";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,14 +11,16 @@ const Footer = () => {
         <div className="footer_content">
           <ul className="footer_list-links">
             <li className="nav-item">
-              <Image
-                style={{ maxWidth: "30px !important" }}
-                src="/favicon.png"
-                alt="logo funny shop"
-                width={30}
-                height={30}
-                priority
-              />
+              <Link href={"/"}>
+                <Image
+                  style={{ maxWidth: "30px !important" }}
+                  src="/favicon.png"
+                  alt="logo funny shop"
+                  width={30}
+                  height={30}
+                  priority
+                />
+              </Link>
             </li>
             <li className="nav-item">
               <Link href={"/"}>Home</Link>
