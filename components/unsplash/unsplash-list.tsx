@@ -12,6 +12,7 @@ import { useWindowSize } from "@react-hook/window-size";
 import { ScrollToTopButton } from "./scroll/scroll-to-top";
 
 import "@/styles/globals.css";
+import { useCallback } from "react";
 
 export interface WindowSize {
   width: number;
@@ -23,9 +24,13 @@ export default function UnsplashList() {
   const [width] = useWindowSize();
   const isMobile = width < 768;
 
-  function isLikeInArrayIdPhotos(idPhoto: string) {
-    return isLike.some((item: any) => item === idPhoto);
-  }
+  const isLikeInArrayIdPhotos = useCallback(
+    function isLikeInArrayIdPhotos(idPhoto: string) {
+      return isLike.some((item: any) => item === idPhoto);
+    },
+    [isLike]
+  );
+
   return (
     <div>
       <MasonryLayout>
@@ -44,6 +49,7 @@ export default function UnsplashList() {
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = "/fallback.jpg";
                 }}
+                priority
               />
               <div
                 className={isMobile ? "layout_hover-image-mobile" : "overlay"}
