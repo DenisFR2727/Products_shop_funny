@@ -30,6 +30,11 @@ export function ThemeContextProvider({
 
     const page = document.getElementById("page");
     const headers = document.getElementsByTagName("header");
+    const headerId = document.getElementById("header");
+    if (headerId) {
+      headerId.classList.remove("light_theme", "dark_theme");
+      headerId.style.background = "#3f3f46";
+    }
     for (const header of headers) {
       header.classList.remove("light_theme", "dark_theme");
       header.classList.add(theme);
