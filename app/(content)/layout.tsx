@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "../providers";
 import { ReduxProvider } from "../providers/redux-provider";
+import { ThemeContextProvider } from "@/context/themeContext";
 import HeaderMain from "@/components/header/header-main";
 import Footer from "@/components/footer/footer-products";
-import { ThemeContextProvider } from "@/context/themeContext";
 
 import "@/styles/globals.css";
 

@@ -5,6 +5,8 @@ import { NavbarMenu } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
 import "./header-main.scss";
+import { useContext } from "react";
+import { ThemeContext } from "@/context/themeContext";
 
 interface NavBarMobileProps {
   isMenuOpen: boolean;
@@ -16,6 +18,7 @@ export default function NavBarMobile({
   setIsMenuOpen,
 }: NavBarMobileProps) {
   const router = useRouter();
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div className="navbar-backdrop" onClick={() => setIsMenuOpen(false)}>

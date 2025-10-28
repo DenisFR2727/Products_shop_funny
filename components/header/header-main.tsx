@@ -17,7 +17,6 @@ import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
 import NavBarMobile from "./navbar-mobile";
 
 import "./header-main.scss";
-import { image } from "@heroui/react";
 import { ThemeContext } from "@/context/themeContext";
 
 export default function HeaderMain() {
@@ -27,7 +26,7 @@ export default function HeaderMain() {
   const isCartItems = useAppSelector(isCartItemsSelector);
 
   return (
-    <header>
+    <header className={`${theme}`}>
       <Navbar
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
