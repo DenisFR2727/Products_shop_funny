@@ -4,11 +4,13 @@ import { createContext, useEffect, useState } from "react";
 interface ThemeContextProps {
   theme: string;
   toggleTheme: () => void;
+  themeFilterBtn: string;
 }
 
 export const ThemeContext = createContext<ThemeContextProps>({
   theme: "light_theme",
   toggleTheme: () => {},
+  themeFilterBtn: "light_theme-btn",
 });
 
 export function ThemeContextProvider({
@@ -17,10 +19,14 @@ export function ThemeContextProvider({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState("light_theme");
+  const [themeFilterBtn, setThemeFilterBtn] = useState("light_theme-btn");
 
   const toggleTheme = () => {
     setTheme((prevTheme: string) =>
       prevTheme === "light_theme" ? "dark_theme" : "light_theme"
+    );
+    setThemeFilterBtn((prevTheme) =>
+      prevTheme === "light_theme-btn" ? "dark_theme-btn" : "light_theme-btn"
     );
   };
 
@@ -42,7 +48,7 @@ export function ThemeContextProvider({
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, themeFilterBtn }}>
       {children}
     </ThemeContext.Provider>
   );

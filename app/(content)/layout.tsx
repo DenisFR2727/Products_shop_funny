@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "../providers";
-import { ReduxProvider } from "../providers/redux-provider";
-import { ThemeContextProvider } from "@/context/themeContext";
 import HeaderMain from "@/components/header/header-main";
 import Footer from "@/components/footer/footer-products";
 
@@ -21,18 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body>
-        <ReduxProvider>
-          <Providers>
-            <ThemeContextProvider>
-              <div id="header">
-                <HeaderMain />
-              </div>
-              <div id="overlay-header"></div>
-              <div id="page">{children}</div>
-              <Footer />
-            </ThemeContextProvider>
-          </Providers>
-        </ReduxProvider>
+        <Providers>
+          <div id="header">
+            <HeaderMain />
+          </div>
+          <div id="overlay-header"></div>
+          <div id="page">{children}</div>
+        </Providers>
+        <Footer />
         <SpeedInsights />
       </body>
     </html>

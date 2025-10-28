@@ -92,7 +92,14 @@ header {
     transform: translate(-50%, -50%);
   }
 }
-
+.logo_funny-shop {
+  max-width: 30px;
+}
+@media (max-width: 700px) {
+  .logo_funny-shop {
+    display: none;
+  }
+}
 @media (max-width: 475px) {
   .nav-cart-icon {
     font-size: 25px;
@@ -123,6 +130,10 @@ header {
     display: none;
   }
 }
+.logo-nav {
+  color: #f5a524;
+}
+
 // header.light_theme {
 //   background-color: #fdfdfd;
 //   color: #222;

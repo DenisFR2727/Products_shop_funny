@@ -2,6 +2,8 @@
 import { ProductListProps } from "../products-list";
 import { useFilterForm } from "./hooks";
 import "./filter-panel.scss";
+import { useContext } from "react";
+import { ThemeContext } from "@/context/themeContext";
 
 export default function FilterPanel({
   products,
@@ -16,7 +18,7 @@ export default function FilterPanel({
     submitSearch,
     resetValuesForm,
   } = useFilterForm();
-
+  const { themeFilterBtn } = useContext(ThemeContext);
   const categories = products.map((p) => p.category);
   const uniqCategories = [...new Set(categories)];
 
@@ -61,10 +63,16 @@ export default function FilterPanel({
           />
         </div>
         <div className="filter_buttons">
-          <button className="search_btn-filter" onClick={submitSearch}>
+          <button
+            className={`${themeFilterBtn} search_btn-filter`}
+            onClick={submitSearch}
+          >
             SEARCH
           </button>
-          <button className="reset_btn-filter" onClick={resetValuesForm}>
+          <button
+            className={`${themeFilterBtn} reset_btn-filter`}
+            onClick={resetValuesForm}
+          >
             RESET
           </button>
         </div>

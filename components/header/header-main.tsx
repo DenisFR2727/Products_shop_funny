@@ -55,7 +55,7 @@ export default function HeaderMain() {
           <NavbarBrand>
             <Link href="/" className="font-bold text-inherit">
               <Image
-                style={{ maxWidth: "30px !important" }}
+                className="logo_funny-shop"
                 src="/favicon.png"
                 alt="logo funny shop!"
                 width={30}
