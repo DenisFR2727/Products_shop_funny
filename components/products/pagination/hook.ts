@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ProductListProps } from "../products-list";
 
 export default function usePagination({ products }: any) {
   const listRef = useRef<HTMLDivElement>(null);

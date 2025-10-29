@@ -1,7 +1,7 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
 import "./about.scss";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About funny page",

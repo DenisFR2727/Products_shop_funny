@@ -1,9 +1,10 @@
 "use client";
 import { ProductListProps } from "../products-list";
 import { useFilterForm } from "./hooks";
-import "./filter-panel.scss";
 import { useContext } from "react";
 import { ThemeContext } from "@/context/themeContext";
+
+import "./filter-panel.scss";
 
 export default function FilterPanel({
   products,
