@@ -19,6 +19,7 @@ export default async function ProductsPage() {
           width={800}
           height={500}
           alt="next-JS-framework"
+          priority
         />
         <div className="about_tech">
           <p className="about_text">Technologies used:</p>
