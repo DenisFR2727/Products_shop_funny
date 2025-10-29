@@ -14,10 +14,10 @@ import NavLink from "./nav-link";
 import { TiShoppingCart } from "react-icons/ti";
 import { useAppSelector } from "@/lib/hooks";
 import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
+import { ThemeContext } from "@/context/themeContext";
 import NavBarMobile from "./navbar-mobile";
 
 import "./header-main.scss";
-import { ThemeContext } from "@/context/themeContext";
 
 export default function HeaderMain() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
