@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+.about_page {
+  font-family: "Roboto", sans-serif;
+  .about_title {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 600;
+  }
+  .about_content {
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    max-width: 800px;
+    height: 500px;
+    border-radius: 10px;
+    color: #f5a524;
+    font-weight: 600;
+
+    .about_img {
+      display: flex;
+      justify-content: center;
+      max-width: 800px;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(60%);
+      border-radius: 10px;
+    }
+    .about_tech {
+      width: 500px;
+      display: flex;
+      align-items: center;
+      margin: 0 auto;
+
+      .about_text {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: 22px;
+
+        z-index: 1;
+      }
+      .about_list {
+        width: 100%;
+
+        z-index: 1;
+        li {
+          list-style: circle;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 420px) {
+  .about_content {
+    .about_tech {
+      flex-direction: column;
+
+      .about_list {
+        li {
+          list-style: decimal;
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}
