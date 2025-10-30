@@ -39,11 +39,11 @@ export default function ProductsServices({
   return (
     <div ref={listRef} className={`products_list ${theme}`}>
       <div id="dialog-overlay"></div>
-      <ProgressModal open={isShowProgress}>
-        {isShowProgress && (
+      {isShowProgress && (
+        <ProgressModal open={isShowProgress}>
           <DeleteComfirmationProgress onCancel={onCancelProgress} />
-        )}
-      </ProgressModal>
+        </ProgressModal>
+      )}
       <FilterPanel products={products} />
       <DinamicPanel ref={listRef} lengItems={filteredProducts} />
       <PaginationList products={filteredProducts} />
