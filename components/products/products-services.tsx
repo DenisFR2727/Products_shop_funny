@@ -5,15 +5,15 @@ import FilterPanel from "./filter/filter-panel";
 import PaginationList from "./pagination/pagination ";
 import { ProductListProps } from "./products-list";
 import { useFilterProducts } from "./filter/hooks";
-import { useContext, useEffect, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { pageSelector } from "@/lib/selectors/paginationSelectors";
 import { ThemeContext } from "@/context/themeContext";
-
-import "@/styles/globals.css";
+import { setShowProgress } from "@/lib/features/products/cartSlice";
 import ProgressModal from "./modal/progress/modal-progress";
 import DeleteComfirmationProgress from "./modal/progress/progress-timer";
-import { setShowProgress } from "@/lib/features/products/cartSlice";
+
+import "@/styles/globals.css";
 
 export default function ProductsServices({
   products,
@@ -32,17 +32,18 @@ export default function ProductsServices({
     listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [page]);
 
+  const onCancelProgress = useCallback(() => {
+    dispatch(setShowProgress(false));
+  }, []);
+
   return (
     <div ref={listRef} className={`products_list ${theme}`}>
       <div id="dialog-overlay"></div>
-      {/* fixed */}
-      {isShowProgress && (
-        <ProgressModal open={isShowProgress}>
-          <DeleteComfirmationProgress
-            onCancel={() => dispatch(setShowProgress(false))}
-          />
-        </ProgressModal>
-      )}
+      <ProgressModal open={isShowProgress}>
+        {isShowProgress && (
+          <DeleteComfirmationProgress onCancel={onCancelProgress} />
+        )}
+      </ProgressModal>
       <FilterPanel products={products} />
       <DinamicPanel ref={listRef} lengItems={filteredProducts} />
       <PaginationList products={filteredProducts} />

@@ -1,5 +1,56 @@
 .dialog_modal {
-  background: red;
-  width: 300px;
-  height: 100px;
+  margin: 0 auto;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  border-bottom: 1px solid grey;
+  height: 55px;
+  border-radius: 0 0 5px 5px;
+
+  .delete_confirmation {
+    h2 {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    progress {
+      width: 300px;
+      background-color: green;
+      color: greenyellow;
+      border-radius: 5px;
+      height: 4px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      transition: width 300ms ease;
+    }
+    progress::-webkit-progress-value {
+      background-color: #4caf50; /* Green color for the progress */
+      border-radius: 5px;
+      transition: width 300ms ease;
+    }
+
+    progress::-moz-progress-bar {
+      background-color: #4caf50;
+      border-radius: 5px;
+      transition: width 300ms ease;
+    }
+    progress:indeterminate {
+      /* Styles for indeterminate state, e.g., an animated background */
+      background-image: linear-gradient(to right, #eee 0%, #ccc 50%, #eee 100%);
+      animation: indeterminate-progress 1s infinite linear;
+    }
+
+    @keyframes indeterminate-progress {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+  }
 }

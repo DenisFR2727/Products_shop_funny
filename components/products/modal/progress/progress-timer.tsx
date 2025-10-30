@@ -1,16 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
+import { ComfirmationProgressProps } from "./types";
 
 const TIMER = 3000;
 
-export default function DeleteComfirmationProgress({ onCancel }: any) {
+export default function DeleteComfirmationProgress({
+  onCancel,
+}: ComfirmationProgressProps) {
   const [remaningTime, setRemaningTime] = useState(TIMER);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("INTERVAL");
-      setRemaningTime((prevTime) => prevTime - 10);
-    }, 10);
+      setRemaningTime((prevTime) => prevTime - 250);
+    }, 250);
 
     return () => {
       clearInterval(interval);
@@ -19,7 +21,6 @@ export default function DeleteComfirmationProgress({ onCancel }: any) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("Timer SET");
       onCancel();
     }, TIMER);
 
@@ -30,8 +31,12 @@ export default function DeleteComfirmationProgress({ onCancel }: any) {
 
   return (
     <div className="delete_confirmation">
-      <h2>Add product in Cart :'</h2>
-      <progress value={remaningTime} max={TIMER}></progress>
+      <h2>Add product in Cart</h2>
+      <progress
+        className="progress_confirmed"
+        value={remaningTime}
+        max={TIMER}
+      ></progress>
     </div>
   );
 }
