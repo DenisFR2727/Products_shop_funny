@@ -25,6 +25,7 @@ export default function RootLayout({
           </div>
           <div id="overlay-header"></div>
           <div id="page">{children}</div>
+          <div id="dialog-overlay"></div>
         </Providers>
         <Footer />
         <SpeedInsights />

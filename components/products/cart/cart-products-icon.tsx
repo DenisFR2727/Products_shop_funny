@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
   addProductToCart,
   CartProduct,
+  setShowProgress,
 } from "@/lib/features/products/cartSlice";
 
 import "./cart-products-icon.scss";
@@ -18,12 +19,18 @@ export default function Cart({ product }: ProductCartProps) {
   const isInCart = useAppSelector((state) =>
     state.cartReducer.cart.some((item) => item.id === product.id)
   );
-
+  //   const isShowProgress = useAppSelector(
+  //     (state) => state.cartReducer.showProgressModal
+  //   );
+  const addProduct = () => {
+    dispatch(addProductToCart(product));
+    dispatch(setShowProgress(true));
+  };
   return (
     <div className="cart">
       <TiShoppingCart
         className={`cart-item cart-hover ${isInCart ? "disabled-cart" : ""}`}
-        onClick={() => dispatch(addProductToCart(product))}
+        onClick={addProduct}
       />
     </div>
   );
