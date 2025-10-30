@@ -35,6 +35,7 @@ export default function ProductsServices({
   return (
     <div ref={listRef} className={`products_list ${theme}`}>
       <div id="dialog-overlay"></div>
+      {/* fixed */}
       {isShowProgress && (
         <ProgressModal open={isShowProgress}>
           <DeleteComfirmationProgress
