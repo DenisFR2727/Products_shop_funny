@@ -5,6 +5,7 @@ import HeaderMain from "@/components/header/header-main";
 import Footer from "@/components/footer/footer-products";
 
 import "@/styles/globals.css";
+import { ThemeContextProvider } from "@/context/themeContext";
 
 export const metadata: Metadata = {
   title: "Funny Shop",
@@ -19,14 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body>
-        <Providers>
-          <div id="header">
-            <HeaderMain />
-          </div>
-          <div id="overlay-header"></div>
-          <div id="page">{children}</div>
-          <div id="dialog-overlay"></div>
-        </Providers>
+        <ThemeContextProvider>
+          <Providers>
+            <div id="header">
+              <HeaderMain />
+            </div>
+            <div id="overlay-header"></div>
+            <div id="page">{children}</div>
+            <div id="dialog-overlay"></div>
+          </Providers>
+        </ThemeContextProvider>
         <Footer />
         <SpeedInsights />
       </body>

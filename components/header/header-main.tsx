@@ -17,6 +17,8 @@ import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
 import { ThemeContext } from "@/context/themeContext";
 import NavBarMobile from "./navbar-mobile";
 
+import dark from "../../public/theme/themes-black.png";
+import light from "../../public/theme/themes-light.png";
 import "./header-main.scss";
 
 export default function HeaderMain() {
@@ -95,16 +97,20 @@ export default function HeaderMain() {
           <NavbarItem className="lg:flex">
             <span className="header_login-nav" onClick={toggleTheme}>
               {theme === "light_theme" ? (
-                <img
+                <Image
                   style={{ maxWidth: "30px" }}
-                  src="theme/themes-light.png.png"
+                  src={light}
                   alt="theme-light"
+                  width={30}
+                  height={30}
                 />
               ) : (
-                <img
+                <Image
                   style={{ maxWidth: "30px" }}
-                  src="theme/themes-black.png.png"
+                  src={dark}
                   alt="theme-black"
+                  width={30}
+                  height={30}
                 />
               )}
             </span>
