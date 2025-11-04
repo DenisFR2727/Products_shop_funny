@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   description: "Products funny page and filter products category.",
 };
 
-export default async function ProductsPage({ modal }: any) {
+export default async function ProductsPage({
+  modal,
+}: {
+  modal: React.ReactNode;
+}) {
   const response = await getProducts();
   const data = response.products;
 
