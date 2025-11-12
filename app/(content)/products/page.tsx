@@ -10,11 +10,7 @@ export const metadata: Metadata = {
   description: "Products funny page and filter products category.",
 };
 
-export default async function ProductsPage({
-  modal,
-}: {
-  modal: React.ReactNode;
-}) {
+export default async function ProductsPage() {
   const response = await getProducts();
   const data = response.products;
 
@@ -22,8 +18,6 @@ export default async function ProductsPage({
     <>
       <ProductsServices products={data} />
       <AutoOpenSaleModal delay={2000} />
-
-      {modal}
     </>
   );
 }
