@@ -6,6 +6,7 @@ import Footer from "@/components/footer/footer-products";
 
 import "@/styles/globals.css";
 import { ThemeContextProvider } from "@/context/themeContext";
+import TelegramChatWidget from "@/components/products/telegram-chat/telegram-chat-widget";
 
 export const metadata: Metadata = {
   title: "Funny Shop",
@@ -26,7 +27,10 @@ export default function RootLayout({
               <HeaderMain />
             </div>
             <div id="overlay-header"></div>
-            <div id="page">{children}</div>
+            <div id="page">
+              {children}
+              <TelegramChatWidget />
+            </div>
             <div id="dialog-overlay"></div>
           </Providers>
         </ThemeContextProvider>
