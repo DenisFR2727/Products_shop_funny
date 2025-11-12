@@ -1,5 +1,6 @@
-import AutoOpenSaleModal from "@/components/products/modal/auto-sale";
+import AutoOpenSaleModal from "@/components/products/modal/sale/auto-sale";
 import ProductsServices from "@/components/products/products-services";
+import TelegramChatWidget from "@/components/products/telegram-chat/telegram-chat-widget";
 import { getProducts } from "@/lib/api";
 import { Metadata } from "next";
 
@@ -22,6 +23,7 @@ export default async function ProductsPage({
     <>
       <ProductsServices products={data} />
       <AutoOpenSaleModal delay={2000} />
+      <TelegramChatWidget />
       {modal}
     </>
   );
