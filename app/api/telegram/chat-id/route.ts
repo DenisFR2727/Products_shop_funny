@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import TelegramBot from "node-telegram-bot-api";
+import { Telegraf } from "telegraf";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -12,39 +12,50 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const bot = new TelegramBot(TELEGRAM_BOT_TOKEN);
+    const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
 
     // Get bot info to verify token
     try {
-      const botInfo = await bot.getMe();
+      const botInfo = await bot.telegram.getMe();
       
       // Try to get updates to find chat ID
       try {
-        const updates = await bot.getUpdates();
+        // Get updates (timeout: 0, limit: 100, offset: 0, allowedUpdates: undefined)
+        // timeout: 0 = no timeout, limit: 100 = max 100 updates, offset: 0 = get all pending
+        const updates = await bot.telegram.getUpdates(0, 100, 0, undefined);
         
         if (updates && updates.length > 0) {
-          // Get the most recent update
-          const latestUpdate = updates[updates.length - 1];
-          const chatId = latestUpdate.message?.chat?.id;
-          const username = latestUpdate.message?.from?.username || latestUpdate.message?.from?.first_name;
-          const messageText = latestUpdate.message?.text;
+          // Find the most recent message update
+          const messageUpdates = updates.filter((update) => "message" in update);
           
-          if (chatId) {
-            return NextResponse.json({
-              message: "Chat ID found!",
-              chatId: chatId.toString(),
-              username: username || "Unknown",
-              lastMessage: messageText || "N/A",
-              botUsername: botInfo.username,
-              botName: botInfo.first_name,
-              instructions: [
-                `✅ Found Chat ID: ${chatId}`,
-                "Add this to your .env.local file:",
-                `TELEGRAM_OWNER_CHAT_ID=${chatId}`,
-                "",
-                "Then restart your dev server."
-              ],
-            });
+          if (messageUpdates.length > 0) {
+            const latestUpdate = messageUpdates[messageUpdates.length - 1];
+            
+            // Type guard: check if update has message
+            if ("message" in latestUpdate) {
+              const message = latestUpdate.message;
+              const chatId = message.chat.id;
+              const username = message.from?.username || message.from?.first_name;
+              const messageText = "text" in message ? message.text : undefined;
+              
+              if (chatId) {
+                return NextResponse.json({
+                  message: "Chat ID found!",
+                  chatId: chatId.toString(),
+                  username: username || "Unknown",
+                  lastMessage: messageText || "N/A",
+                  botUsername: botInfo.username,
+                  botName: botInfo.first_name,
+                  instructions: [
+                    `✅ Found Chat ID: ${chatId}`,
+                    "Add this to your .env.local file:",
+                    `TELEGRAM_OWNER_CHAT_ID=${chatId}`,
+                    "",
+                    "Then restart your dev server."
+                  ],
+                });
+              }
+            }
           }
         }
       } catch (updateError: any) {
@@ -64,7 +75,7 @@ export async function GET(request: NextRequest) {
           "4. The Chat ID will be displayed automatically",
           "",
           "Alternatively:",
-          "- Run: node scripts/get-chat-id.js",
+          "- Run: ts-node scripts/get-chat-id.ts",
           "- Or visit: https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/getUpdates",
           "- Look for 'chat':{'id': YOUR_CHAT_ID} in the response"
         ],

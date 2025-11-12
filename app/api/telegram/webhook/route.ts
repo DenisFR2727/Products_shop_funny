@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+// import { Telegraf } from "telegraf";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -11,11 +12,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  const body = await request.json();
-
     // This endpoint can be used for two-way communication
     // Currently, we're only using it for receiving webhook updates
     // For now, we'll just acknowledge the webhook
+
+    // If needed, you can process webhook updates here using Telegraf
+    // const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
+    // const body = await request.json();
+    // await bot.handleUpdate(body);
 
     return NextResponse.json({ ok: true });
   } catch (error: any) {

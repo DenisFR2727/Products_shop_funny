@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import TelegramBot from "node-telegram-bot-api";
+import { Telegraf } from "telegraf";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_OWNER_CHAT_ID = process.env.TELEGRAM_OWNER_CHAT_ID;
@@ -90,14 +90,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize Telegram bot
-    const bot = new TelegramBot(TELEGRAM_BOT_TOKEN);
+    // Initialize Telegraf bot
+    const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
 
     // Format message for Telegram
     const telegramMessage = `📨 Нове повідомлення з сайту:\n\n${sanitizedMessage}\n\n---\nЧас: ${new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kyiv" })}`;
 
     // Send message to owner's Telegram
-    await bot.sendMessage(TELEGRAM_OWNER_CHAT_ID, telegramMessage);
+    await bot.telegram.sendMessage(TELEGRAM_OWNER_CHAT_ID, telegramMessage);
 
     return NextResponse.json(
       { success: true, message: "Message sent successfully" },
@@ -107,14 +107,14 @@ export async function POST(request: NextRequest) {
     console.error("Error sending Telegram message:", error);
 
     // Handle specific Telegram API errors
-    if (error.response?.body?.error_code === 400) {
+    if (error.response?.error_code === 400) {
       return NextResponse.json(
         { error: "Invalid chat ID. Please check your configuration." },
         { status: 400 }
       );
     }
 
-    if (error.response?.body?.error_code === 401) {
+    if (error.response?.error_code === 401) {
       return NextResponse.json(
         { error: "Invalid bot token. Please check your configuration." },
         { status: 401 }
