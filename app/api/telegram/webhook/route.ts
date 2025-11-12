@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import TelegramBot from "node-telegram-bot-api";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -12,7 +11,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
+    //  const body = await request.json();
 
     // This endpoint can be used for two-way communication
     // Currently, we're only using it for receiving webhook updates
@@ -27,4 +26,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
