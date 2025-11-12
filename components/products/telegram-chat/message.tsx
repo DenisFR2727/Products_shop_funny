@@ -22,12 +22,25 @@ export default function MessageTG({
         </div>
       ) : (
         messages.map((message: MessageTG) => (
-          <div key={message.id} className="telegram-chat-message">
+          <div
+            key={message.id}
+            className={`telegram-chat-message ${
+              message.isBot ? "telegram-chat-message-bot" : "telegram-chat-message-user"
+            }`}
+          >
             <div className="telegram-chat-message-content">
+              {message.sender && !message.isBot && (
+                <div className="telegram-chat-message-sender">{message.sender}</div>
+              )}
+              {message.isBot && (
+                <div className="telegram-chat-message-sender telegram-chat-message-sender-bot">
+                  Відповідь
+                </div>
+              )}
               <p>{message.text}</p>
               <span className="telegram-chat-message-time">
                 {formatTime(message.timestamp)}
-                {message.sent && (
+                {message.sent && !message.isBot && (
                   <svg
                     width="12"
                     height="12"

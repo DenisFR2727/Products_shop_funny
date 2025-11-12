@@ -3,4 +3,6 @@ export interface MessageTG {
   text: string;
   timestamp: Date;
   sent: boolean;
+  sender?: string; // Ім'я відправника (для повідомлень від користувача)
+  isBot?: boolean; // Чи це повідомлення від бота
 }

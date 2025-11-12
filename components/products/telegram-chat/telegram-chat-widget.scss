@@ -76,9 +76,9 @@
       background: #f9fafb;
     }
 
-    .telegram-chat-message {
+    .telegram-chat-message-bot {
       .telegram-chat-message-content {
-        background: #ffffff;
+        background: #f3f4f6;
         color: #1f2937;
         border: 1px solid #e5e7eb;
       }
@@ -126,7 +126,7 @@
       background: #111827;
     }
 
-    .telegram-chat-message {
+    .telegram-chat-message-bot {
       .telegram-chat-message-content {
         background: #374151;
         color: #f9fafb;
@@ -251,13 +251,33 @@
 
     .telegram-chat-message {
       display: flex;
-      justify-content: flex-end;
+      margin-bottom: 12px;
+
+      &.telegram-chat-message-user {
+        justify-content: flex-end;
+      }
+
+      &.telegram-chat-message-bot {
+        justify-content: flex-start;
+      }
 
       .telegram-chat-message-content {
         max-width: 80%;
         padding: 10px 14px;
         border-radius: 12px;
         word-wrap: break-word;
+        position: relative;
+
+        .telegram-chat-message-sender {
+          font-size: 11px;
+          font-weight: 600;
+          margin-bottom: 4px;
+          opacity: 0.8;
+
+          &.telegram-chat-message-sender-bot {
+            color: #667eea;
+          }
+        }
 
         p {
           margin: 0 0 4px 0;
@@ -275,6 +295,24 @@
       }
     }
 
+    // User message styles (right side)
+    .telegram-chat-message-user {
+      .telegram-chat-message-content {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-bottom-right-radius: 4px;
+      }
+    }
+
+    // Bot message styles (left side)
+    .telegram-chat-message-bot {
+      .telegram-chat-message-content {
+        background: rgba(102, 126, 234, 0.1);
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        border-bottom-left-radius: 4px;
+      }
+    }
+
     .telegram-chat-error {
       padding: 12px;
       border-radius: 8px;
@@ -283,6 +321,129 @@
 
       p {
         margin: 0;
+      }
+    }
+  }
+
+  .telegram-chat-name-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+
+    .telegram-chat-name-input-content {
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+
+      h3 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 0 0 24px 0;
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .telegram-chat-name-input-field {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        margin-bottom: 16px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        transition: border-color 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #667eea;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      .telegram-chat-name-input-button {
+        width: 100%;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(0);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  // Light theme name input
+  &.light_theme {
+    .telegram-chat-name-input {
+      .telegram-chat-name-input-content {
+        h3 {
+          color: #1f2937;
+        }
+
+        p {
+          color: #6b7280;
+        }
+
+        .telegram-chat-name-input-field {
+          background: #ffffff;
+          border-color: #e5e7eb;
+          color: #1f2937;
+
+          &:focus {
+            border-color: #667eea;
+          }
+        }
+      }
+    }
+  }
+
+  // Dark theme name input
+  &.dark_theme {
+    .telegram-chat-name-input {
+      .telegram-chat-name-input-content {
+        h3 {
+          color: #f9fafb;
+        }
+
+        p {
+          color: #9ca3af;
+        }
+
+        .telegram-chat-name-input-field {
+          background: #374151;
+          border-color: #4b5563;
+          color: #f9fafb;
+
+          &:focus {
+            border-color: #667eea;
+          }
+        }
       }
     }
   }

@@ -6,6 +6,7 @@ import useTelegramChat from "./hook";
 import ChatButton from "./chat-button";
 import HeaderTGChat from "./header";
 import MessageTG from "./message";
+import NameInput from "./name-input";
 
 import "./telegram-chat-widget.scss";
 import InputChatTG from "./input-chat";
@@ -21,8 +22,20 @@ export default function TelegramChatWidget() {
       {chat.isOpen && (
         <div className="telegram-chat-window">
           <HeaderTGChat handleToggle={chat.handleToggle} />
-          <MessageTG {...chat} />
-          <InputChatTG {...chat} />
+          {!chat.isNameSet ? (
+            <NameInput
+              name={chat.userName}
+              setName={chat.setUserName}
+              nameInputRef={chat.nameInputRef}
+              handleNameSubmit={chat.handleNameSubmit}
+              isLoading={chat.isLoading}
+            />
+          ) : (
+            <>
+              <MessageTG {...chat} />
+              <InputChatTG {...chat} />
+            </>
+          )}
         </div>
       )}
     </div>

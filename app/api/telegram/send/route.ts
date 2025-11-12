@@ -64,12 +64,28 @@ export async function POST(request: NextRequest) {
 
     // Parse request body
     const body = await request.json();
-    const { message } = body;
+    const { message, userName, sessionId } = body;
 
     // Validate message
     if (!message || typeof message !== "string") {
       return NextResponse.json(
         { error: "Message is required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate userName
+    if (!userName || typeof userName !== "string") {
+      return NextResponse.json(
+        { error: "User name is required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate sessionId
+    if (!sessionId || typeof sessionId !== "string") {
+      return NextResponse.json(
+        { error: "Session ID is required" },
         { status: 400 }
       );
     }
@@ -90,14 +106,34 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Sanitize userName
+    const sanitizedUserName = userName.trim();
+    if (sanitizedUserName.length === 0 || sanitizedUserName.length > 50) {
+      return NextResponse.json(
+        { error: "User name is invalid" },
+        { status: 400 }
+      );
+    }
+
     // Initialize Telegraf bot
     const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
 
-    // Format message for Telegram
-    const telegramMessage = `📨 Нове повідомлення з сайту:\n\n${sanitizedMessage}\n\n---\nЧас: ${new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kyiv" })}`;
+    // Format message for Telegram with user name and session ID
+    const telegramMessage = `📨 Нове повідомлення з сайту:\n\n👤 Ім'я: ${sanitizedUserName}\n💬 Повідомлення: ${sanitizedMessage}\n\n🔗 Session ID: ${sessionId}\n⏰ Час: ${new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kyiv" })}`;
 
     // Send message to owner's Telegram
-    await bot.telegram.sendMessage(TELEGRAM_OWNER_CHAT_ID, telegramMessage);
+    const sentMessage = await bot.telegram.sendMessage(TELEGRAM_OWNER_CHAT_ID, telegramMessage);
+
+    // Store session mapping for reply functionality
+    // Save sessionId -> messageId mapping (we'll use this in webhook to route replies back)
+    if (typeof global.messageIdToSessionMap === 'undefined') {
+      global.messageIdToSessionMap = new Map<number, string>();
+    }
+    
+    // Store mapping between message ID and session ID for reply detection
+    if (sentMessage && sentMessage.message_id) {
+      global.messageIdToSessionMap.set(sentMessage.message_id, sessionId);
+    }
 
     return NextResponse.json(
       { success: true, message: "Message sent successfully" },
