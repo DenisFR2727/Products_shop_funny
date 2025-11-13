@@ -32,23 +32,42 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Always return JSON - Telegram requires this
+  const jsonResponse = (data: any, status: number = 200) => {
+    return NextResponse.json(data, { 
+      status,
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+  };
+
   try {
     if (!TELEGRAM_BOT_TOKEN) {
-      return NextResponse.json(
-        { error: "TELEGRAM_BOT_TOKEN is not set" },
-        { status: 500 }
-      );
+      console.error(`[Webhook] TELEGRAM_BOT_TOKEN is not set`);
+      return jsonResponse({ ok: false, error: "TELEGRAM_BOT_TOKEN is not set" }, 500);
     }
 
     const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
     
     // Handle potential JSON parsing errors
-    let body;
+    let body: any;
     try {
-      body = await request.json();
+      const text = await request.text();
+      if (!text || text.trim().length === 0) {
+        console.error(`[Webhook] Empty request body`);
+        return jsonResponse({ ok: true });
+      }
+      body = JSON.parse(text);
     } catch (error: any) {
       console.error(`[Webhook] Error parsing JSON:`, error);
-      return NextResponse.json({ ok: true, error: "Invalid JSON" });
+      return jsonResponse({ ok: true, error: "Invalid JSON" });
+    }
+
+    // Validate body structure
+    if (!body || typeof body !== 'object') {
+      console.error(`[Webhook] Invalid body structure:`, body);
+      return jsonResponse({ ok: true, error: "Invalid body structure" });
     }
 
     console.log(`[Webhook] Received webhook request:`, JSON.stringify(body, null, 2));
@@ -64,7 +83,7 @@ export async function POST(request: NextRequest) {
       // Only process text messages from owner's chat
       if (!TELEGRAM_OWNER_CHAT_ID) {
         console.error(`[Webhook] TELEGRAM_OWNER_CHAT_ID is not set`);
-        return NextResponse.json({ ok: true, error: "TELEGRAM_OWNER_CHAT_ID not configured" });
+        return jsonResponse({ ok: true, error: "TELEGRAM_OWNER_CHAT_ID not configured" });
       }
 
       console.log(`[Webhook] Message from chatId: ${chatId}, ownerChatId: ${TELEGRAM_OWNER_CHAT_ID}, match: ${chatId === TELEGRAM_OWNER_CHAT_ID}`);
@@ -116,7 +135,7 @@ export async function POST(request: NextRequest) {
                     console.error(`[Webhook] Error sending error message:`, error);
                   }
                 }
-                return NextResponse.json({ ok: true, error: "No message text in command" });
+                return jsonResponse({ ok: true, error: "No message text in command" });
               }
             } else if (messagePart) {
               extractedMessageText = messagePart;
@@ -190,19 +209,23 @@ export async function POST(request: NextRequest) {
           // Validate that sessionId is not empty
           if (sessionId.trim().length === 0) {
             console.error(`[Webhook] Empty sessionId, skipping message`);
-            return NextResponse.json({ ok: true, error: "Empty sessionId" });
+            return jsonResponse({ ok: true, error: "Empty sessionId" });
           }
           
           // Validate message text is not empty
           if (extractedMessageText.length === 0) {
             console.error(`[Webhook] Empty message text, skipping`);
             if (TELEGRAM_OWNER_CHAT_ID) {
-              await bot.telegram.sendMessage(
-                TELEGRAM_OWNER_CHAT_ID,
-                `❌ Помилка: Повідомлення не може бути порожнім`
-              );
+              try {
+                await bot.telegram.sendMessage(
+                  TELEGRAM_OWNER_CHAT_ID,
+                  `❌ Помилка: Повідомлення не може бути порожнім`
+                );
+              } catch (error: any) {
+                console.error(`[Webhook] Error sending error message:`, error);
+              }
             }
-            return NextResponse.json({ ok: true, error: "Empty message text" });
+            return jsonResponse({ ok: true, error: "Empty message text" });
           }
           
           // Ensure session messages map exists
@@ -242,7 +265,7 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          return NextResponse.json({ ok: true, sessionId, messageId: global.messageCounter });
+          return jsonResponse({ ok: true, sessionId, messageId: global.messageCounter });
         } else {
           // No sessionId found - inform the owner
           console.log(`[Webhook] No sessionId found for message: "${messageText}"`);
@@ -260,12 +283,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ ok: true });
+    // Always return ok: true for Telegram webhook
+    return jsonResponse({ ok: true });
   } catch (error: any) {
     console.error("Error handling webhook:", error);
-    return NextResponse.json(
-      { error: "Failed to handle webhook" },
-      { status: 500 }
+    // Always return JSON, even on error
+    return jsonResponse(
+      { ok: false, error: "Failed to handle webhook", details: error.message },
+      500
     );
   }
 }
