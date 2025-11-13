@@ -118,21 +118,32 @@ export async function POST(request: NextRequest) {
     // Initialize Telegraf bot
     const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
 
-    // Format message for Telegram with user name and session ID
-    const telegramMessage = `📨 Нове повідомлення з сайту:\n\n👤 Ім'я: ${sanitizedUserName}\n💬 Повідомлення: ${sanitizedMessage}\n\n🔗 Session ID: ${sessionId}\n⏰ Час: ${new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kyiv" })}`;
+    // Format message for Telegram with structured format for easier parsing
+    // Using a clear delimiter pattern that's easy to extract
+    const timestamp = new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kyiv" });
+    const telegramMessage = `📨 Нове повідомлення з сайту:\n\n👤 Ім'я: ${sanitizedUserName}\n💬 Повідомлення: ${sanitizedMessage}\n\n🔗 Session ID: ${sessionId}\n⏰ Час: ${timestamp}\n\n💡 Для відповіді використайте Reply або формат: /reply ${sessionId} <ваше повідомлення>`;
 
     // Send message to owner's Telegram
     const sentMessage = await bot.telegram.sendMessage(TELEGRAM_OWNER_CHAT_ID, telegramMessage);
 
-    // Store session mapping for reply functionality
-    // Save sessionId -> messageId mapping (we'll use this in webhook to route replies back)
+    // Initialize global maps if they don't exist
     if (typeof global.messageIdToSessionMap === 'undefined') {
       global.messageIdToSessionMap = new Map<number, string>();
     }
     
+    if (typeof global.sessionToLastMessageIdMap === 'undefined') {
+      global.sessionToLastMessageIdMap = new Map<string, number>();
+    }
+
     // Store mapping between message ID and session ID for reply detection
     if (sentMessage && sentMessage.message_id) {
+      // Store forward mapping: messageId -> sessionId (for reply detection)
       global.messageIdToSessionMap.set(sentMessage.message_id, sessionId);
+      
+      // Store reverse mapping: sessionId -> lastMessageId (for finding last message from session)
+      global.sessionToLastMessageIdMap.set(sessionId, sentMessage.message_id);
+      
+      console.log(`[Telegram Send] Stored mapping: messageId=${sentMessage.message_id} -> sessionId=${sessionId}`);
     }
 
     return NextResponse.json(

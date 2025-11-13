@@ -101,9 +101,74 @@ If you're having trouble getting your chat ID:
 3. Test the chat widget in production
 4. Monitor for any errors or issues
 
+## Setting Up Webhook (Required for Replies)
+
+To receive replies from Telegram, you need to set up a webhook:
+
+### Method 1: Using the API Endpoint
+
+1. Visit `/api/telegram/setup-webhook` in your browser (GET request)
+2. You'll see the current webhook status and suggested URL
+3. Send a POST request to `/api/telegram/setup-webhook` with:
+   ```json
+   {
+     "webhookUrl": "https://your-domain.com/api/telegram/webhook"
+   }
+   ```
+
+### Method 2: Using curl
+
+```bash
+curl -X POST https://your-domain.com/api/telegram/setup-webhook \
+  -H "Content-Type: application/json" \
+  -d '{"webhookUrl":"https://your-domain.com/api/telegram/webhook"}'
+```
+
+### Method 3: Using Telegram Bot API directly
+
+```bash
+curl -X POST "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://your-domain.com/api/telegram/webhook"}'
+```
+
+**Important Notes:**
+- For local development, use a tunneling service like ngrok, localtunnel, or cloudflared
+- The webhook URL must be HTTPS (Telegram requires HTTPS for webhooks)
+- After setting up the webhook, Telegram will send all updates to your endpoint
+
+### Alternative Tunneling Services (if ngrok requires registration):
+
+**Option 1: localtunnel (no registration needed)**
+```bash
+npm install -g localtunnel
+lt --port 3000
+```
+
+**Option 2: cloudflared (no registration needed)**
+```bash
+# Download from https://github.com/cloudflare/cloudflared/releases
+cloudflared tunnel --url http://localhost:3000
+```
+
+**Option 3: ngrok (requires free registration)**
+1. Sign up at https://dashboard.ngrok.com/signup
+2. Get authtoken from https://dashboard.ngrok.com/get-started/your-authtoken
+3. Run: `ngrok config add-authtoken YOUR_TOKEN`
+4. Run: `ngrok http 3000`
+
+## Replying to Messages
+
+Once the webhook is set up, you can reply to messages in three ways:
+
+1. **Reply Button (Recommended)**: Click "Reply" on the user's message in Telegram
+2. **Command Format**: `/reply <sessionId> <your message>`
+3. **Copy Session ID**: Copy the Session ID from the message and include it in your reply
+
 ## Features
 
 - ✅ Real-time message forwarding to Telegram
+- ✅ Bidirectional chat (reply from Telegram to website)
 - ✅ Rate limiting (5 messages/minute)
 - ✅ Theme-aware (light/dark mode)
 - ✅ Mobile responsive

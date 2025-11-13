@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Webhook Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #0088cc;
+            padding-bottom: 10px;
+        }
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196F3;
+        }
+        .status.error {
+            background-color: #ffebee;
+            border-left-color: #f44336;
+        }
+        .status.success {
+            background-color: #e8f5e9;
+            border-left-color: #4caf50;
+        }
+        button {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #006699;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .code {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .info {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0088cc;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Налаштування Telegram Webhook</h1>
+        
+        <div id="status" class="status">
+            <strong>Статус:</strong> Завантаження...
+        </div>
+
+        <div class="info">
+            <strong>ℹ️ Інформація:</strong><br>
+            Webhook необхідний для отримання відповідей з Telegram. 
+            Без нього ви не зможете отримувати повідомлення від користувачів.
+        </div>
+
+        <h2>1. Перевірка поточного статусу</h2>
+        <button onclick="checkStatus()">🔄 Перевірити статус</button>
+
+        <div id="webhookInfo" style="margin-top: 20px;"></div>
+
+        <h2>2. Налаштування Webhook</h2>
+        <label for="webhookUrl">URL Webhook:</label>
+        <input 
+            type="text" 
+            id="webhookUrl" 
+            placeholder="https://your-domain.com/api/telegram/webhook"
+            value=""
+        >
+        <button onclick="setupWebhook()">✅ Налаштувати Webhook</button>
+        <button onclick="deleteWebhook()">🗑️ Видалити Webhook</button>
+
+        <h2>3. Для локальної розробки</h2>
+        <div class="info">
+            <strong>Важливо:</strong> Для локальної розробки потрібно використовувати ngrok або інший tunneling сервіс.<br><br>
+            <strong>Кроки:</strong><br>
+            1. Встановіть ngrok: <code>npm install -g ngrok</code><br>
+            2. Запустіть: <code>ngrok http 3000</code><br>
+            3. Скопіюйте HTTPS URL (наприклад: https://abc123.ngrok.io)<br>
+            4. Використайте: <code>https://abc123.ngrok.io/api/telegram/webhook</code>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+
+        async function checkStatus() {
+            const statusDiv = document.getElementById('status');
+            const infoDiv = document.getElementById('webhookInfo');
+            
+            statusDiv.innerHTML = '<strong>Статус:</strong> <span class="loading"></span> Перевірка...';
+            infoDiv.innerHTML = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/telegram/setup-webhook`);
+                const data = await response.json();
+
+                if (data.error) {
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = `<strong>Помилка:</strong> ${data.error}`;
+                    return;
+                }
+
+                const webhookUrl = data.currentWebhook?.url || 'Не встановлено';
+                const isSet = webhookUrl !== 'Not set' && webhookUrl;
+
+                statusDiv.className = isSet ? 'status success' : 'status';
+                statusDiv.innerHTML = `<strong>Статус:</strong> ${isSet ? '✅ Webhook налаштовано' : '❌ Webhook не налаштовано'}`;
+
+                infoDiv.innerHTML = `
+                    <div class="code">
+                        <strong>Поточний Webhook:</strong> ${webhookUrl}<br>
+                        <strong>Запропонований URL:</strong> ${data.suggestedUrl}<br>
+                        <strong>Очікуючі оновлення:</strong> ${data.currentWebhook?.pendingUpdateCount || 0}<br>
+                        ${data.currentWebhook?.lastErrorMessage ? `<strong style="color: red;">Остання помилка:</strong> ${data.currentWebhook.lastErrorMessage}` : ''}
+                    </div>
+                `;
+
+                // Заповнити поле вводу запропонованим URL
+                document.getElementById('webhookUrl').value = data.suggestedUrl;
+
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = `<strong>Помилка:</strong> ${error.message}`;
+            }
+        }
+
+        async function setupWebhook() {
+            const webhookUrl = document.getElementById('webhookUrl').value;
+            const statusDiv = document.getElementById('status');
+            const infoDiv = document.getElementById('webhookInfo');
+
+            if (!webhookUrl) {
+                alert('Будь ласка, введіть URL webhook');
+                return;
+            }
+
+            statusDiv.innerHTML = '<strong>Статус:</strong> <span class="loading"></span> Налаштування...';
+            infoDiv.innerHTML = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/telegram/setup-webhook`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ webhookUrl }),
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = `<strong>Помилка:</strong> ${data.error}<br>${data.details || ''}`;
+                } else {
+                    statusDiv.className = 'status success';
+                    statusDiv.innerHTML = `<strong>Успіх!</strong> ${data.message}`;
+                    infoDiv.innerHTML = `
+                        <div class="code">
+                            <strong>Webhook URL:</strong> ${data.webhookUrl}<br>
+                            <strong>Очікуючі оновлення:</strong> ${data.pendingUpdateCount || 0}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = `<strong>Помилка:</strong> ${error.message}`;
+            }
+        }
+
+        async function deleteWebhook() {
+            if (!confirm('Ви впевнені, що хочете видалити webhook?')) {
+                return;
+            }
+
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '<strong>Статус:</strong> <span class="loading"></span> Видалення...';
+
+            try {
+                // Видалити webhook через Telegram API
+                const response = await fetch(`${API_BASE}/api/telegram/setup-webhook`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ webhookUrl: '' }),
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = `<strong>Помилка:</strong> ${data.error}`;
+                } else {
+                    statusDiv.className = 'status success';
+                    statusDiv.innerHTML = '<strong>Успіх!</strong> Webhook видалено';
+                    checkStatus();
+                }
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = `<strong>Помилка:</strong> ${error.message}`;
+            }
+        }
+
+        // Автоматично перевірити статус при завантаженні
+        window.onload = checkStatus;
+    </script>
+</body>
+</html>
+
+

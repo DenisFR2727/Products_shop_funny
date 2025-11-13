@@ -75,12 +75,13 @@ export default function useTelegramChat() {
     const pollMessages = async () => {
       try {
         const response = await fetch(
-          `/api/telegram/messages?sessionId=${sessionId}&lastMessageId=${lastMessageId}`
+          `/api/telegram/messages?sessionId=${encodeURIComponent(sessionId)}&lastMessageId=${lastMessageId}`
         );
 
         if (response.ok) {
           const data = await response.json();
           if (data.messages && data.messages.length > 0) {
+            console.log(`[Polling] Received ${data.messages.length} new messages for session ${sessionId}`);
             const newMessages: MessageTG[] = data.messages.map((msg: any) => ({
               id: `bot_${msg.id}`,
               text: msg.text,
@@ -89,15 +90,23 @@ export default function useTelegramChat() {
               isBot: true,
             }));
 
-            setMessages((prev) => [...prev, ...newMessages]);
-            if (data.messages.length > 0) {
-              const maxId = Math.max(...data.messages.map((m: any) => m.id));
-              setLastMessageId(maxId);
+            setMessages((prev) => {
+              // Avoid duplicates by checking message IDs
+              const existingIds = new Set(prev.map(m => m.id));
+              const uniqueNewMessages = newMessages.filter(m => !existingIds.has(m.id));
+              return [...prev, ...uniqueNewMessages];
+            });
+            
+            if (data.messages.length > 0 && data.lastMessageId) {
+              setLastMessageId(data.lastMessageId);
             }
           }
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          console.error(`[Polling] Error response:`, response.status, errorData);
         }
       } catch (error) {
-        console.error("Error polling messages:", error);
+        console.error("[Polling] Error polling messages:", error);
       }
     };
 
