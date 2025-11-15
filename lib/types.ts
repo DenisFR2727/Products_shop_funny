@@ -92,3 +92,10 @@ export interface UnsPlash {
     social: Social;
   };
 }
+
+// Error type
+export type ErrorResponse = {
+  code: number;
+  error: true;
+  message: string;
+};

@@ -1,4 +1,4 @@
-import { getProduct } from "@/lib/api";
+import { getProduct } from "@/lib/api/api";
 import { notFound } from "next/navigation";
 import { PropsId } from "../../page";
 import ModalBackdrop from "@/components/products/modal/modal-backdrop";

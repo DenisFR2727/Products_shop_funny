@@ -1,5 +1,5 @@
 "use client";
-import { getPhotos } from "@/lib/api";
+import { getPhotos } from "@/lib/api/api";
 import { UnsPlash } from "@/lib/types";
 import { useEffect, useRef, useState } from "react";
 

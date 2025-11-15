@@ -1,4 +1,4 @@
-import { getProduct } from "@/lib/api";
+import { getProduct } from "@/lib/api/api";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";

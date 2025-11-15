@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProductCard from "@/components/products/product-card";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProducts } from "@/lib/api";
+import { getProducts } from "@/lib/api/api";
 import SlideProducts from "@/components/products/slide/slide-products";
 
 import "./marketing.scss";

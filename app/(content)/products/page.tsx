@@ -1,6 +1,6 @@
 import AutoOpenSaleModal from "@/components/products/modal/sale/auto-sale";
 import ProductsServices from "@/components/products/products-services";
-import { getProducts } from "@/lib/api";
+import { getProducts } from "@/lib/api/api";
 import { Metadata } from "next";
 
 export const dynamic = "force-static";

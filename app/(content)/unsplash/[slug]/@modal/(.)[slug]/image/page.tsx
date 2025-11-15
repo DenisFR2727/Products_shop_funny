@@ -29,7 +29,7 @@ export default function PhotoPageUnsplash() {
       <div className="fullscreen-image">
         <Image
           src={selectedPhoto.urls.full}
-          alt={selectedPhoto.alt_description || "photo"}
+          alt={selectedPhoto.alt_description}
           width={500}
           height={500}
           unoptimized
