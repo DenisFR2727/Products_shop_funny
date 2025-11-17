@@ -2,7 +2,6 @@
 import { IProducts, IProductsResponse, UnsPlash } from "../types";
 import { apiRequest } from "./api-request";
 import { API_DUMMY_URL, NEXT_PUBLIC_UNSPLASH_ACCESS_KEY } from "./config";
-import { handleApiError } from "./error";
 
 export async function getProduct(id: number): Promise<IProducts | null> {
   return apiRequest<IProducts | null>(
