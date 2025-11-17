@@ -4,13 +4,16 @@ import Link from "next/link";
 import Cart from "./cart/cart-products-icon";
 
 import "./product-card.scss";
+import { memo } from "react";
+import { log } from "@/lib/log";
 
 export type ProductCardProps = {
   product: IProducts;
   isToggle: boolean;
 };
 
-export default function ProductCard({ product, isToggle }: ProductCardProps) {
+const ProductCard = memo(function ({ product, isToggle }: ProductCardProps) {
+  log("ProductCard rendered", 1);
   return (
     <div className={!isToggle ? "card-product" : "card-product-list"}>
       <Link href={`/products/${product.id}`} prefetch={false}>
@@ -20,6 +23,7 @@ export default function ProductCard({ product, isToggle }: ProductCardProps) {
           width={250}
           height={250}
           alt={product.title}
+          unoptimized
         />
       </Link>
       <div className="card-info">
@@ -33,4 +37,5 @@ export default function ProductCard({ product, isToggle }: ProductCardProps) {
       <Cart product={product} />
     </div>
   );
-}
+});
+export default ProductCard;

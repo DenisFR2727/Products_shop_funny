@@ -48,61 +48,56 @@ const Footer = () => {
             <ul className="footer_list-icons">
               <li>
                 <Link href="" target="_blank">
-                  <Image
+                  <img
                     src="/social/twitter-logo-svgrepo-com.svg"
                     alt="twitter"
                     style={{ maxWidth: "30px" }}
                     width={30}
                     height={30}
-                    priority
                   />
                 </Link>
               </li>
               <li>
                 <Link href="https://ua.linkedin.com/" target="_blank">
-                  <Image
+                  <img
                     src="/social/linkedin-rounded-svgrepo-com.svg"
                     alt="linkedin"
                     style={{ maxWidth: "30px" }}
                     width={30}
                     height={30}
-                    priority
                   />
                 </Link>
               </li>
               <li>
                 <Link href="https://instagram.com" target="_blank">
-                  <Image
+                  <img
                     src="/social/instagram-rounded-svgrepo-com.svg"
                     alt="Instagram"
                     style={{ maxWidth: "30px" }}
                     width={30}
                     height={30}
-                    priority
                   />
                 </Link>
               </li>
               <li>
                 <Link href="https://github.com/DenisFR2727" target="_blank">
-                  <Image
+                  <img
                     src="/social/github-svgrepo-com.svg"
                     alt="github"
                     style={{ maxWidth: "30px" }}
                     width={30}
                     height={30}
-                    priority
                   />
                 </Link>
               </li>
               <li>
                 <Link href="https://www.facebook.com/" target="_blank">
-                  <Image
+                  <img
                     src="/social/facebook-svgrepo-com.svg"
                     alt="facebook"
                     style={{ maxWidth: "30px" }}
                     width={30}
                     height={30}
-                    priority
                   />
                 </Link>
               </li>

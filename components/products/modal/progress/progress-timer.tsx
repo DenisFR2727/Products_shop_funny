@@ -7,7 +7,7 @@ const TIMER = 3000;
 export default function DeleteComfirmationProgress({
   onCancel,
 }: ComfirmationProgressProps) {
-  const [remaningTime, setRemaningTime] = useState(TIMER);
+  const [remaningTime, setRemaningTime] = useState<number>(TIMER);
 
   useEffect(() => {
     const interval = setInterval(() => {

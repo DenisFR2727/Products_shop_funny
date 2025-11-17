@@ -1,5 +1,5 @@
 "use client";
-
+import { memo } from "react";
 import { TiShoppingCart } from "react-icons/ti";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
@@ -14,7 +14,7 @@ interface ProductCartProps {
   product: CartProduct;
 }
 
-export default function Cart({ product }: ProductCartProps) {
+const Cart = memo(function ({ product }: ProductCartProps) {
   const dispatch = useAppDispatch();
   const isInCart = useAppSelector((state) =>
     state.cartReducer.cart.some((item) => item.id === product.id)
@@ -32,4 +32,5 @@ export default function Cart({ product }: ProductCartProps) {
       />
     </div>
   );
-}
+});
+export default Cart;

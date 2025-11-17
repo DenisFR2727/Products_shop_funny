@@ -5,7 +5,7 @@ import FilterPanel from "./filter/filter-panel";
 import PaginationList from "./pagination/pagination ";
 import { ProductListProps } from "./products-list";
 import { useFilterProducts } from "./filter/hooks";
-import { useCallback, useContext, useEffect, useRef } from "react";
+import { memo, useCallback, useContext, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { pageSelector } from "@/lib/selectors/paginationSelectors";
 import { ThemeContext } from "@/context/themeContext";
@@ -14,10 +14,12 @@ import ProgressModal from "./modal/progress/modal-progress";
 import DeleteComfirmationProgress from "./modal/progress/progress-timer";
 
 import "@/styles/globals.css";
+import { log } from "@/lib/log";
 
-export default function ProductsServices({
+const ProductsServices = memo(function ({
   products,
 }: Omit<ProductListProps, "listRef">) {
+  log("<ProductsServices /> rendered", 1);
   const { filteredProducts } = useFilterProducts(products);
   const { theme } = useContext(ThemeContext);
   const dispatch = useAppDispatch();
@@ -49,4 +51,5 @@ export default function ProductsServices({
       <PaginationList products={filteredProducts} />
     </div>
   );
-}
+});
+export default ProductsServices;
