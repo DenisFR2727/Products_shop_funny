@@ -16,6 +16,7 @@ export default async function ProductsPage() {
 
   return (
     <>
+      <div id="dialog-overlay"></div>
       <ProductsServices products={data} />
       <AutoOpenSaleModal delay={2000} />
     </>
