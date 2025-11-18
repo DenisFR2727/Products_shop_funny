@@ -11,6 +11,8 @@ export const API_ENDPOINTS = {
 export const REQUEST_DELAY = 150; // Delay between requests in milliseconds
 export const MAX_RETRIES = 3; // Maximum number of retries for 429 errors
 export const RETRY_DELAY = 1000; // Initial delay for retries in milliseconds
+
+// HTTP STATUS
 export const HTTP_STATUS = {
   TOO_MANY_REQUESTS: 429,
 } as const;
