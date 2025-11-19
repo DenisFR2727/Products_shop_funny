@@ -1,16 +1,27 @@
 "use client";
-import Image from "next/image";
 
-export default function ImageCard({ src, width, height, alt }: any) {
+import Image from "next/image";
+import { useState } from "react";
+
+interface ImageCardProps {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
+export default function ImageCard({ src, width, height, alt }: ImageCardProps) {
+  const [imgSrc, setImgSrc] = useState(src);
+
   return (
     <Image
       className="card-product-img"
-      src={src}
+      src={imgSrc}
       width={width}
       height={height}
       alt={alt}
-      onError={(e) => (e.currentTarget.src = "/fback-image-card.svg")}
+      onError={(e) => setImgSrc("/fback-image-card.svg")}
       unoptimized
-    ></Image>
+    />
   );
 }
