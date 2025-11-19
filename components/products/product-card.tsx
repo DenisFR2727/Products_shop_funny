@@ -23,6 +23,9 @@ const ProductCard = memo(function ({ product, isToggle }: ProductCardProps) {
           width={250}
           height={250}
           alt={product.title}
+          onError={(e) => {
+            e.currentTarget.src = "/fback-image-card.svg";
+          }}
           unoptimized
         />
       </Link>
