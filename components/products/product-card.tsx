@@ -1,11 +1,11 @@
 import { IProducts } from "@/lib/types";
-import Image from "next/image";
 import Link from "next/link";
 import Cart from "./cart/cart-products-icon";
-
-import "./product-card.scss";
 import { memo } from "react";
 import { log } from "@/lib/log";
+import ImageCard from "./image-card";
+
+import "./product-card.scss";
 
 export type ProductCardProps = {
   product: IProducts;
@@ -17,16 +17,11 @@ const ProductCard = memo(function ({ product, isToggle }: ProductCardProps) {
   return (
     <div className={!isToggle ? "card-product" : "card-product-list"}>
       <Link href={`/products/${product.id}`} prefetch={false}>
-        <Image
-          className="card-product-img"
+        <ImageCard
           src={product.thumbnail}
           width={250}
           height={250}
           alt={product.title}
-          onError={(e) => {
-            e.currentTarget.src = "/fback-image-card.svg";
-          }}
-          unoptimized
         />
       </Link>
       <div className="card-info">
