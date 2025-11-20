@@ -2,6 +2,10 @@
 header {
   padding-left: 1rem;
   padding-right: 1rem;
+  overflow: hidden;
+}
+.logo_funny-shop {
+  margin-left: 10px;
 }
 .z-40 {
   font-family: "Roboto", sans-serif;
@@ -98,6 +102,9 @@ header {
 @media (max-width: 700px) {
   .logo_funny-shop {
     display: none;
+  }
+  .group {
+    margin-left: 10px;
   }
 }
 @media (max-width: 475px) {

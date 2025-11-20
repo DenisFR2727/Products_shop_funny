@@ -8,7 +8,9 @@ import SpinnerItem from "@/components/spinners/spinner";
 export function ReduxProvider({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>{children}</PersistGate>
+      <PersistGate loading={<SpinnerItem />} persistor={persistor}>
+        {children}
+      </PersistGate>
     </Provider>
   );
 }

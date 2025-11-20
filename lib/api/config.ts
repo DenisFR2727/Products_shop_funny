@@ -1,5 +1,6 @@
 // API Configuration
 export const API_DUMMY_URL = "https://dummyjson.com";
+export const API_UNSPLASH_URL = "https://api.unsplash.com/photos";
 export const NEXT_PUBLIC_UNSPLASH_ACCESS_KEY =
   process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
 
