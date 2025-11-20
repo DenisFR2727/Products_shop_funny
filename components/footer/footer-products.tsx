@@ -19,7 +19,6 @@ const Footer = () => {
                   width={30}
                   height={30}
                   loading="lazy"
-                  // priority
                 />
               </Link>
             </li>

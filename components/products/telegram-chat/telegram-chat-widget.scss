@@ -519,10 +519,18 @@
 // Mobile responsive
 @media (max-width: 520px) {
   .telegram-chat-widget {
+    //  bottom: 10px;
+    //  right: т;
+    //  left: 10px;
+    //  background: none !important;
+    position: fixed;
     bottom: 10px;
     right: 10px;
-    left: 10px;
-    background: none !important;
+    z-index: 9999;
+
+    // Кнопка залишається маленькою
+    width: auto;
+    height: auto;
 
     .telegram-chat-window {
       width: 100%;
