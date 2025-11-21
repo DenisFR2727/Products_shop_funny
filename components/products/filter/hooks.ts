@@ -47,6 +47,10 @@ export function useFilterForm() {
   const [defaultRange, setDefaultRange] = useState<number>(3000);
 
   const changeSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    let searchText = e.target.value;
+    if (/[^a-zA-Zа-яА-ЯґҐєЄіІїЇ]/g.test(searchText)) {
+      return;
+    }
     setSearchTitle(e.target.value);
   };
 
