@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import ProgressHandler from "@/components/products/modal/progress/ProgressHandler";
 
 export default function RootLayout({
   children,
@@ -9,6 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <div>
+      <ProgressHandler />
       {children}
       {modal}
     </div>

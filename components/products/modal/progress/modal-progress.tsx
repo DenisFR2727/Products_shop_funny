@@ -1,3 +1,4 @@
+"use client";
 import { createPortal } from "react-dom";
 import { useEffect, useRef } from "react";
 import { ProgressModalProps } from "./types";

@@ -6,6 +6,13 @@ import unsplashPage from "./features/unsplash/unsplashSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+// Separate persist config for cartReducer to exclude showProgressModal and togglePanel
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+  blacklist: ["showProgressModal", "togglePanel"],
+};
+
 const persistConfig = {
   key: "root",
   storage,
@@ -13,7 +20,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  cartReducer: cartSlice,
+  cartReducer: persistReducer(cartPersistConfig, cartSlice),
   filterReducer: filterProductsSlice,
   paginationPage: paginationPage,
   unsplashPage: unsplashPage,

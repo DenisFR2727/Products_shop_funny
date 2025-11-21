@@ -1,3 +1,4 @@
+"use client";
 import { setShowProgress } from "@/lib/features/products/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useCallback } from "react";

@@ -1,5 +1,8 @@
 "use client";
-import { addProductToCart } from "@/lib/features/products/cartSlice";
+import {
+  addProductToCart,
+  setShowProgress,
+} from "@/lib/features/products/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { IProducts } from "@/lib/types";
 
@@ -11,10 +14,15 @@ export default function AddToCart({ product }: { product: IProducts }) {
     state.cartReducer.cart.some((item) => item.id === product.id)
   );
 
+  const addProductButton = () => {
+    dispatch(addProductToCart(product));
+    dispatch(setShowProgress(true));
+  };
+
   return (
     <div
       className={`cart-item-add cart-hover-add ${isInCart ? "disabled-cart-add" : ""}`}
-      onClick={() => dispatch(addProductToCart(product))}
+      onClick={addProductButton}
     >
       {isInCart ? "Thank You" : "ADD TO CART"}
     </div>
