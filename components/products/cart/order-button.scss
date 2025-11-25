@@ -1,0 +1,30 @@
+.order_button-cart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: black;
+  font-weight: 700;
+  border-radius: 20px;
+  background-color: #f5a524;
+  user-select: none;
+  cursor: pointer;
+}
+.order_button-icon {
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+.order_button-cart:hover {
+  filter: brightness(90%);
+}
+
+.order_button-cart:hover .order_button-icon {
+  font-size: 24px;
+  -moz-transform: scale(1.1) translate(0px, 1px) skew(-26deg, 24deg);
+  -webkit-transform: scale(1.1) translate(0px, 1px) skew(-26deg, 24deg);
+  -o-transform: scale(1.1) translate(0px, 1px) skew(-26deg, 24deg);
+  -ms-transform: scale(1.1) translate(0px, 1px) skew(-26deg, 24deg);
+  transform: scale(1.1) translate(0px, 1px) skew(-26deg, 24deg);
+}
