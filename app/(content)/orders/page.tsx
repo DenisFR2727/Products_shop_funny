@@ -1,3 +1,9 @@
+import ShippingForm from "@/components/products/cart/orders/shipping-details-form";
+
 export default function OrderPage() {
-  return <p>Order Page</p>;
+  return (
+    <div>
+      <ShippingForm />
+    </div>
+  );
 }

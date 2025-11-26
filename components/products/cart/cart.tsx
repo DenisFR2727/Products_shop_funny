@@ -14,11 +14,12 @@ import {
   selectShipping,
   selectSubtotal,
 } from "@/lib/selectors/cartSelectors";
-import OrderButton from "./order-button";
-import OrderTotal from "./order-total";
+import OrderButton from "./orders/order-button";
+import OrderTotal from "./orders/order-total";
+import OrdersList from "./orders/orders-list";
+import Link from "next/link";
 
 export default function CartProducts() {
-  const dispatch = useAppDispatch();
   const orders = useAppSelector(selectOrders);
   const shipping = useAppSelector(selectShipping);
   const subtotal = useAppSelector(selectSubtotal);
@@ -37,55 +38,7 @@ export default function CartProducts() {
           <h1>Shopping Cart</h1>
           <span className="cart-line"></span>
           <div className="cart-items-block">
-            <ul className="cart-order">
-              {orders.map((order) => (
-                <li key={order.id}>
-                  <div className="order-img">
-                    <img src={order?.thumbnail} alt={order.title} />
-                  </div>
-                  <div className="order-title">
-                    <h2>{order.title}</h2>
-                    <span className="order-title-item">{order.brand}</span>
-                    <span className="order-title-item">{order.category}</span>
-                  </div>
-                  <div className="amount-price-block">
-                    <div className="order-amount">
-                      <h2>Amount</h2>
-                      <select
-                        value={order.amount}
-                        className="order-amount-item order-select"
-                        onChange={(e) =>
-                          dispatch(
-                            amountToPriceProduct({
-                              id: order.id,
-                              amount: Number(e.target.value),
-                            })
-                          )
-                        }
-                      >
-                        {Array.from(
-                          { length: order.stock },
-                          (_, index) => index + 1
-                        ).map((n, i) => (
-                          <option key={n} value={n}>
-                            {n}
-                          </option>
-                        ))}
-                      </select>
-                      <button
-                        className="order-amount-item order-remove"
-                        onClick={() => dispatch(removeOrder(order.id))}
-                      >
-                        remove
-                      </button>
-                    </div>
-                    <div className="order-price">
-                      <span className="order-price-item">$ {order.price}</span>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <OrdersList />
             <div className="order-products-total">
               <OrderTotal
                 subtotal={subtotal}
@@ -93,7 +46,9 @@ export default function CartProducts() {
                 discountedSubtotal={discountedSubtotal}
                 discountedTotalPrice={discountedTotalPrice}
               />
-              <OrderButton href={"/orders"} />
+              <Link href={"/orders"}>
+                <OrderButton>Orders products</OrderButton>
+              </Link>
             </div>
           </div>
         </div>
