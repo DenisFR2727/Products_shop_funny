@@ -15,6 +15,7 @@ import {
   selectSubtotal,
 } from "@/lib/selectors/cartSelectors";
 import OrderButton from "./order-button";
+import OrderTotal from "./order-total";
 
 export default function CartProducts() {
   const dispatch = useAppDispatch();
@@ -86,26 +87,12 @@ export default function CartProducts() {
               ))}
             </ul>
             <div className="order-products-total">
-              <div className="order-total">
-                <div className="order-total-border">
-                  <p className="subtotal ">
-                    <span>Subtotal</span>
-                    <span>$ {subtotal.toFixed(2)}</span>
-                  </p>
-                  <p className="shipping shipping-line">
-                    <span>Shipping</span>
-                    <span>$ {shipping}</span>
-                  </p>
-                  <p className="tax tax-line">
-                    <span>With discount:</span>
-                    <span>$ {discountedSubtotal.toFixed(2)}</span>
-                  </p>
-                  <p className="order-total-sum total-line">
-                    <span>Order Total</span>
-                    <span>$ {discountedTotalPrice.toFixed(2)}</span>
-                  </p>
-                </div>
-              </div>
+              <OrderTotal
+                subtotal={subtotal}
+                shipping={shipping}
+                discountedSubtotal={discountedSubtotal}
+                discountedTotalPrice={discountedTotalPrice}
+              />
               <OrderButton href={"/orders"} />
             </div>
           </div>
