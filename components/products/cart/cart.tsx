@@ -85,7 +85,7 @@ export default function CartProducts() {
                 </li>
               ))}
             </ul>
-            <div>
+            <div className="order-products-total">
               <div className="order-total">
                 <div className="order-total-border">
                   <p className="subtotal ">
