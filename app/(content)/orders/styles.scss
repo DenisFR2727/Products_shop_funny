@@ -4,8 +4,8 @@
   justify-content: center;
 }
 .confirm_order {
-  width: 100%;
-  margin-top: 20px;
+  max-width: 500px;
+  margin: 20px auto;
 }
 
 @media (max-width: 672px) {
