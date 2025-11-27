@@ -27,7 +27,7 @@
 
 .shipping_title,
 .shipping_name,
-.shipping_last-name,
+.shipping_last_name,
 .shipping_address {
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
 .shipping_name {
   width: 210px;
 }
-.shipping_last-name {
+.shipping_last_name {
   width: 210px;
 }
 .shipping_country {
@@ -59,8 +59,8 @@
   flex-wrap: wrap;
   gap: 20px;
 
-  .shipping_country-item,
-  .shipping_zip-item {
+  .shipping_country_item,
+  .shipping_zip_item {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -73,6 +73,33 @@
       border: 1px solid black;
       padding-left: 10px;
       border-radius: 5px;
+    }
+  }
+}
+@media (max-width: 1010px) {
+  .shipping {
+    display: flex;
+    flex-direction: column;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .title_name {
+        flex-direction: column;
+        width: 100%;
+      }
+      .shipping_title,
+      .shipping_name,
+      .shipping_last_name,
+      .shipping_address {
+        width: 100%;
+
+        input {
+          width: 100%;
+        }
+      }
     }
   }
 }

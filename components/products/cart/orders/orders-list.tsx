@@ -1,3 +1,4 @@
+"use client";
 import {
   amountToPriceProduct,
   removeOrder,
@@ -5,28 +6,30 @@ import {
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { selectOrders } from "@/lib/selectors/cartSelectors";
 
+import styles from "../cart.module.scss";
+
 export default function OrdersList() {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(selectOrders);
 
   return (
-    <ul className="cart-order">
+    <ul className={styles.cart_order}>
       {orders.map((order) => (
         <li key={order.id}>
-          <div className="order-img">
+          <div className={styles.order_img}>
             <img src={order?.thumbnail} alt={order.title} />
           </div>
-          <div className="order-title">
+          <div className={styles.order_title}>
             <h2>{order.title}</h2>
-            <span className="order-title-item">{order.brand}</span>
-            <span className="order-title-item">{order.category}</span>
+            <span className={styles.order_title_item}>{order.brand}</span>
+            <span className={styles.order_title_item}>{order.category}</span>
           </div>
-          <div className="amount-price-block">
-            <div className="order-amount">
+          <div className={styles.amount_price_block}>
+            <div className={styles.order_amount}>
               <h2>Amount</h2>
               <select
                 value={order.amount}
-                className="order-amount-item order-select"
+                className={`${styles.order_amount_item} ${styles.order_select}`}
                 onChange={(e) =>
                   dispatch(
                     amountToPriceProduct({
@@ -46,14 +49,14 @@ export default function OrdersList() {
                 ))}
               </select>
               <button
-                className="order-amount-item order-remove"
+                className={`${styles.order_amount_item} ${styles.order_remove}`}
                 onClick={() => dispatch(removeOrder(order.id))}
               >
                 remove
               </button>
             </div>
-            <div className="order-price">
-              <span className="order-price-item">$ {order.price}</span>
+            <div className={styles.order_price}>
+              <span className={styles.order_price_item}>$ {order.price}</span>
             </div>
           </div>
         </li>

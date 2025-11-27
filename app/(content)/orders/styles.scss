@@ -1,0 +1,25 @@
+.shipping_product-info {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.confirm_order {
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media (max-width: 672px) {
+  .shipping_product-info {
+    flex-direction: column;
+
+    .order_total-product {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+  .confirm_order {
+    width: 100%;
+    margin-top: 20px;
+  }
+}

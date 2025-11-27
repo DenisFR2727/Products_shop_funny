@@ -1,51 +1,33 @@
 "use client";
 
-import {
-  amountToPriceProduct,
-  removeOrder,
-} from "@/lib/features/products/cartSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/hooks";
 
-import "./cart.scss";
-import {
-  selectDiscountedSubtotal,
-  selectDiscountedTotalPrice,
-  selectOrders,
-  selectShipping,
-  selectSubtotal,
-} from "@/lib/selectors/cartSelectors";
+import { selectOrders } from "@/lib/selectors/cartSelectors";
 import OrderButton from "./orders/order-button";
 import OrderTotal from "./orders/order-total";
 import OrdersList from "./orders/orders-list";
 import Link from "next/link";
 
+import styles from "./cart.module.scss";
+
 export default function CartProducts() {
   const orders = useAppSelector(selectOrders);
-  const shipping = useAppSelector(selectShipping);
-  const subtotal = useAppSelector(selectSubtotal);
-  const discountedSubtotal = useAppSelector(selectDiscountedSubtotal);
-  const discountedTotalPrice = useAppSelector(selectDiscountedTotalPrice);
 
   return (
     <>
       {orders.length === 0 ? (
-        <div className="cart">
+        <div className={styles.cart}>
           <h1>You Cart Is Empty</h1>
-          <span className="cart-line"></span>
+          <span className={styles.cart_line}></span>
         </div>
       ) : (
-        <div className="cart">
+        <div className={styles.cart}>
           <h1>Shopping Cart</h1>
-          <span className="cart-line"></span>
-          <div className="cart-items-block">
+          <span className={styles.cart_line}></span>
+          <div className={styles.cart_items_block}>
             <OrdersList />
-            <div className="order-products-total">
-              <OrderTotal
-                subtotal={subtotal}
-                shipping={shipping}
-                discountedSubtotal={discountedSubtotal}
-                discountedTotalPrice={discountedTotalPrice}
-              />
+            <div className={styles.order_products_total}>
+              <OrderTotal />
               <Link href={"/orders"}>
                 <OrderButton>Orders products</OrderButton>
               </Link>
