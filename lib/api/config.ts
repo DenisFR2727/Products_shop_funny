@@ -4,8 +4,12 @@ export const API_UNSPLASH_URL = "https://api.unsplash.com/photos";
 export const NEXT_PUBLIC_UNSPLASH_ACCESS_KEY =
   process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
 
+export const API_ADDRESS_CREATE =
+  "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
+
 export const API_ENDPOINTS = {
   PRODUCTS: "/products",
+  ADDRESS: "/address",
 } as const;
 
 // Rate limiting constants
