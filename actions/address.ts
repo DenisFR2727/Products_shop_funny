@@ -11,14 +11,14 @@ export default async function addressCreate(prevState: any, formData: any) {
   console.log(`${title}`);
   let errors = [];
 
-  //   await postAddressOrder({
-  //     title,
-  //     name,
-  //     last_name,
-  //     address,
-  //     country,
-  //     code,
-  //   });
+  await postAddressOrder({
+    title,
+    name,
+    last_name,
+    address,
+    country,
+    code,
+  });
 
   redirect("/orders");
 }
