@@ -1,24 +1,37 @@
+"use server";
 import { postAddressOrder } from "@/lib/api/order-address";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import errorsForm from "./errors";
 
-export default async function addressCreate(prevState: any, formData: any) {
-  const title = formData.get("title");
-  const name = formData.get("name");
-  const last_name = formData.get("last_name");
-  const address = formData.get("address");
-  const country = formData.get("country");
-  const code = formData.get("code");
-  console.log(`${title}`);
-  let errors = [];
+export interface AddressDetails {
+  title: string;
+  name: string;
+  lastName: string;
+  address: string;
+  country: string;
+  code: number;
+}
 
-  await postAddressOrder({
-    title,
-    name,
-    last_name,
-    address,
-    country,
-    code,
-  });
+export default async function addressCreate(
+  prevState: any,
+  formData: FormData
+) {
+  const data: AddressDetails = {
+    title: formData.get("title") as string,
+    name: formData.get("name") as string,
+    lastName: formData.get("lastName") as string,
+    address: formData.get("address") as string,
+    country: formData.get("country") as string,
+    code: Number(formData.get("code")),
+  };
+  const errors = errorsForm(data);
+  if (errors) {
+    return errors;
+  }
 
-  redirect("/orders");
+  await postAddressOrder(data);
+
+  revalidatePath("/", "layout");
+  redirect("/products");
 }

@@ -3,6 +3,7 @@ import { useActionState } from "react";
 import styles from "./shipping-details.module.scss";
 import OrderButton from "./order-button";
 import addressCreate from "@/actions/address";
+import SubmitForm from "./submit-form";
 
 export default function ShippingForm() {
   const [state, formAction] = useActionState(addressCreate, null);
@@ -15,19 +16,22 @@ export default function ShippingForm() {
           <div className={styles.shipping_title}>
             <label htmlFor="title">Title</label>
             <input id="title" type="text" placeholder="Mr." name="title" />
+            <p className={styles.error}>{state?.errors.title}</p>
           </div>
           <div className={styles.shipping_name}>
             <label htmlFor="name">First Name</label>
             <input id="name" type="text" placeholder="Name" name="name" />
+            <p className={styles.error}>{state?.errors.name}</p>
           </div>
           <div className={styles.shipping_last_name}>
             <label htmlFor="last_name">Last Name</label>
             <input
-              id="last_name"
+              id="lastName"
               type="text"
               placeholder="Last Name"
-              name="last_name"
+              name="lastName"
             />
+            <p className={styles.error}>{state?.errors.lastName}</p>
           </div>
         </div>
         <div className={styles.shipping_address}>
@@ -38,6 +42,7 @@ export default function ShippingForm() {
             placeholder="address"
             name="address"
           />
+          <p className={styles.error}>{state?.errors.address}</p>
         </div>
         <div className={styles.shipping_country}>
           <div className={styles.shipping_country_item}>
@@ -48,14 +53,16 @@ export default function ShippingForm() {
               placeholder="country"
               name="country"
             />
+            <p className={styles.error}>{state?.errors.country}</p>
           </div>
           <div className={styles.shipping_zip_item}>
             <label htmlFor="address">Zip Code</label>
             <input id="code" type="text" placeholder="code" name="code" />
+            <p className={styles.error}>{state?.errors.code}</p>
           </div>
         </div>
         <OrderButton>
-          <button type="submit">Confirm order</button>
+          <SubmitForm />
         </OrderButton>
       </form>
     </div>

@@ -124,4 +124,15 @@
       }
     }
   }
+  .shipping_title {
+    max-width: 100%;
+  }
+}
+.confirm {
+  cursor: pointer;
+  user-select: none;
+}
+.error {
+  color: red;
+  font-weight: 600;
 }
