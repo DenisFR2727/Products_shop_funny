@@ -22,13 +22,25 @@
       flex-wrap: wrap;
       padding-top: 20px;
     }
+    .shipping_email {
+      input {
+        width: 250px;
+      }
+    }
+    .shipping_phone {
+      input {
+        width: 250px;
+      }
+    }
   }
 }
 
 .shipping_title,
 .shipping_name,
 .shipping_last_name,
-.shipping_address {
+.shipping_address,
+.shipping_email,
+.shipping_phone {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -41,6 +53,17 @@
     border: 1px solid black;
     padding-left: 10px;
     border-radius: 5px;
+  }
+}
+.shipping_contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .shipping_contact_information {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
   }
 }
 
@@ -93,12 +116,17 @@
       .shipping_title,
       .shipping_name,
       .shipping_last_name,
-      .shipping_address {
+      .shipping_address,
+      .shipping_email,
+      .shipping_phone {
         width: 100%;
 
         input {
           width: 100%;
         }
+      }
+      .shipping_contact_information {
+        flex-direction: column;
       }
     }
   }

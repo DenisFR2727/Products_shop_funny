@@ -92,6 +92,35 @@ export default function ShippingForm() {
             <p className={styles.error}>{clientErrors.code}</p>
           </div>
         </div>
+        <div className={styles.shipping_contacts}>
+          <h2>Contact information</h2>
+          <div className={styles.shipping_contact_information}>
+            <div className={styles.shipping_email}>
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="text"
+                placeholder="email"
+                name="email"
+                value={clientValue.email}
+                onChange={handleChangeError}
+              />
+              <p className={styles.error}>{clientErrors.email}</p>
+            </div>
+            <div className={styles.shipping_phone}>
+              <label htmlFor="phone">Phone</label>
+              <input
+                id="phone"
+                type="text"
+                placeholder="phone"
+                name="phone"
+                value={clientValue.phone}
+                onChange={handleChangeError}
+              />
+              <p className={styles.error}>{clientErrors.phone}</p>
+            </div>
+          </div>
+        </div>
         <OrderButton>
           <SubmitForm />
         </OrderButton>

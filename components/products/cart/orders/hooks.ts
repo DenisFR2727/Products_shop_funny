@@ -1,3 +1,4 @@
+import { IProducts } from "@/lib/types";
 import { useEffect, useState } from "react";
 
 interface ValueClientInputs {
@@ -7,6 +8,8 @@ interface ValueClientInputs {
   address: string;
   country: string;
   code: string;
+  email?: string;
+  phone?: string;
 }
 
 export default function useShippingDetailsForm(state: any) {
