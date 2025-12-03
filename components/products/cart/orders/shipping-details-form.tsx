@@ -6,15 +6,6 @@ import addressCreate from "@/actions/address";
 import SubmitForm from "./submit-form";
 import useShippingDetailsForm from "./hooks";
 
-interface ValueClientInputs {
-  title: string;
-  name: string;
-  lastName: string;
-  address: string;
-  country: string;
-  code: string;
-}
-
 export default function ShippingForm() {
   const [state, formAction] = useActionState(addressCreate, null);
   const { clientValue, clientErrors, handleChangeError } =
