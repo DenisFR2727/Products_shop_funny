@@ -7,11 +7,9 @@ export default function OrderButton({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <div className="order_button-cart">
-        <SlBasketLoaded className="order_button-icon" />
-        {children}
-      </div>
+    <div className="order_button-cart">
+      <SlBasketLoaded className="order_button-icon" />
+      {children}
     </div>
   );
 }

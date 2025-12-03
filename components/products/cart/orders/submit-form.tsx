@@ -8,7 +8,7 @@ export default function SubmitForm() {
     return <p>Loading address...</p>;
   }
   return (
-    <button type="submit" className={styles.confirm} disabled={status.pending}>
+    <button className={styles.confirm} disabled={status.pending}>
       Confirm order
     </button>
   );
