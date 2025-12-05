@@ -2,20 +2,14 @@
 import { postAddressOrder } from "@/lib/api/order-address";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { CartProduct } from "@/lib/features/products/cartSlice";
+import { AddressDetails } from "./types";
 import errorsForm from "./errors";
 
-export interface AddressDetails {
-  title: string;
-  name: string;
-  lastName: string;
-  address: string;
-  country: string;
-  code: number;
-}
-
 export default async function addressCreate(
-  prevState: any,
-  formData: FormData
+  _prevState: any,
+  formData: FormData,
+  orders: CartProduct[]
 ) {
   const data: AddressDetails = {
     title: formData.get("title") as string,
@@ -23,14 +17,17 @@ export default async function addressCreate(
     lastName: formData.get("lastName") as string,
     address: formData.get("address") as string,
     country: formData.get("country") as string,
-    code: Number(formData.get("code")),
+    code: formData.get("code") as string,
+    email: formData.get("email") as string,
+    phone: formData.get("phone") as string,
   };
+
   const errors = errorsForm(data);
   if (errors) {
     return errors;
   }
 
-  await postAddressOrder(data);
+  await postAddressOrder({ ...data, orders });
 
   revalidatePath("/", "layout");
   redirect("/products");

@@ -1,4 +1,4 @@
-import { IProducts } from "@/lib/types";
+import { AddressDetails } from "@/actions/types";
 import { useEffect, useState } from "react";
 
 interface ValueClientInputs {
@@ -10,9 +10,12 @@ interface ValueClientInputs {
   code: string;
   email?: string;
   phone?: string;
+  phonePrefix?: string;
 }
+type ErrorAddress = Partial<Record<keyof ValueClientInputs, string>>;
+type State = AddressDetails | null;
 
-export default function useShippingDetailsForm(state: any) {
+export default function useShippingDetailsForm(state: State) {
   const [clientValue, setClientValue] = useState<ValueClientInputs>({
     title: "",
     name: "",
@@ -20,15 +23,11 @@ export default function useShippingDetailsForm(state: any) {
     address: "",
     country: "",
     code: "",
+    email: "",
+    phone: "",
+    phonePrefix: "",
   });
-  const [clientErrors, setClientErrors] = useState<ValueClientInputs>({
-    title: "",
-    name: "",
-    lastName: "",
-    address: "",
-    country: "",
-    code: "",
-  });
+  const [clientErrors, setClientErrors] = useState<ErrorAddress>({});
 
   useEffect(() => {
     if (state?.errors) {
@@ -45,5 +44,18 @@ export default function useShippingDetailsForm(state: any) {
       setClientErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
-  return { clientValue, clientErrors, handleChangeError };
+  const changePrefixCountry = (value: string) => {
+    setClientValue((prevPrefix) => ({
+      ...prevPrefix,
+      phonePrefix: value,
+    }));
+  };
+
+  return {
+    clientValue,
+    clientErrors,
+    handleChangeError,
+    changePrefixCountry,
+    setClientValue,
+  };
 }

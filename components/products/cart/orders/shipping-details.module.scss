@@ -131,6 +131,16 @@
     }
   }
 }
+.select {
+  width: 118px;
+  border-bottom: 1px solid grey;
+  border-radius: 5px;
+}
+.selectContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 @media (max-width: 592px) {
   form {
     .shipping_country {

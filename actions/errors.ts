@@ -1,4 +1,4 @@
-import { AddressDetails } from "./address";
+import { AddressDetails } from "./types";
 
 export default function errorsForm(data: AddressDetails) {
   let errors = {
@@ -8,6 +8,8 @@ export default function errorsForm(data: AddressDetails) {
     address: "",
     country: "",
     code: "",
+    email: "",
+    phone: "",
   };
 
   if (!data.title || data.title.trim().length === 0) {
@@ -44,6 +46,19 @@ export default function errorsForm(data: AddressDetails) {
   if (!/^\d+$/.test(String(data.code))) {
     errors.code = "Code must contain only digits";
   }
+
+  if (!data.email || data.email.trim().length === 0) {
+    errors.email = "Email is required";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/g.test(data.email.trim())) {
+    errors.email = "Email not valid!";
+  }
+
+  if (!data.phone || data.phone.trim().length === 0) {
+    errors.phone = "Phone is required";
+  } else if (!/^\+\d{7,15}$/.test(data.phone.trim())) {
+    errors.phone = "Phone not valid!";
+  }
+
   const hasErrors = Object.values(errors).some((err) => err !== "");
 
   return hasErrors ? { errors } : null;
