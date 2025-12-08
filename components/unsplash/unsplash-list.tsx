@@ -49,7 +49,6 @@ export default function UnsplashList() {
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = "/fallback.jpg";
                 }}
-                priority
               />
               <div
                 className={isMobile ? "layout_hover-image-mobile" : "overlay"}
