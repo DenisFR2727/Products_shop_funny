@@ -13,9 +13,6 @@ export default function OrderPage() {
           <OrderTotal />
         </div>
       </div>
-      {/* <div className="confirm_order">
-        <div></div>
-      </div> */}
     </div>
   );
 }
