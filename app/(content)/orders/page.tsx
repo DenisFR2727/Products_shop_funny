@@ -1,4 +1,3 @@
-import OrderButton from "@/components/products/cart/orders/order-button";
 import OrderTotal from "@/components/products/cart/orders/order-total";
 import ShippingForm from "@/components/products/cart/orders/shipping-details-form";
 
