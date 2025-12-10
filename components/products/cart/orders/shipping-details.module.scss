@@ -174,3 +174,12 @@
   color: red;
   font-weight: 600;
 }
+.loading {
+  display: flex;
+  align-items: center;
+}
+.diamond {
+  width: 30px;
+  height: 30px;
+  padding-left: 5px;
+}
