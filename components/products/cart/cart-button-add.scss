@@ -21,3 +21,14 @@
   cursor: not-allowed;
   pointer-events: none;
 }
+
+.light_theme .cart-item-add {
+  background: #006fee !important;
+  border-color: #f5a524;
+  color: #fff !important;
+}
+.dark_theme .cart-item-add {
+  background: #111;
+  border-color: #f5a524 !important;
+  color: #f5a524;
+}
