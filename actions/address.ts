@@ -11,7 +11,10 @@ export default async function addressCreate(
   formData: FormData,
   orders: CartProduct[]
 ) {
+  const orderId = Date.now() + Math.floor(Math.random() * 10000);
+
   const data: AddressDetails = {
+    orderId: String(orderId),
     title: formData.get("title") as string,
     name: formData.get("name") as string,
     lastName: formData.get("lastName") as string,
@@ -30,5 +33,5 @@ export default async function addressCreate(
   await postAddressOrder({ ...data, orders });
 
   revalidatePath("/", "layout");
-  redirect("/products");
+  redirect(`/thanks/${orderId}`);
 }

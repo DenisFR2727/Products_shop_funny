@@ -1,4 +1,5 @@
 export interface AddressDetails {
+  orderId: string;
   title: string;
   name: string;
   lastName: string;

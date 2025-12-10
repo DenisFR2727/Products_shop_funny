@@ -1,0 +1,21 @@
+.thanks_page {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  text-align: center;
+
+  h2 {
+    font-size: 22px;
+  }
+  .thanks_order {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .thanks_btn {
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #f5a524;
+  }
+}
