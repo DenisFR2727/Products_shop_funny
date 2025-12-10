@@ -18,13 +18,29 @@ export function ThemeContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState("light_theme");
-  const [themeFilterBtn, setThemeFilterBtn] = useState("light_theme-btn");
+  const [theme, setTheme] = useState<string>("light_theme");
+  const [themeFilterBtn, setThemeFilterBtn] =
+    useState<string>("light_theme-btn");
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      const parsedTheme = JSON.parse(storedTheme);
+      setTheme(parsedTheme);
+      setThemeFilterBtn(
+        parsedTheme === "light_theme" ? "light_theme-btn" : "dark_theme-btn"
+      );
+    }
+  }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme: string) =>
-      prevTheme === "light_theme" ? "dark_theme" : "light_theme"
-    );
+    setTheme((prevTheme: string) => {
+      const newTheme =
+        prevTheme === "light_theme" ? "dark_theme" : "light_theme";
+      localStorage.setItem("theme", JSON.stringify(newTheme));
+      return newTheme;
+    });
+
     setThemeFilterBtn((prevTheme) =>
       prevTheme === "light_theme-btn" ? "dark_theme-btn" : "light_theme-btn"
     );
