@@ -15,10 +15,10 @@ import { log } from "@/lib/log";
 import ProgressHandler from "./modal/progress/ProgressHandler";
 
 const ProductsServices = memo(function ({
-  products,
+  products: allProducts,
 }: Omit<ProductListProps, "listRef">) {
   log("<ProductsServices /> rendered", 1);
-  const { filteredProducts } = useFilterProducts(products);
+  const { filteredProducts } = useFilterProducts(allProducts);
   const { theme } = useContext(ThemeContext);
 
   const page = useAppSelector(pageSelector);
@@ -32,7 +32,7 @@ const ProductsServices = memo(function ({
   return (
     <div ref={listRef} className={`products_list ${theme}`}>
       <ProgressHandler />
-      <FilterPanel products={products} />
+      <FilterPanel products={allProducts} />
       <DinamicPanel ref={listRef} lengItems={filteredProducts} />
       <PaginationList products={filteredProducts} />
     </div>
