@@ -5,10 +5,14 @@ import { ProgressModalProps } from "./types";
 
 import "./progress.scss";
 
-export default function ProgressModal({ open, children }: ProgressModalProps) {
+export default function ProgressModal({
+  open,
+  children,
+  overlayId,
+}: ProgressModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const overlay = document.getElementById("dialog-overlay");
+  const overlay = document.getElementById(overlayId);
 
   if (!overlay) return null;
 

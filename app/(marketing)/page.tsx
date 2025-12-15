@@ -6,6 +6,8 @@ import { getProducts } from "@/lib/api/api";
 import SlideProducts from "@/components/products/slide/slide-products";
 
 import "./marketing.scss";
+import ProgressModal from "@/components/products/modal/progress/modal-progress";
+import ProgressHandler from "@/components/products/modal/progress/ProgressHandler";
 
 export const metadata: Metadata = {
   title: "Welcome in my shopping site",
@@ -26,6 +28,8 @@ export default async function HomePage() {
   }
   return (
     <div id="home">
+      <div id="dialog-overlay"></div>
+      <ProgressHandler />
       <div className="home_layout">
         <div className="home_marketing">
           <SlideProducts products={data} />

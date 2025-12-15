@@ -18,7 +18,7 @@ export default function ProgressHandler() {
   if (!isShowProgress) return null;
 
   return (
-    <ProgressModal open={isShowProgress}>
+    <ProgressModal open={isShowProgress} overlayId="dialog-overlay">
       <DeleteComfirmationProgress onCancel={onCancelProgress} />
     </ProgressModal>
   );
