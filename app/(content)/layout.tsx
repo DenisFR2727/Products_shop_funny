@@ -19,24 +19,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body>
-        <ThemeContextProvider>
-          <Providers>
-            <div id="header">
-              <HeaderMain />
-            </div>
-            <div id="overlay-header"></div>
-            <div id="page">
-              {children}
-              <TelegramChatWidget />
-            </div>
-            <div id="dialog-overlay"></div>
-          </Providers>
-        </ThemeContextProvider>
-        <Footer />
-        <SpeedInsights />
-      </body>
-    </html>
+    <section>
+      <ThemeContextProvider>
+        <Providers>
+          <div id="header">
+            <HeaderMain />
+          </div>
+          <div id="overlay-header"></div>
+          <div id="page">
+            {children}
+            <TelegramChatWidget />
+          </div>
+          <div id="dialog-overlay"></div>
+        </Providers>
+      </ThemeContextProvider>
+      <Footer />
+      <SpeedInsights />
+    </section>
   );
 }

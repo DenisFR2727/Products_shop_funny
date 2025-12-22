@@ -31,7 +31,7 @@ export function ThemeContextProvider({
         parsedTheme === "light_theme" ? "light_theme-btn" : "dark_theme-btn"
       );
     }
-  }, [theme]);
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prevTheme: string) => {

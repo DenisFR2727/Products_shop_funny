@@ -6,7 +6,6 @@ import { getProducts } from "@/lib/api/api";
 import SlideProducts from "@/components/products/slide/slide-products";
 
 import "./marketing.scss";
-import ProgressModal from "@/components/products/modal/progress/modal-progress";
 import ProgressHandler from "@/components/products/modal/progress/ProgressHandler";
 
 export const metadata: Metadata = {

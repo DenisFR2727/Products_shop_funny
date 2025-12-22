@@ -116,17 +116,17 @@ export default function HeaderMain() {
             </span>
           </NavbarItem>
           <NavbarItem className="lg:flex login-nav">
-            <Link href="#">
+            <Link href="/login">
               <span className="header_login-nav">Login</span>
             </Link>
           </NavbarItem>
           <NavbarItem className="sign-up-nav">
             <Button
               as={Link}
-              color="primary"
               href="#"
+              color="primary"
               variant="flat"
-              onPaste={() => setIsMenuOpen(false)}
+              onClick={() => setIsMenuOpen(false)}
             >
               Sign Up
             </Button>
