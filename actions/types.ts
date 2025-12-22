@@ -11,4 +11,17 @@ export interface AddressDetails {
   phonePrefix?: string;
   errors?: AddressErrors;
 }
-export type AddressErrors = Partial<Record<keyof AddressDetails, string>>;
+export interface UserFields {
+  userId: string;
+  username: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPass: string;
+}
+// export type AddressErrors = Partial<Record<keyof AddressDetails, string>>;
+export type FormErrors<T> = Partial<Record<keyof T, string>>;
+
+// AddressErrors без рекурсії
+export type AddressErrors = FormErrors<AddressDetails>;
+export type UserErrors = FormErrors<UserFields>;

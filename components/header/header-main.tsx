@@ -123,7 +123,7 @@ export default function HeaderMain() {
           <NavbarItem className="sign-up-nav">
             <Button
               as={Link}
-              href="#"
+              href="/signup"
               color="primary"
               variant="flat"
               onClick={() => setIsMenuOpen(false)}

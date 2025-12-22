@@ -10,6 +10,9 @@ export default function errorsForm(data: AddressDetails) {
     code: "",
     email: "",
     phone: "",
+    username: "",
+    password: "",
+    confirmPass: "",
   };
 
   if (!data.title || data.title.trim().length === 0) {
@@ -57,6 +60,11 @@ export default function errorsForm(data: AddressDetails) {
     errors.phone = "Phone is required";
   } else if (!/^\+\d{7,15}$/.test(data.phone.trim())) {
     errors.phone = "Phone not valid!";
+  }
+
+  //   Sign Up Form Errors
+
+  if (!data) {
   }
 
   const hasErrors = Object.values(errors).some((err) => err !== "");

@@ -3,7 +3,7 @@ import { postAddressOrder } from "@/lib/api/order-address";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { CartProduct } from "@/lib/features/products/cartSlice";
-import { AddressDetails } from "./types";
+import { AddressDetails, AddressErrors } from "./types";
 import errorsForm from "./errors";
 
 export default async function addressCreate(
@@ -13,7 +13,7 @@ export default async function addressCreate(
 ) {
   const orderId = Date.now() + Math.floor(Math.random() * 10000);
 
-  const data: AddressDetails = {
+  const data = {
     orderId: String(orderId),
     title: formData.get("title") as string,
     name: formData.get("name") as string,
