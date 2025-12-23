@@ -2,8 +2,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import errorsForm from "./errors";
 import PostUserCreate from "@/lib/api/auth";
+import errorsLoginForm from "./errors-login";
 
 export default async function userCreate(_prevState: any, formData: FormData) {
   const userId = Date.now() + Math.floor(Math.random() * 10000);
@@ -17,7 +17,7 @@ export default async function userCreate(_prevState: any, formData: FormData) {
     confirmPass: formData.get("confirmPass") as string,
   };
 
-  const errors = errorsForm(data);
+  const errors = errorsLoginForm(data);
 
   if (errors) {
     return errors;

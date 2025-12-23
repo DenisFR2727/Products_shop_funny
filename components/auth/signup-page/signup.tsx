@@ -1,7 +1,8 @@
 "use client";
 
 import userCreate from "@/actions/signup";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import styles from "../auth.module.scss";
 
 export default function SignUp() {
   const [state, formAction] = useActionState(userCreate, null);
@@ -19,6 +20,7 @@ export default function SignUp() {
               name="username"
               placeholder="User name"
             />
+            {<p className={styles.error}>{state?.username}</p>}
           </div>
           <div className="sign__email">
             <input
@@ -27,6 +29,7 @@ export default function SignUp() {
               name="email"
               placeholder="Email"
             />
+            {<p className={styles.error}>{state?.email}</p>}
           </div>
           <div className="sign__phone">
             <input
@@ -35,6 +38,7 @@ export default function SignUp() {
               name="phone"
               placeholder="Phone"
             />
+            {<p className={styles.error}>{state?.phone}</p>}
           </div>
           <div className="sign__password">
             <input
@@ -43,6 +47,7 @@ export default function SignUp() {
               name="password"
               placeholder="Password"
             />
+            {<p className={styles.error}>{state?.password}</p>}
           </div>
           <div className="sign__confirm-pass">
             <input
@@ -51,6 +56,7 @@ export default function SignUp() {
               name="confirmPass"
               placeholder="Confirm password"
             />
+            {<p className={styles.error}>{state?.confirmPass}</p>}
           </div>
         </div>
         <div>

@@ -3,7 +3,6 @@ import { postAddressOrder } from "@/lib/api/order-address";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { CartProduct } from "@/lib/features/products/cartSlice";
-import { AddressDetails, AddressErrors } from "./types";
 import errorsForm from "./errors";
 
 export default async function addressCreate(

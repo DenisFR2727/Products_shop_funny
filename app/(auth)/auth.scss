@@ -62,6 +62,8 @@ $hover-border-color: #007c89;
   .sign__confirm-pass {
     position: relative;
     display: flex;
+    flex-direction: column;
+    gap: 5px;
 
     .email,
     .password,

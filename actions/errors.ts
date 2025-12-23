@@ -62,11 +62,6 @@ export default function errorsForm(data: AddressDetails) {
     errors.phone = "Phone not valid!";
   }
 
-  //   Sign Up Form Errors
-
-  if (!data) {
-  }
-
   const hasErrors = Object.values(errors).some((err) => err !== "");
 
   return hasErrors ? { errors } : null;
