@@ -4,9 +4,15 @@ import { redirect } from "next/navigation";
 
 import PostUserCreate from "@/lib/api/auth";
 import errorsLoginForm from "./errors-login";
+import { hashUserPassword } from "@/lib/hash";
 
 export default async function userCreate(_prevState: any, formData: FormData) {
   const userId = Date.now() + Math.floor(Math.random() * 10000);
+
+  const password = formData.get("password");
+  if (!password || typeof password !== "string") {
+    throw new Error("Password is required");
+  }
 
   const data = {
     userId: String(userId),
@@ -19,11 +25,18 @@ export default async function userCreate(_prevState: any, formData: FormData) {
 
   const errors = errorsLoginForm(data);
 
+  const hashedPass = await hashUserPassword(password);
+
   if (errors) {
     return errors;
   }
 
-  await PostUserCreate(data);
+  const dataToSave = {
+    ...data,
+    password: hashedPass,
+    confirmPass: "",
+  };
+  await PostUserCreate(dataToSave);
 
   revalidatePath("/", "layout");
   redirect(`/products`);
