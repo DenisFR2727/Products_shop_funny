@@ -44,6 +44,7 @@ export default function Login() {
         <h2 id="login__h2">Login</h2>
         <div className="login__inputs">
           <Input
+            styles="login__email"
             className="email"
             icon={<FontAwesomeIcon className="user__icon" icon={faUser} />}
             type="email"
@@ -55,28 +56,8 @@ export default function Login() {
             onChange={(e: any) => handleChangeInput("email", e)}
             error={isEmailInValid && "Please enter a valid email address!"}
           />
-
-          {/* <div className="login__email">
-            <span>
-              <FontAwesomeIcon className="user__icon" icon={faUser} />
-            </span>
-            <input
-              className="email"
-              type="email"
-              name="email"
-              placeholder="Username"
-              required
-              value={enteredValue.email}
-              onBlur={() => handleInputBlur("email")}
-              onChange={(e) => handleChangeInput("email", e)}
-            />
-          </div>
-          <div>
-            {isEmailInValid && (
-              <p className="error-text">Please enter a valid email address!</p>
-            )}
-          </div> */}
           <Input
+            styles="login__password"
             className="password"
             icon={<FontAwesomeIcon className="lock__icon" icon={faLock} />}
             type="password"
@@ -88,22 +69,6 @@ export default function Login() {
             onChange={(e: any) => handleChangeInput("password", e)}
             error={isPasswordInValid && "Please to mutch password!"}
           />
-          {/* <div className="login__password">
-            <span>
-              <FontAwesomeIcon className="lock__icon" icon={faLock} />
-            </span>
-            <input
-              className="password"
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              value={enteredValue.password}
-              onBlur={() => handleInputBlur("password")}
-              onChange={(e) => handleChangeInput("password", e)}
-            />
-          </div>
-          <div>{isPasswordInValid && <p>Please to mutch password!</p>}</div> */}
         </div>
         <div>
           <button className="login__btn">Login</button>
