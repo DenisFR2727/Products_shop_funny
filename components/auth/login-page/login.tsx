@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import Input from "../input/input";
 
 export default function Login() {
   const [enteredValue, setEnteredValue] = useState({
@@ -25,6 +26,10 @@ export default function Login() {
       ...prevValue,
       [identifier]: e.target.value,
     }));
+    setDidEdit((prevValue) => ({
+      ...prevValue,
+      [identifier]: false,
+    }));
   }
   function handleInputBlur(identifier: string) {
     setDidEdit((prevValue) => ({
@@ -38,7 +43,20 @@ export default function Login() {
       <form className="login__form">
         <h2 id="login__h2">Login</h2>
         <div className="login__inputs">
-          <div className="login__email">
+          <Input
+            className="email"
+            icon={<FontAwesomeIcon className="user__icon" icon={faUser} />}
+            type="email"
+            name="email"
+            placeholder="Username"
+            required
+            value={enteredValue.email}
+            onBlur={() => handleInputBlur("email")}
+            onChange={(e: any) => handleChangeInput("email", e)}
+            error={isEmailInValid && "Please enter a valid email address!"}
+          />
+
+          {/* <div className="login__email">
             <span>
               <FontAwesomeIcon className="user__icon" icon={faUser} />
             </span>
@@ -57,8 +75,20 @@ export default function Login() {
             {isEmailInValid && (
               <p className="error-text">Please enter a valid email address!</p>
             )}
-          </div>
-          <div className="login__password">
+          </div> */}
+          <Input
+            className="password"
+            icon={<FontAwesomeIcon className="lock__icon" icon={faLock} />}
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            value={enteredValue.password}
+            onBlur={() => handleInputBlur("password")}
+            onChange={(e: any) => handleChangeInput("password", e)}
+            error={isPasswordInValid && "Please to mutch password!"}
+          />
+          {/* <div className="login__password">
             <span>
               <FontAwesomeIcon className="lock__icon" icon={faLock} />
             </span>
@@ -73,7 +103,7 @@ export default function Login() {
               onChange={(e) => handleChangeInput("password", e)}
             />
           </div>
-          <div>{isPasswordInValid && <p>Please to mutch password!</p>}</div>
+          <div>{isPasswordInValid && <p>Please to mutch password!</p>}</div> */}
         </div>
         <div>
           <button className="login__btn">Login</button>
