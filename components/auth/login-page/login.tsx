@@ -6,9 +6,10 @@ import useInput from "../hooks/useInput";
 import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
 import { useActionState } from "react";
 import userCreate from "@/actions/signup";
+import isLogin from "@/actions/login";
 
 export default function Login() {
-  const [state, formAction] = useActionState({}, 0);
+  const [state, formAction] = useActionState(isLogin, null);
   const {
     value: emailValue,
     handleChangeInput: handleEmailChange,
