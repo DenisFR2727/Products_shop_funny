@@ -3,46 +3,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import Input from "../input/input";
 import useInput from "../hooks/useInput";
+import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
+import { useActionState } from "react";
+import userCreate from "@/actions/signup";
 
 export default function Login() {
+  const [state, formAction] = useActionState({}, 0);
   const {
     value: emailValue,
     handleChangeInput: handleEmailChange,
     handleInputBlur: handleEmailBlur,
-  } = useInput("");
+    hasError: emailHasError,
+  } = useInput("", (value: string) => isEmail(value) && isNotEmpty(value));
   const {
     value: passwordValue,
     handleChangeInput: handlePasswordChange,
     handleInputBlur: handlePasswordBlur,
-  } = useInput("");
+    hasError: passwordHasError,
+  } = useInput(
+    "",
+    (value: string) => isNotEmpty(value) && hasMinLength(value, 6)
+  );
 
-  const isEmailInValid = didEdit.email && !enteredValue.email.includes("@");
-  const isPasswordInValid =
-    didEdit.password && enteredValue.password.trim().length < 6;
-
-  //   function handleChangeInput(
-  //     identifier: string,
-  //     e: React.ChangeEvent<HTMLInputElement>
-  //   ) {
-  //     setEnteredValue((prevValue) => ({
-  //       ...prevValue,
-  //       [identifier]: e.target.value,
-  //     }));
-  //     setDidEdit((prevValue) => ({
-  //       ...prevValue,
-  //       [identifier]: false,
-  //     }));
-  //   }
-  //   function handleInputBlur(identifier: string) {
-  //     setDidEdit((prevValue) => ({
-  //       ...prevValue,
-  //       [identifier]: true,
-  //     }));
-  //   }
   return (
     <div className="login__center">
       <h2 className="login__logo">LOGO HERE</h2>
-      <form className="login__form">
+      <form className="login__form" action={formAction}>
         <h2 id="login__h2">Login</h2>
         <div className="login__inputs">
           <Input
@@ -56,7 +42,7 @@ export default function Login() {
             value={emailValue}
             onBlur={handleEmailBlur}
             onChange={handleEmailChange}
-            error={isEmailInValid && "Please enter a valid email address!"}
+            error={emailHasError && "Please enter a valid email address!"}
           />
           <Input
             styles="login__password"
@@ -69,7 +55,7 @@ export default function Login() {
             value={passwordValue}
             onBlur={handlePasswordBlur}
             onChange={handlePasswordChange}
-            error={isPasswordInValid && "Please to mutch password!"}
+            error={passwordHasError && "Please to mutch password!"}
           />
         </div>
         <div>
