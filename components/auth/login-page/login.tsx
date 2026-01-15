@@ -4,11 +4,12 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import Input from "../input/input";
 import useInput from "../hooks/useInput";
 import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
-import { useActionState } from "react";
-import userCreate from "@/actions/signup";
-import isLogin from "@/actions/login";
+import { useActionState, useEffect } from "react";
+import { isLogin } from "@/actions/login";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [state, formAction] = useActionState(isLogin, null);
   const {
     value: emailValue,
@@ -25,6 +26,13 @@ export default function Login() {
     "",
     (value: string) => isNotEmpty(value) && hasMinLength(value, 6)
   );
+
+  // // 👉 якщо логін успішний — редірект
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/dashboard");
+    }
+  }, [state, router]);
 
   return (
     <div className="login__center">
@@ -56,7 +64,10 @@ export default function Login() {
             value={passwordValue}
             onBlur={handlePasswordBlur}
             onChange={handlePasswordChange}
-            error={passwordHasError && "Please to mutch password!"}
+            error={
+              passwordHasError &&
+              "The correct number of digits in the password is required!"
+            }
           />
         </div>
         <div>
