@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { authorizeUser } from "@/lib/auth/authorize";
+import { getEmailUser } from "@/lib/api/auth";
+import { verifyPassword } from "@/components/auth/util/verify-password";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -15,7 +16,33 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        return authorizeUser(credentials.email, credentials.password);
+        try {
+          const users = await getEmailUser(credentials.email);
+
+          if (!users || users.length === 0) {
+            return null;
+          }
+
+          const user = users[0];
+
+          const isValid = await verifyPassword(
+            credentials.password,
+            user.password
+          );
+
+          if (!isValid) {
+            return null;
+          }
+
+          return {
+            id: user.id || user.userId,
+            email: user.email,
+            name: user.username,
+          };
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
+        }
       },
     }),
   ],
