@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/options";
+import { authOptions } from "@/lib/auth/nextauth-options";
 import Link from "next/link";
 
 export default async function Dashboard() {
