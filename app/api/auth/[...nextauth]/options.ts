@@ -1,39 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getEmailUser } from "@/lib/api/auth";
-import { verifyPassword } from "@/components/auth/util/verify-password";
-
-// Винесена функція для авторизації (використовується в server action)
-export async function authorizeUser(email: string, password: string) {
-  if (!email || !password) {
-    return null;
-  }
-
-  try {
-    const users = await getEmailUser(email);
-
-    if (!users || users.length === 0) {
-      return null;
-    }
-
-    const user = users[0];
-
-    const isValid = await verifyPassword(password, user.password);
-
-    if (!isValid) {
-      return null;
-    }
-
-    return {
-      id: user.id || user.userId,
-      email: user.email,
-      name: user.username,
-    };
-  } catch (error) {
-    console.error("Auth error:", error);
-    return null;
-  }
-}
+import { authorizeUser } from "@/lib/auth/authorize";
 
 export const authOptions: NextAuthOptions = {
   providers: [
