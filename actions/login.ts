@@ -1,62 +1,57 @@
 "use server";
 
-import { verifyPassword } from "@/components/auth/util/verify-password";
+import { authorizeUser } from "@/app/api/auth/[...nextauth]/route";
 import { getEmailUser } from "@/lib/api/auth";
-import { cookies } from "next/headers";
 
-interface LoginState {
+export interface LoginState {
   success?: boolean;
   errors?: {
     email?: string;
     password?: string;
   };
 }
-export async function isLogin(_prevState: any, formData: FormData) {
+
+export default async function isLogin(
+  _prevState: any,
+  formData: FormData
+): Promise<LoginState | null> {
   const email = String(formData.get("email") || "");
   const password = String(formData.get("password") || "");
 
-  let errors: LoginState["errors"] = {};
+  // Валідація email
+  if (!email || !email.includes("@")) {
+    return { errors: { email: "Please enter a valid email address!" } };
+  }
 
-  if (!email.includes("@")) {
-    errors.email = "Please enter a valid email address.";
-  }
-  if (password.trim().length < 6 || !password.trim().length) {
-    errors.password = "Passwor must be at least 8 charesters long.";
-  }
-  if (Object.keys(errors).length > 0) {
+  // Валідація password
+  if (!password || password.trim().length < 6) {
     return {
-      errors: errors,
+      errors: {
+        password: "The correct number of digits in the password is required!",
+      },
     };
   }
 
   try {
-    const user = await getEmailUser(email);
-
-    if (!user) {
-      errors.email = "User with this email does not exist";
+    // Перевірка чи користувач існує (для більш детального повідомлення про помилку)
+    const users = await getEmailUser(email);
+    if (!users || users.length === 0) {
+      return { errors: { email: "User does not exist" } };
     }
 
-    const isValid = await verifyPassword(password, user.password);
+    // Використання NextAuth authorize для перевірки credentials
+    const authUser = await authorizeUser(email, password);
 
-    if (!isValid) {
-      errors.password = "Incorrect password";
+    if (!authUser) {
+      // Якщо користувач існує, але authorizeUser повернув null - невірний пароль
+      return { errors: { password: "Incorrect password" } };
     }
 
-    const cookieStore = await cookies();
-
-    cookieStore.set("auth", user.id, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60 * 24,
-    });
-
+    // Якщо все ОК, повертаємо success
+    // NextAuth signIn буде викликано на клієнті
     return { success: true };
-  } catch (error: any) {
-    return {
-      errors: {
-        email: "It seems like an account for the chosen email already exists.",
-      },
-    };
+  } catch (error) {
+    console.error("Login error:", error);
+    return { errors: { email: "An error occurred. Please try again." } };
   }
 }
