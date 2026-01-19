@@ -3,6 +3,6 @@ export const menuItems = [
   { label: "Unsplash", href: "/unsplash" },
   { label: "Cart", href: "/cart" },
   { label: "About", href: "/about" },
-  { label: "Login", href: "#" },
-  { label: "Sign Up", href: "#" },
+  //   { label: "Login", href: "#" },
+  //   { label: "Sign Up", href: "#" },
 ];
