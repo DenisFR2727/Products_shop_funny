@@ -1,7 +1,7 @@
 "use server";
 
-import { authorizeUser } from "@/app/api/auth/[...nextauth]/route";
 import { getEmailUser } from "@/lib/api/auth";
+import { authorizeUser } from "@/app/api/auth/[...nextauth]/options";
 
 export interface LoginState {
   success?: boolean;
