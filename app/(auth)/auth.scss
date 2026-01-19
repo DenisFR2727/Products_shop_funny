@@ -206,3 +206,10 @@ $hover-border-color: #007c89;
     width: 340px;
   }
 }
+
+.form-errors {
+  li {
+    list-style: none;
+    color: red;
+  }
+}
