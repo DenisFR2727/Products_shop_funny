@@ -8,7 +8,7 @@ import errorsForm from "./errors";
 export default async function addressCreate(
   _prevState: any,
   formData: FormData,
-  orders: CartProduct[]
+  orders: CartProduct[],
 ) {
   const orderId = Date.now() + Math.floor(Math.random() * 10000);
 

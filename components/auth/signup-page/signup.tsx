@@ -1,7 +1,7 @@
 "use client";
 
 import userCreate from "@/actions/signup";
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import styles from "../auth.module.scss";
 
 export default function SignUp() {

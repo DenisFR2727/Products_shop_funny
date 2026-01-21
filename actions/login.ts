@@ -13,7 +13,7 @@ export interface LoginState {
 
 export default async function isLogin(
   _prevState: any,
-  formData: FormData
+  formData: FormData,
 ): Promise<LoginState | null> {
   const email = String(formData.get("email") || "");
   const password = String(formData.get("password") || "");

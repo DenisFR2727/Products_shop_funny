@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 
 export async function verifyPassword(
   enteredPassword: string,
-  storedPassword: string // format: hash:salt
+  storedPassword: string, // format: hash:salt
 ): Promise<boolean> {
   const [storedHash, salt] = storedPassword.split(":");
 
