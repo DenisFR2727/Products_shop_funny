@@ -5,11 +5,10 @@ import Input from "../input/input";
 import useInput from "../hooks/useInput";
 import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
 import { useActionState, useEffect } from "react";
-import { isLogin } from "@/actions/login";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import isLogin from "@/actions/login";
 
 export default function Login() {
-  const router = useRouter();
   const [state, formAction] = useActionState(isLogin, null);
   const {
     value: emailValue,
@@ -24,15 +23,20 @@ export default function Login() {
     hasError: passwordHasError,
   } = useInput(
     "",
-    (value: string) => isNotEmpty(value) && hasMinLength(value, 6)
+    (value: string) => isNotEmpty(value) && hasMinLength(value, 6),
   );
 
-  // // // 👉 якщо логін успішний — редірект
   useEffect(() => {
-    if (state?.success) {
-      router.push("/dashboard");
+    if (state?.success && emailValue && passwordValue) {
+      // Викликаємо NextAuth signIn після успішної перевірки
+      signIn("credentials", {
+        email: emailValue,
+        password: passwordValue,
+        redirect: true,
+        callbackUrl: "/dashboard",
+      });
     }
-  }, [state, router]);
+  }, [state?.success, emailValue, passwordValue]);
 
   return (
     <div className="login__center">
@@ -71,13 +75,11 @@ export default function Login() {
           />
         </div>
         {state?.errors && (
-          <div className="login__errors">
-            {Object.entries(state.errors).map(([field, message]) => (
-              <p key={field} style={{ color: "red", margin: "5px 0" }}>
-                {message}
-              </p>
+          <ul className="form-errors">
+            {Object.values(state.errors).map((message) => (
+              <li key={message}>{message}</li>
             ))}
-          </div>
+          </ul>
         )}
         <div>
           <button className="login__btn">Login</button>

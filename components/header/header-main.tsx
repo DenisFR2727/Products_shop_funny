@@ -15,6 +15,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { useAppSelector } from "@/lib/hooks";
 import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
 import { ThemeContext } from "@/context/themeContext";
+import { signOut, useSession } from "next-auth/react";
 import NavBarMobile from "./navbar-mobile";
 
 import dark from "../../public/theme/themes-black.png";
@@ -24,6 +25,7 @@ import "./header-main.scss";
 export default function HeaderMain() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { data: session, status } = useSession();
 
   const isCartItems = useAppSelector(isCartItemsSelector);
 
@@ -116,21 +118,32 @@ export default function HeaderMain() {
             </span>
           </NavbarItem>
           <NavbarItem className="lg:flex login-nav">
-            <Link href="/login">
-              <span className="header_login-nav">Login</span>
-            </Link>
+            {status === "authenticated" ? (
+              <div className="user-nav">
+                <span className="user-name">
+                  {session.user?.name || session.user?.email}
+                </span>
+                <button
+                  className="logout-btn"
+                  onClick={() => signOut({ callbackUrl: "/login" })}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link href="/login">
+                <span className="header_login-nav">Login</span>
+              </Link>
+            )}
           </NavbarItem>
-          <NavbarItem className="sign-up-nav">
-            <Button
-              as={Link}
-              href="/signup"
-              color="primary"
-              variant="flat"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Sign Up
-            </Button>
-          </NavbarItem>
+
+          {status !== "authenticated" && (
+            <NavbarItem>
+              <Button as={Link} href="/signup" color="primary" variant="flat">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          )}
         </NavbarContent>
         {/* Mobile menu */}
         <NavBarMobile isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />

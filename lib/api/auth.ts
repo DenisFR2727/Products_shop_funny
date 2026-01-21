@@ -15,14 +15,20 @@ export default function PostUserCreate(data: any) {
 }
 
 export async function getEmailUser(email: string) {
-  const users = await apiRequest<any[]>(
+  const res = await fetch(
     `${API_USERS_CREATE}/${API_ENDPOINTS.USERS}?email=${email}`,
-    "Failed to get user!",
     {
-      method: "GET",
       cache: "no-store",
     }
   );
 
-  return users[0] || null;
+  if (res.status === 404) {
+    return [];
+  }
+
+  if (!res.ok) {
+    throw new Error(`Failed to get user: ${res.status}`);
+  }
+
+  return res.json();
 }

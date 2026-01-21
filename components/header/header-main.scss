@@ -138,3 +138,13 @@ header {
 .logo-nav {
   color: #f5a524;
 }
+
+.logout-btn {
+  cursor: pointer;
+  padding-left: 5px;
+}
+.mobile-auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
