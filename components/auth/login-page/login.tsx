@@ -27,7 +27,7 @@ export default function Login() {
     (value: string) => isNotEmpty(value) && hasMinLength(value, 6)
   );
 
-  // // 👉 якщо логін успішний — редірект
+  // // // 👉 якщо логін успішний — редірект
   useEffect(() => {
     if (state?.success) {
       router.push("/dashboard");
@@ -70,6 +70,15 @@ export default function Login() {
             }
           />
         </div>
+        {state?.errors && (
+          <div className="login__errors">
+            {Object.entries(state.errors).map(([field, message]) => (
+              <p key={field} style={{ color: "red", margin: "5px 0" }}>
+                {message}
+              </p>
+            ))}
+          </div>
+        )}
         <div>
           <button className="login__btn">Login</button>
         </div>
