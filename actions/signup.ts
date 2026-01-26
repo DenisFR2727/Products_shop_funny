@@ -5,14 +5,13 @@ import { redirect } from "next/navigation";
 import PostUserCreate from "@/lib/api/auth";
 import errorsLoginForm from "./errors-login";
 import { hashUserPassword } from "@/lib/hash";
+import { SignUpState } from "./types";
 
-export default async function userCreate(_prevState: any, formData: FormData) {
+export default async function userCreate(
+  _prevState: any,
+  formData: FormData,
+): Promise<SignUpState> {
   const userId = Date.now() + Math.floor(Math.random() * 10000);
-
-  const password = formData.get("password");
-  if (!password || typeof password !== "string") {
-    throw new Error("Password is required");
-  }
 
   const data = {
     userId: String(userId),
@@ -25,11 +24,13 @@ export default async function userCreate(_prevState: any, formData: FormData) {
 
   const errors = errorsLoginForm(data);
 
-  const hashedPass = await hashUserPassword(password);
-
   if (errors) {
-    return errors;
+    return {
+      errors,
+      values: data,
+    };
   }
+  const hashedPass = await hashUserPassword(data.password);
 
   const dataToSave = {
     ...data,

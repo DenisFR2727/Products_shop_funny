@@ -7,7 +7,10 @@ import styles from "../auth.module.scss";
 import Input from "../input/input";
 
 export default function SignUp() {
-  const [state, formAction] = useActionState(userCreate, null);
+  const [state, formAction] = useActionState(userCreate, {
+    errors: null,
+    values: {},
+  });
   const focusInput = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -27,8 +30,9 @@ export default function SignUp() {
               type="text"
               name="username"
               placeholder="User name"
+              defaultValue={state.values.username || ""}
             />
-            {<p className={styles.error}>{state?.username}</p>}
+            {<p className={styles.error}>{state?.errors?.username}</p>}
           </div>
           <div className="sign__email">
             <Input
@@ -36,8 +40,9 @@ export default function SignUp() {
               type="email"
               name="email"
               placeholder="Email"
+              defaultValue={state.values.email || ""}
             />
-            {<p className={styles.error}>{state?.email}</p>}
+            {<p className={styles.error}>{state?.errors?.email}</p>}
           </div>
           <div className="sign__phone">
             <Input
@@ -45,8 +50,9 @@ export default function SignUp() {
               type="phone"
               name="phone"
               placeholder="Phone"
+              defaultValue={state.values.phone || ""}
             />
-            {<p className={styles.error}>{state?.phone}</p>}
+            {<p className={styles.error}>{state?.errors?.phone}</p>}
           </div>
           <div className="sign__password">
             <Input
@@ -54,8 +60,9 @@ export default function SignUp() {
               type="password"
               name="password"
               placeholder="Password"
+              defaultValue={state.values.password || ""}
             />
-            {<p className={styles.error}>{state?.password}</p>}
+            {<p className={styles.error}>{state?.errors?.password}</p>}
           </div>
           <div className="sign__confirm-pass">
             <Input
@@ -63,8 +70,9 @@ export default function SignUp() {
               type="password"
               name="confirmPass"
               placeholder="Confirm password"
+              defaultValue={state.values.confirmPass || ""}
             />
-            {<p className={styles.error}>{state?.confirmPass}</p>}
+            {<p className={styles.error}>{state?.errors?.confirmPass}</p>}
           </div>
         </div>
         <div>

@@ -24,3 +24,22 @@ export type FormErrors<T> = Partial<Record<keyof T, string>>;
 
 export type AddressErrors = FormErrors<AddressDetails>;
 export type UserErrors = FormErrors<UserFields>;
+
+// types.ts signup
+export type SignUpState = {
+  errors: {
+    username?: string;
+    email?: string;
+    phone?: string;
+    password?: string;
+    confirmPass?: string;
+  } | null;
+  values: {
+    userId?: string;
+    username?: string;
+    email?: string;
+    phone?: string;
+    password?: string;
+    confirmPass?: string;
+  };
+};
