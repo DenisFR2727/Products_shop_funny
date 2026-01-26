@@ -4,7 +4,7 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import Input from "../input/input";
 import useInput from "../hooks/useInput";
 import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
-import { RefObject, useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import isLogin from "@/actions/login";
 

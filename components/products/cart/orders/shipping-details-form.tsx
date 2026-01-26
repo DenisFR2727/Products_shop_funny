@@ -7,12 +7,13 @@ import OrderButton from "./order-button";
 import addressCreate from "@/actions/address";
 import SubmitForm from "./submit-form";
 import useShippingDetailsForm from "./hooks";
+import Input from "./input/input";
 
 export default function ShippingForm(): JSX.Element {
   const orders = useAppSelector((state) => state.cartReducer.cart);
   const [state, formAction] = useActionState<any, FormData>(
     (prev, formData) => addressCreate(prev, formData, orders),
-    null
+    {},
   );
 
   const {
@@ -28,97 +29,89 @@ export default function ShippingForm(): JSX.Element {
       <h2>Shipping Details</h2>
       <form action={formAction}>
         <div className={styles.title_name}>
-          <div className={styles.shipping_title}>
-            <label htmlFor="title">Title</label>
-            <input
-              id="title"
-              type="text"
-              placeholder="Mr."
-              name="title"
-              value={clientValue.title}
-              onChange={handleChangeError}
-            />
-            <p className={styles.error}>{clientErrors.title}</p>
-          </div>
-          <div className={styles.shipping_name}>
-            <label htmlFor="name">First Name</label>
-            <input
-              id="name"
-              type="text"
-              placeholder="Name"
-              name="name"
-              value={clientValue.name}
-              onChange={handleChangeError}
-            />
-            <p className={styles.error}>{clientErrors.name}</p>
-          </div>
-          <div className={styles.shipping_last_name}>
-            <label htmlFor="last_name">Last Name</label>
-            <input
-              id="lastName"
-              type="text"
-              placeholder="Last Name"
-              name="lastName"
-              value={clientValue.lastName}
-              onChange={handleChangeError}
-            />
-            <p className={styles.error}>{clientErrors.lastName}</p>
-          </div>
-        </div>
-        <div className={styles.shipping_address}>
-          <label htmlFor="address">Address</label>
-          <input
+          <Input
+            styles={styles}
+            label="Title"
+            id="title"
+            type="text"
+            placeholder="Mr."
+            name="title"
+            value={clientValue.title}
+            onChange={handleChangeError}
+            error={clientErrors.title}
+          />
+          <Input
+            styles={styles}
+            label="First Name"
+            id="name"
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={clientValue.name}
+            onChange={handleChangeError}
+            error={clientErrors.name}
+          />
+          <Input
+            styles={styles}
+            label="Last Name"
+            id="lastName"
+            type="text"
+            placeholder="Last Name"
+            name="lastName"
+            value={clientValue.lastName}
+            onChange={handleChangeError}
+            error={clientErrors.lastName}
+          />
+          <Input
+            styles={styles}
+            label="Address"
             id="address"
             type="text"
             placeholder="address"
             name="address"
             value={clientValue.address}
             onChange={handleChangeError}
+            error={clientErrors.address}
           />
-          <p className={styles.error}>{clientErrors.address}</p>
         </div>
         <div className={styles.shipping_country}>
-          <div className={styles.shipping_country_item}>
-            <label htmlFor="address">Country</label>
-            <input
-              id="country"
-              type="text"
-              placeholder="country"
-              name="country"
-              value={clientValue.country}
-              onChange={handleChangeError}
-            />
-            <p className={styles.error}>{clientErrors.country}</p>
-          </div>
-          <div className={styles.shipping_zip_item}>
-            <label htmlFor="address">Zip Code</label>
-            <input
-              id="code"
-              type="text"
-              placeholder="code"
-              name="code"
-              value={clientValue.code}
-              onChange={handleChangeError}
-            />
-
-            <p className={styles.error}>{clientErrors.code}</p>
-          </div>
+          <Input
+            styles={styles}
+            label="Country"
+            id="country"
+            type="text"
+            placeholder="country"
+            name="country"
+            value={clientValue.country}
+            onChange={handleChangeError}
+            error={clientErrors.country}
+          />
+          <Input
+            styles={styles}
+            label="Zip Code"
+            id="code"
+            type="text"
+            placeholder="code"
+            name="code"
+            value={clientValue.code}
+            onChange={handleChangeError}
+            error={clientErrors.code}
+          />
         </div>
         <div className={styles.shipping_contacts}>
           <h2>Contact information</h2>
           <div className={styles.shipping_contact_information}>
-            <div className={styles.shipping_email}>
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                type="text"
-                placeholder="email"
-                name="email"
-                value={clientValue.email}
-                onChange={handleChangeError}
-              />
-              <p className={styles.error}>{clientErrors.email}</p>
-            </div>
+            <Input
+              styles={styles}
+              label="Email"
+              id="email"
+              type="text"
+              placeholder="email"
+              name="email"
+              value={clientValue.email}
+              onChange={handleChangeError}
+              error={clientErrors.email}
+            />
             <div className={styles.shipping_phone}>
               <label htmlFor="phone">Phone</label>
               <div className={styles.selectContent}>
@@ -135,7 +128,7 @@ export default function ShippingForm(): JSX.Element {
                       <option key={code} value={code}>
                         {`+${code}`} {short}
                       </option>
-                    )
+                    ),
                   )}
                 </select>
                 <div>

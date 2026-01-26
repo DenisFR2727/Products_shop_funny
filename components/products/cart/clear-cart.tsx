@@ -8,7 +8,7 @@ export default function CleaningAfterOrdering() {
 
   useEffect(() => {
     dispatch(clearCart());
-  }, []);
+  }, [dispatch]);
 
   return null;
 }

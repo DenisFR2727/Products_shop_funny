@@ -1,3 +1,4 @@
+"use client";
 import OrderTotal from "@/components/products/cart/orders/order-total";
 import ShippingForm from "@/components/products/cart/orders/shipping-details-form";
 

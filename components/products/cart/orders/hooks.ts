@@ -1,3 +1,4 @@
+"use client";
 import { AddressDetails } from "@/actions/types";
 import { useEffect, useState } from "react";
 
