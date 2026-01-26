@@ -30,7 +30,7 @@ export default function SignUp() {
               type="text"
               name="username"
               placeholder="User name"
-              defaultValue={state.values.username || ""}
+              defaultValue={state.values.username}
             />
             {<p className={styles.error}>{state?.errors?.username}</p>}
           </div>
@@ -40,7 +40,7 @@ export default function SignUp() {
               type="email"
               name="email"
               placeholder="Email"
-              defaultValue={state.values.email || ""}
+              defaultValue={state.values.email}
             />
             {<p className={styles.error}>{state?.errors?.email}</p>}
           </div>
@@ -50,7 +50,7 @@ export default function SignUp() {
               type="phone"
               name="phone"
               placeholder="Phone"
-              defaultValue={state.values.phone || ""}
+              defaultValue={state.values.phone}
             />
             {<p className={styles.error}>{state?.errors?.phone}</p>}
           </div>
@@ -60,7 +60,7 @@ export default function SignUp() {
               type="password"
               name="password"
               placeholder="Password"
-              defaultValue={state.values.password || ""}
+              defaultValue={state.values.password}
             />
             {<p className={styles.error}>{state?.errors?.password}</p>}
           </div>
@@ -70,7 +70,7 @@ export default function SignUp() {
               type="password"
               name="confirmPass"
               placeholder="Confirm password"
-              defaultValue={state.values.confirmPass || ""}
+              defaultValue={state.values.confirmPass}
             />
             {<p className={styles.error}>{state?.errors?.confirmPass}</p>}
           </div>
