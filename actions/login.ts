@@ -18,12 +18,10 @@ export default async function isLogin(
   const email = String(formData.get("email") || "");
   const password = String(formData.get("password") || "");
 
-  // Валідація email
   if (!email || !email.includes("@")) {
     return { errors: { email: "Please enter a valid email address!" } };
   }
 
-  // Валідація password
   if (!password || password.trim().length < 6) {
     return {
       errors: {
@@ -35,6 +33,7 @@ export default async function isLogin(
   try {
     // Перевірка чи користувач існує (для більш детального повідомлення про помилку)
     const users = await getEmailUser(email);
+
     if (!users || users.length === 0) {
       return { errors: { email: "User does not exist" } };
     }

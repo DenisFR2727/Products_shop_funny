@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { ReduxProvider } from "./providers/redux-provider";
-import { ThemeContextProvider } from "@/context/themeContext";
 
 export interface ProvidersProps {
   children: React.ReactNode;
