@@ -4,7 +4,7 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import Input from "../input/input";
 import useInput from "../hooks/useInput";
 import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
-import { useActionState, useEffect } from "react";
+import { RefObject, useActionState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import isLogin from "@/actions/login";
 
@@ -25,6 +25,7 @@ export default function Login() {
     "",
     (value: string) => isNotEmpty(value) && hasMinLength(value, 6),
   );
+  const focusInput = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (state?.success && emailValue && passwordValue) {
@@ -38,6 +39,10 @@ export default function Login() {
     }
   }, [state?.success, emailValue, passwordValue]);
 
+  useEffect(() => {
+    focusInput.current?.focus();
+  }, []);
+
   return (
     <div className="login__center">
       <h2 className="login__logo">LOGO HERE</h2>
@@ -45,6 +50,7 @@ export default function Login() {
         <h2 id="login__h2">Login</h2>
         <div className="login__inputs">
           <Input
+            ref={focusInput}
             styles="login__email"
             className="email"
             icon={<FontAwesomeIcon className="user__icon" icon={faUser} />}

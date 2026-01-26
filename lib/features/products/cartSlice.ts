@@ -31,7 +31,7 @@ const initialState: CartState = {
 const calculateTotals = (state: CartState): void => {
   state.subtotal = state.cart.reduce(
     (acc, item) => acc + item.price * item.amount,
-    0
+    0,
   );
 
   state.discountedSubtotal = state.cart.reduce((acc, item) => {
@@ -51,7 +51,7 @@ const cartSlice = createSlice({
   reducers: {
     addProductToCart(state, action: PayloadAction<IProducts>) {
       const isAddProduct = state.cart.find(
-        (product) => product.id === action.payload.id
+        (product) => product.id === action.payload.id,
       );
       if (!isAddProduct) {
         state.cart.push({ ...action.payload, amount: 1 });
@@ -60,10 +60,10 @@ const cartSlice = createSlice({
     },
     amountToPriceProduct(
       state,
-      action: PayloadAction<{ id: number; amount: number }>
+      action: PayloadAction<{ id: number; amount: number }>,
     ) {
       const existingProduct = state.cart.find(
-        (product) => product.id === action.payload.id
+        (product) => product.id === action.payload.id,
       );
       if (existingProduct) {
         existingProduct.amount = action.payload.amount;
@@ -72,7 +72,7 @@ const cartSlice = createSlice({
     },
     removeOrder(state, action: PayloadAction<number>) {
       state.cart = state.cart.filter(
-        (product) => product.id !== action.payload
+        (product) => product.id !== action.payload,
       );
       calculateTotals(state);
     },
@@ -82,6 +82,9 @@ const cartSlice = createSlice({
     setShowProgress(state, action: PayloadAction<boolean>) {
       state.showProgressModal = action.payload;
     },
+    clearCart(state, action: PayloadAction) {
+      state.cart = [];
+    },
   },
 });
 export const {
@@ -90,5 +93,6 @@ export const {
   removeOrder,
   togglePanel,
   setShowProgress,
+  clearCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -1,4 +1,5 @@
-import { InputHTMLAttributes } from "react";
+"use client";
+import { forwardRef, InputHTMLAttributes } from "react";
 import "./input.scss";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,22 +8,22 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string | false;
 }
 
-export default function Input({
-  styles,
-  className,
-  icon,
-  error,
-  ...props
-}: InputProps) {
-  return (
-    <>
-      <div className={styles}>
-        <span>{icon}</span>
-        <input className={className} {...props} />
-      </div>
-      <div className="error_field">
-        {error && <p className="error-text">{error}</p>}
-      </div>
-    </>
-  );
-}
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ styles, className, icon, error, ...props }, ref) => {
+    return (
+      <>
+        <div className={styles}>
+          {icon && <span>{icon}</span>}
+          <input ref={ref} className={className} {...props} />
+        </div>
+        <div className="error_field">
+          {error && <p className="error-text">{error}</p>}
+        </div>
+      </>
+    );
+  },
+);
+
+Input.displayName = "Input";
+
+export default Input;
