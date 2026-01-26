@@ -13,7 +13,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <>
         <div className={styles}>
-          <span>{icon}</span>
+          {icon && <span>{icon}</span>}
           <input ref={ref} className={className} {...props} />
         </div>
         <div className="error_field">

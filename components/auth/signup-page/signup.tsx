@@ -1,11 +1,17 @@
 "use client";
 
 import userCreate from "@/actions/signup";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import styles from "../auth.module.scss";
+import Input from "../input/input";
 
 export default function SignUp() {
   const [state, formAction] = useActionState(userCreate, null);
+  const focusInput = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    focusInput.current?.focus();
+  }, []);
 
   return (
     <div className="sign__center">
@@ -14,7 +20,8 @@ export default function SignUp() {
         <h2 id="sign__h2">Sign Up</h2>
         <div className="sign__inputs">
           <div className="sign__username">
-            <input
+            <Input
+              ref={focusInput}
               className="sign__username-up"
               type="text"
               name="username"
@@ -23,7 +30,7 @@ export default function SignUp() {
             {<p className={styles.error}>{state?.username}</p>}
           </div>
           <div className="sign__email">
-            <input
+            <Input
               className="sign__email-up"
               type="email"
               name="email"
@@ -32,7 +39,7 @@ export default function SignUp() {
             {<p className={styles.error}>{state?.email}</p>}
           </div>
           <div className="sign__phone">
-            <input
+            <Input
               className="sign__phone-up"
               type="phone"
               name="phone"
@@ -41,7 +48,7 @@ export default function SignUp() {
             {<p className={styles.error}>{state?.phone}</p>}
           </div>
           <div className="sign__password">
-            <input
+            <Input
               className="sign__password-up"
               type="password"
               name="password"
@@ -50,7 +57,7 @@ export default function SignUp() {
             {<p className={styles.error}>{state?.password}</p>}
           </div>
           <div className="sign__confirm-pass">
-            <input
+            <Input
               className="confirm__password-up"
               type="password"
               name="confirmPass"
