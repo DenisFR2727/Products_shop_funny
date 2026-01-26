@@ -1,5 +1,8 @@
 import Link from "next/link";
+import CleaningAfterOrdering from "@/components/products/cart/clear-cart";
+
 import "./thanks.scss";
+
 export default async function ThanksPage({
   params,
 }: {
@@ -8,6 +11,7 @@ export default async function ThanksPage({
   const { orderId } = await params;
   return (
     <div className="thanks_page">
+      <CleaningAfterOrdering />
       <h2>Thanks you for your purchase</h2>
       <p>
         ORDER NO. <span className="thanks_order">{orderId}</span>
