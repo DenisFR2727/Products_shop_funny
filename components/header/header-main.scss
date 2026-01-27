@@ -148,3 +148,19 @@ header {
   flex-direction: column;
   gap: 10px;
 }
+@media (max-width: 375px) {
+  .z-0 {
+    display: none;
+  }
+  .header_login-nav img {
+    width: 22px;
+  }
+  .header_login-nav {
+    position: relative;
+    img {
+      position: absolute;
+      top: -8px;
+      left: 5px;
+    }
+  }
+}
