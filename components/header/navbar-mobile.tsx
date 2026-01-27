@@ -8,13 +8,14 @@ import { useRouter } from "next/navigation";
 import "./header-main.scss";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@heroui/react";
+import React from "react";
 
 interface NavBarMobileProps {
   isMenuOpen: boolean;
   setIsMenuOpen: (isOpen: boolean) => void;
 }
 
-export default function NavBarMobile({
+const NavBarMobile = React.memo(function NavBarMobile({
   isMenuOpen,
   setIsMenuOpen,
 }: NavBarMobileProps) {
@@ -85,4 +86,5 @@ export default function NavBarMobile({
       </NavbarMenu>
     </div>
   );
-}
+});
+export default NavBarMobile;
