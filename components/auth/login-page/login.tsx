@@ -8,6 +8,8 @@ import { useActionState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import isLogin from "@/actions/login";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import ButtonReturn from "../btn-return";
 
 export default function Login() {
   const [state, formAction] = useActionState(isLogin, null);
@@ -27,6 +29,7 @@ export default function Login() {
     (value: string) => isNotEmpty(value) && hasMinLength(value, 6),
   );
   const focusInput = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (state?.success && emailValue && passwordValue) {
@@ -49,6 +52,7 @@ export default function Login() {
       <h2 className="login__logo">LOGO HERE</h2>
       <form className="login__form" action={formAction}>
         <h2 id="login__h2">Login</h2>
+        <ButtonReturn />
         <div className="login__inputs">
           <Input
             ref={focusInput}
