@@ -7,6 +7,7 @@ import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
 import { useActionState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import isLogin from "@/actions/login";
+import Link from "next/link";
 
 export default function Login() {
   const [state, formAction] = useActionState(isLogin, null);
@@ -90,6 +91,9 @@ export default function Login() {
         <div>
           <button className="login__btn">Login</button>
         </div>
+        <p className="sign__link-signup">
+          <Link href="/signup">Don't have an account? Sign up</Link>
+        </p>
       </form>
     </div>
   );

@@ -219,3 +219,17 @@ $hover-border-color: #007c89;
 .login__center {
   top: 40%;
 }
+
+.sign__link-login,
+.sign__link-signup {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  cursor: pointer;
+  user-select: none;
+
+  a {
+    text-decoration: none;
+  }
+}

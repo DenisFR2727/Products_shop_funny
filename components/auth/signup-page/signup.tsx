@@ -5,6 +5,7 @@ import { useActionState, useEffect, useRef } from "react";
 
 import styles from "../auth.module.scss";
 import Input from "../input/input";
+import Link from "next/link";
 
 export default function SignUp() {
   const [state, formAction] = useActionState(userCreate, {
@@ -78,6 +79,9 @@ export default function SignUp() {
         <div>
           <button className="sign__btn">Sign up</button>
         </div>
+        <p className="sign__link-login">
+          <Link href="/login">Already have an account? Login</Link>
+        </p>
       </form>
     </div>
   );
