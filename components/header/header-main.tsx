@@ -21,13 +21,15 @@ import NavBarMobile from "./navbar-mobile";
 import dark from "../../public/theme/themes-black.png";
 import light from "../../public/theme/themes-light.png";
 import "./header-main.scss";
+import LanguageSelect from "../language-select/language-select";
+import { useTranslation } from "react-i18next";
 
 export default function HeaderMain() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { data: session, status } = useSession();
-
   const isCartItems = useAppSelector(isCartItemsSelector);
+  const {t} = useTranslation();
 
   return (
     <header className={`${theme}`}>
@@ -96,6 +98,9 @@ export default function HeaderMain() {
               </div>
             </Link>
           </NavbarItem>
+          <NavbarItem>
+            <LanguageSelect />
+          </NavbarItem>
           <NavbarItem className="lg:flex">
             <span className="header_login-nav" onClick={toggleTheme}>
               {theme === "light_theme" ? (
@@ -132,7 +137,7 @@ export default function HeaderMain() {
               </div>
             ) : (
               <Link href="/login">
-                <span className="header_login-nav">Login</span>
+                <span className="header_login-nav">{t('Login')}</span>
               </Link>
             )}
           </NavbarItem>

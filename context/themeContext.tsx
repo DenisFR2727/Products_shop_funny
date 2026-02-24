@@ -1,4 +1,5 @@
 "use client";
+import "@/lib/features/language/i18n";
 import { createContext, useEffect, useState } from "react";
 
 interface ThemeContextProps {
