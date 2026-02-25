@@ -11,5 +11,11 @@ export const uk = {
     "Select price": "Вибір ціни",
     search: "пошук",
     reset: "скинути",
+    Products: "Продукти",
+    "You Cart Is Empty": "Ваш кошик порожній",
+    "Orders products": "Замовлення продуктів",
+    Amount: "Сума",
+    remove: "видалити",
+    "Shopping Cart": "Кошик для покупок",
   },
 };

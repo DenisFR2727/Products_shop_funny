@@ -11,5 +11,11 @@ export const en = {
     "Select price": "Select price",
     search: "search",
     reset: "reset",
+    Products: "Products",
+    "You Cart Is Empty": "You Cart Is Empty",
+    "Orders products": "Orders products",
+    Amount: "Amount",
+    remove: "remove",
+    "Shopping Cart": "Shopping Cart",
   },
 };

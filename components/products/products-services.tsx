@@ -34,7 +34,7 @@ const ProductsServices = memo(function ({
     <div ref={listRef} className={`products_list ${theme}`}>
       <ProgressHandler />
       <FilterPanel products={allProducts} />
-      <DinamicPanel lengItems={filteredProducts} t={t} />
+      <DinamicPanel ref={listRef} lengItems={filteredProducts} t={t} />
       <PaginationList products={filteredProducts} />
     </div>
   );
