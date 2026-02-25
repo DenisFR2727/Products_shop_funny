@@ -1,18 +1,20 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import i18n from "@/lib/features/language/i18n";
 import styles from "./select-language.module.css";
+import { ThemeContext } from "@/context/themeContext";
 
 const LANGUAGES = [
-  { value: "en", label: "English" },
-  { value: "uk", label: "Українська" },
+  { value: "en", label: "En" },
+  { value: "uk", label: "UK" },
 ] as const;
 
 const LANGUAGE_SELECT = "LANGUAGE_SELECT";
 
 export default function LanguageSelect() {
   const [currentLang, setCurrentLang] = useState("en");
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const savedLang = localStorage.getItem(LANGUAGE_SELECT);
@@ -43,7 +45,7 @@ export default function LanguageSelect() {
 
   return (
     <select
-      className={styles.selectLanguage}
+      className={`${styles.selectLanguage} ${styles[theme]}`}
       value={currentLang}
       onChange={handleChange}
       aria-label="Select language"

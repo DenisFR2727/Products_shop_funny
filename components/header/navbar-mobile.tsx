@@ -9,6 +9,9 @@ import "./header-main.scss";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@heroui/react";
 import React from "react";
+import LanguageSelect from "../language-select/language-select";
+
+import "./header-main.scss";
 
 interface NavBarMobileProps {
   isMenuOpen: boolean;
@@ -82,6 +85,14 @@ const NavBarMobile = React.memo(function NavBarMobile({
               </Link>
             </div>
           )}
+        </NavbarMenuItem>
+        <NavbarMenuItem
+          className="mobile_language"
+          onClick={(e: any) => {
+            e.stopPropagation();
+          }}
+        >
+          <LanguageSelect />
         </NavbarMenuItem>
       </NavbarMenu>
     </div>

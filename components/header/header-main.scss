@@ -164,3 +164,13 @@ header {
     }
   }
 }
+
+.mobile_language {
+  display: block;
+  height: 50px;
+}
+@media (max-width: 900px) {
+  .mobile_language select {
+    display: block !important;
+  }
+}

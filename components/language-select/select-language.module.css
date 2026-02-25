@@ -1,5 +1,5 @@
 .selectLanguage {
-  min-width: 100px;
+  min-width: 60px;
   padding: 6px 10px;
   font-size: 14px;
   border-radius: 6px;
@@ -27,4 +27,10 @@
 .selectLanguage option {
   background: var(--select-bg, #fff);
   color: inherit;
+}
+
+@media (max-width: 900px) {
+  .selectLanguage {
+    display: none;
+  }
 }
