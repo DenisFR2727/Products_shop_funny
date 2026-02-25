@@ -10,7 +10,9 @@ const LANGUAGES = [
 ] as const;
 
 export default function LanguageSelect() {
-  const [currentLang, setCurrentLang] = useState(i18n.language?.split("-")[0] || "en");
+  const [currentLang, setCurrentLang] = useState(
+    i18n.language?.split("-")[0] || "en",
+  );
 
   useEffect(() => {
     const handler = (lng: string) => setCurrentLang(lng?.split("-")[0] || "en");
@@ -24,7 +26,7 @@ export default function LanguageSelect() {
       i18n.changeLanguage(value);
       setCurrentLang(value);
     },
-    []
+    [],
   );
 
   return (

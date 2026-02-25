@@ -1,15 +1,17 @@
 interface SelectPriceProps {
   defaultRangePrice: number;
   setDefaultRangePrice: (value: number) => void;
+  t: (value: string) => string;
 }
 export default function SelectPrice({
   defaultRangePrice,
   setDefaultRangePrice,
+  t,
 }: SelectPriceProps) {
   return (
     <div className="select_price">
       <div className="select_price-value">
-        <label htmlFor="range_price">Select price</label>
+        <label htmlFor="range_price">{t("Select price")}</label>
         <p>${defaultRangePrice}</p>
       </div>
       <input

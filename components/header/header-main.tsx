@@ -29,7 +29,7 @@ export default function HeaderMain() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { data: session, status } = useSession();
   const isCartItems = useAppSelector(isCartItemsSelector);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <header className={`${theme}`}>
@@ -71,16 +71,16 @@ export default function HeaderMain() {
             </Link>
           </NavbarBrand>
           <NavbarItem className="lg:flex ">
-            <NavLink href="/">Home</NavLink>
+            <NavLink href="/">{t("home")}</NavLink>
           </NavbarItem>
           <NavbarItem>
-            <NavLink href="/products">Products</NavLink>
+            <NavLink href="/products">{t("products")}</NavLink>
           </NavbarItem>
           <NavbarItem>
-            <NavLink href="/unsplash">Unsplash</NavLink>
+            <NavLink href="/unsplash">{t("Unsplash")}</NavLink>
           </NavbarItem>
           <NavbarItem>
-            <NavLink href="/cart">Cart</NavLink>
+            <NavLink href="/cart">{t("cart")}</NavLink>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
@@ -137,7 +137,7 @@ export default function HeaderMain() {
               </div>
             ) : (
               <Link href="/login">
-                <span className="header_login-nav">{t('Login')}</span>
+                <span className="header_login-nav">{t("Login")}</span>
               </Link>
             )}
           </NavbarItem>
@@ -145,7 +145,7 @@ export default function HeaderMain() {
           {status !== "authenticated" && (
             <NavbarItem>
               <Button as={Link} href="/signup" color="primary" variant="flat">
-                Sign Up
+                {t("signup")}
               </Button>
             </NavbarItem>
           )}

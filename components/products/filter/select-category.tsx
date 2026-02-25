@@ -5,12 +5,14 @@ interface CategorySelectProps {
   valueSelected: string;
   onChangeSelected: (value: string) => void;
   products: IProducts[];
+  t: (value: string) => string;
 }
 
 export default function CategorySelect({
   valueSelected,
   onChangeSelected,
   products,
+  t,
 }: CategorySelectProps) {
   log("CategotySelect", 1);
   const categories = products.map((p) => p.category);
@@ -18,7 +20,7 @@ export default function CategorySelect({
 
   return (
     <div className="select_category">
-      <label htmlFor="select_category">Select category</label>
+      <label htmlFor="select_category">{t("Select category")}</label>
       <select
         id="select_category"
         className="select_item-category"

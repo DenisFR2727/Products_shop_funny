@@ -13,6 +13,7 @@ import { ThemeContext } from "@/context/themeContext";
 import "@/styles/globals.css";
 import { log } from "@/lib/log";
 import ProgressHandler from "./modal/progress/ProgressHandler";
+import { useTranslation } from "react-i18next";
 
 const ProductsServices = memo(function ({
   products: allProducts,
@@ -20,7 +21,7 @@ const ProductsServices = memo(function ({
   log("<ProductsServices /> rendered", 1);
   const { filteredProducts } = useFilterProducts(allProducts);
   const { theme } = useContext(ThemeContext);
-
+  const { t } = useTranslation();
   const page = useAppSelector(pageSelector);
 
   const listRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ const ProductsServices = memo(function ({
     <div ref={listRef} className={`products_list ${theme}`}>
       <ProgressHandler />
       <FilterPanel products={allProducts} />
-      <DinamicPanel ref={listRef} lengItems={filteredProducts} />
+      <DinamicPanel lengItems={filteredProducts} t={t} />
       <PaginationList products={filteredProducts} />
     </div>
   );

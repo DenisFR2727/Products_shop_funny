@@ -72,14 +72,12 @@
         background-color: #71717a;
         color: #f5a524;
       }
-      // .search_btn-filter {
-      //   background: #006fee;
-      //   color: #ffffff;
-      // }
-      // .reset_btn-filter {
-      //   background: #7828c8;
-      //   color: #ffffff;
-      // }
+      .search_btn-filter {
+        text-transform: uppercase;
+      }
+      .reset_btn-filter {
+        text-transform: uppercase;
+      }
       .search_btn-filter:hover {
         filter: brightness(90%);
       }

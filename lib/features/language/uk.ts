@@ -1,5 +1,15 @@
 export const uk = {
   translation: {
-   Login: "Вхід"
+    Login: "Вхід",
+    signup: "Вихід",
+    home: "Додому",
+    products: "Продукти",
+    unsplash: "Unsplash",
+    cart: "Корзина",
+    "Serch Product": "Пошук продукта",
+    "Select category": "Вибір категорії",
+    "Select price": "Вибір ціни",
+    search: "пошук",
+    reset: "скинути",
   },
 };

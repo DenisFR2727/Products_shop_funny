@@ -10,6 +10,7 @@ import CategorySelect from "./select-category";
 import SelectPrice from "./select-price";
 import SearchProduct from "./search-product";
 import FilterButtons from "./filter-buttons";
+import { useTranslation } from "react-i18next";
 
 const FilterPanel = memo(function ({
   products,
@@ -26,6 +27,7 @@ const FilterPanel = memo(function ({
     resetValuesForm,
   } = useFilterForm();
   const { themeFilterBtn } = useContext(ThemeContext);
+  const { t } = useTranslation();
 
   return (
     <div className="filter_panel">
@@ -33,20 +35,24 @@ const FilterPanel = memo(function ({
         <SearchProduct
           searchTitleProducts={searchTitle}
           changeSearchProducts={changeSearch}
+          t={t}
         />
         <CategorySelect
           valueSelected={selectedCategoryCurrent}
           onChangeSelected={setSelectedCategoriesCurrent}
           products={products}
+          t={t}
         />
         <SelectPrice
           defaultRangePrice={defaultRange}
           setDefaultRangePrice={setDefaultRange}
+          t={t}
         />
         <FilterButtons
           theme={themeFilterBtn}
           submitSearchFilter={submitSearch}
           resetValuesFormFilter={resetValuesForm}
+          t={t}
         />
       </form>
     </div>
