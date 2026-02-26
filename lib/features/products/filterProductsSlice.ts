@@ -9,12 +9,14 @@ interface FilterProducts {
   serchProducts: string;
   selectedCategory: string;
   rangePrice: number | null;
+  selectAlphabet: boolean;
 }
 
 const initialState: FilterProducts = {
   serchProducts: "",
   selectedCategory: "",
   rangePrice: null,
+  selectAlphabet: false,
 };
 const filterProductsSlice = createSlice({
   name: "products",
@@ -34,6 +36,9 @@ const filterProductsSlice = createSlice({
     setSelectedCategory(state, action: PayloadAction<string>) {
       state.selectedCategory = action.payload;
     },
+    setSelectAlphabet(state, action: PayloadAction<boolean>) {
+      state.selectAlphabet = action.payload;
+    },
   },
 });
 export const {
@@ -41,5 +46,6 @@ export const {
   resetAllValueFilter,
   setRangePrice,
   setSelectedCategory,
+  setSelectAlphabet,
 } = filterProductsSlice.actions;
 export default filterProductsSlice.reducer;

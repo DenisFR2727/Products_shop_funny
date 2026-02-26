@@ -3,6 +3,7 @@ import {
   resetAllValueFilter,
   setRangePrice,
   setSearchProducts,
+  setSelectAlphabet,
   setSelectedCategory,
 } from "@/lib/features/products/filterProductsSlice";
 import {
@@ -18,13 +19,16 @@ export function useFilterProducts(products: IProducts[]) {
   const serchProducts = useAppSelector(serchProductsSelector);
   const selectedCategory = useAppSelector(selectedCategorySelector);
   const selectedRange = useAppSelector(selectedRangeSelector);
+  const selectedAlphabet = useAppSelector(
+    (state) => state.filterReducer.selectAlphabet,
+  );
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
     if (serchProducts) {
       result = result.filter((p) =>
-        p.title.toLowerCase().includes(serchProducts.toLowerCase())
+        p.title.toLowerCase().includes(serchProducts.toLowerCase()),
       );
     }
     if (selectedCategory && selectedCategory !== "All") {
@@ -33,8 +37,17 @@ export function useFilterProducts(products: IProducts[]) {
     if (selectedRange) {
       result = result.filter((p) => p.price <= selectedRange);
     }
+    if (selectedAlphabet) {
+      result.sort((a, b) => a.title.localeCompare(b.title));
+    }
     return result;
-  }, [products, serchProducts, selectedRange, selectedCategory]);
+  }, [
+    products,
+    serchProducts,
+    selectedRange,
+    selectedCategory,
+    selectedAlphabet,
+  ]);
 
   return { filteredProducts };
 }
@@ -64,6 +77,7 @@ export function useFilterForm() {
     setSelectedCategoriesCurrent("All");
     setDefaultRange(3000);
     dispatch(resetAllValueFilter(""));
+    dispatch(setSelectAlphabet(false));
   };
 
   return {

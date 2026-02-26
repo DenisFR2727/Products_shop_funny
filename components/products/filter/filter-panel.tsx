@@ -11,6 +11,7 @@ import SelectPrice from "./select-price";
 import SearchProduct from "./search-product";
 import FilterButtons from "./filter-buttons";
 import { useTranslation } from "react-i18next";
+import AlphabetSortedProducts from "./sorted-alphabet";
 
 const FilterPanel = memo(function ({
   products,
@@ -48,6 +49,7 @@ const FilterPanel = memo(function ({
           setDefaultRangePrice={setDefaultRange}
           t={t}
         />
+        <AlphabetSortedProducts />
         <FilterButtons
           theme={themeFilterBtn}
           submitSearchFilter={submitSearch}
