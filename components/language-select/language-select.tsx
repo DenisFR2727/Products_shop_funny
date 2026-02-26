@@ -32,8 +32,8 @@ export default function LanguageSelect() {
     return () => i18n.off("languageChanged", handler);
   }, []);
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange: React.ChangeEventHandler<HTMLSelectElement> = useCallback(
+    (e) => {
       const value = e.target.value as "en" | "uk";
       i18n.changeLanguage(value);
       setCurrentLang(value);
@@ -51,7 +51,7 @@ export default function LanguageSelect() {
       aria-label="Select language"
     >
       {LANGUAGES.map(({ value, label }) => (
-        <option key={value} value={value}>
+        <option key={value} value={value} className={`${styles[theme]}`}>
           {label}
         </option>
       ))}

@@ -1,7 +1,7 @@
 export const uk = {
   translation: {
     Login: "Вхід",
-    signup: "Вихід",
+    signup: "Реєстр",
     home: "Додому",
     products: "Продукти",
     unsplash: "Unsplash",

@@ -168,7 +168,15 @@ header {
 .mobile_language {
   display: block;
   height: 50px;
+  border: 1px solid grey !important;
+  max-width: 60px;
+  height: 43px;
+  border-radius: 6px;
 }
+.mobile_language option {
+  background: grey;
+}
+
 @media (max-width: 900px) {
   .mobile_language select {
     display: block !important;

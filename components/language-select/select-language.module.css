@@ -4,8 +4,7 @@
   font-size: 14px;
   border-radius: 6px;
   border: 1px solid var(--select-border, #e5e7eb);
-  background-color: var(--select-bg, #fff);
-  color: inherit;
+  /* color: inherit; */
   cursor: pointer;
   outline: none;
   appearance: none;
@@ -25,8 +24,9 @@
 }
 
 .selectLanguage option {
-  background: var(--select-bg, #fff);
+  background: var(--select-bg, #6b6a6a);
   color: inherit;
+  cursor: pointer;
 }
 
 @media (max-width: 900px) {

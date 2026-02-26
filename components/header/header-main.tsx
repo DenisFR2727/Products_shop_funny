@@ -16,13 +16,15 @@ import { useAppSelector } from "@/lib/hooks";
 import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
 import { ThemeContext } from "@/context/themeContext";
 import { signOut, useSession } from "next-auth/react";
+import { useTranslation } from "react-i18next";
 import NavBarMobile from "./navbar-mobile";
 
 import dark from "../../public/theme/themes-black.png";
 import light from "../../public/theme/themes-light.png";
-import "./header-main.scss";
+
 import LanguageSelect from "../language-select/language-select";
-import { useTranslation } from "react-i18next";
+
+import "./header-main.scss";
 
 export default function HeaderMain() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
