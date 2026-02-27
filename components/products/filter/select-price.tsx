@@ -1,3 +1,5 @@
+import Field from "./field/field";
+
 interface SelectPriceProps {
   defaultRangePrice: number;
   setDefaultRangePrice: (value: number) => void;
@@ -11,16 +13,18 @@ export default function SelectPrice({
   return (
     <div className="select_price">
       <div className="select_price-value">
-        <label htmlFor="range_price">{t("Select price")}</label>
         <p>${defaultRangePrice}</p>
       </div>
-      <input
+      <Field
         id="range_price"
+        label={t("Select price")}
         className="range_price"
         type="range"
         max={3000}
         value={defaultRangePrice}
-        onChange={(e) => setDefaultRangePrice(+e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setDefaultRangePrice(+e.target.value)
+        }
       />
     </div>
   );

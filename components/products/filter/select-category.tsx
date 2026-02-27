@@ -1,5 +1,6 @@
 import { log } from "@/lib/log";
 import { IProducts } from "@/lib/types";
+import Field from "./field/field";
 
 interface CategorySelectProps {
   valueSelected: string;
@@ -20,8 +21,9 @@ export default function CategorySelect({
 
   return (
     <div className="select_category">
-      <label htmlFor="select_category">{t("Select category")}</label>
-      <select
+      <Field
+        as="select"
+        label={t("Select category")}
         id="select_category"
         className="select_item-category"
         value={valueSelected}
@@ -33,7 +35,16 @@ export default function CategorySelect({
             {category}
           </option>
         ))}
-      </select>
+      </Field>
+      {/* <label htmlFor="select_category">{t("Select category")}</label>
+      <select>
+        <option value="All">All</option>
+        {uniqCategories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select> */}
     </div>
   );
 }

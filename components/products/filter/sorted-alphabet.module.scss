@@ -3,3 +3,10 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.alphabet_products input[type="checkbox"] {
+  accent-color: #7c3aed;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

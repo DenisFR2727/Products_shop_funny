@@ -1,3 +1,5 @@
+import Field from "./field/field";
+
 interface SearchProductsProps {
   searchTitleProducts: string;
   changeSearchProducts: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -10,9 +12,9 @@ export default function SearchProduct({
 }: SearchProductsProps) {
   return (
     <div className="search_product">
-      <label htmlFor="search_product">{t("Serch Product")}</label>
-      <input
+      <Field
         id="search_product"
+        label={t("Serch Product")}
         className="search_item-input"
         type="text"
         value={searchTitleProducts}
