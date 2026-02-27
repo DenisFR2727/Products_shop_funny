@@ -182,3 +182,11 @@ header {
     display: block !important;
   }
 }
+
+@media (max-width: 775px) {
+  .nav_header {
+    a {
+      font-size: 16px;
+    }
+  }
+}

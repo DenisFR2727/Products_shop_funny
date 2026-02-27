@@ -59,7 +59,7 @@ export default function HeaderMain() {
             </Link>
           </NavbarBrand>
         </NavbarContent>
-        <NavbarContent className="hidden sm:flex gap-4" justify="start">
+        <NavbarContent className="hidden sm:flex gap-4 " justify="start">
           <NavbarBrand>
             <Link href="/" className="font-bold text-inherit">
               <Image
@@ -72,16 +72,16 @@ export default function HeaderMain() {
               />
             </Link>
           </NavbarBrand>
-          <NavbarItem className="lg:flex ">
+          <NavbarItem className="lg:flex nav_header">
             <NavLink href="/">{t("home")}</NavLink>
           </NavbarItem>
-          <NavbarItem>
+          <NavbarItem className="nav_header">
             <NavLink href="/products">{t("products")}</NavLink>
           </NavbarItem>
-          <NavbarItem>
+          <NavbarItem className="nav_header">
             <NavLink href="/unsplash">{t("Unsplash")}</NavLink>
           </NavbarItem>
-          <NavbarItem>
+          <NavbarItem className="nav_header">
             <NavLink href="/cart">{t("cart")}</NavLink>
           </NavbarItem>
         </NavbarContent>
@@ -145,7 +145,7 @@ export default function HeaderMain() {
           </NavbarItem>
 
           {status !== "authenticated" && (
-            <NavbarItem>
+            <NavbarItem className="signup_nav">
               <Button as={Link} href="/signup" color="primary" variant="flat">
                 {t("signup")}
               </Button>
