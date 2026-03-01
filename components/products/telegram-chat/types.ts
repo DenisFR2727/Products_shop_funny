@@ -1,3 +1,4 @@
+// Types
 export interface MessageTG {
   id: string;
   text: string;
