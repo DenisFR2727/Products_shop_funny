@@ -5,13 +5,15 @@ import { NavbarMenuItem } from "@heroui/react";
 import { NavbarMenu } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
-import "./header-main.scss";
+
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@heroui/react";
-import React from "react";
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import LanguageSelect from "../language-select/language-select";
 
 import "./header-main.scss";
+
 
 interface NavBarMobileProps {
   isMenuOpen: boolean;
@@ -30,11 +32,26 @@ const NavBarMobile = React.memo(function NavBarMobile({
     router.push(href);
   };
 
-  return (
-    <div className="navbar-backdrop" onClick={() => setIsMenuOpen(false)}>
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isMenuOpen, setIsMenuOpen]);
+
+  if (!isMenuOpen) return null;
+
+  const menuContent = (
+    <div
+      className="navbar-backdrop"
+      onClick={() => setIsMenuOpen(false)}
+      role="presentation"
+    >
       <NavbarMenu
-        className={`z-30 ${isMenuOpen ? "menuOpen" : "menuClose"}`}
-        onClick={router.refresh}
+        className="z-30 menuOpen"
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
         {/* NAV LINKS */}
         {menuItems.map((item, index) => (
@@ -88,14 +105,16 @@ const NavBarMobile = React.memo(function NavBarMobile({
         </NavbarMenuItem>
         <NavbarMenuItem
           className="mobile_language"
-          onClick={(e: any) => {
-            e.stopPropagation();
-          }}
+          onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           <LanguageSelect />
         </NavbarMenuItem>
       </NavbarMenu>
     </div>
   );
+
+  return typeof document !== "undefined"
+    ? createPortal(menuContent, document.body)
+    : null;
 });
 export default NavBarMobile;

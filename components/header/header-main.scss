@@ -19,6 +19,13 @@ header {
   z-index: 0;
 }
 
+.navbar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  background: rgba(0, 0, 0, 0.25);
+}
+
 @keyframes leftBurger {
   from {
     transform: translateX(-100%);
@@ -38,7 +45,7 @@ header {
 .z-30 {
   position: fixed;
   left: 0;
-  max-height: 300px;
+  max-height: 50vh;
   max-width: 200px;
   width: 100%;
   padding-left: 2rem;
