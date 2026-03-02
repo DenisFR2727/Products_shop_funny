@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { ThemeContextProvider } from "@/context/themeContext";
 import "./auth.scss";
 
@@ -9,7 +10,9 @@ export const metadata = {
 export default function AuthLayout({ children }: any) {
   return (
     <ThemeContextProvider>
-      <section className="auth-layout">{children}</section>;
+      <section className="auth-layout">
+        <Suspense fallback={null}>{children}</Suspense>
+      </section>
     </ThemeContextProvider>
   );
 }

@@ -1,5 +1,7 @@
 "use client";
 import { useContext, useState } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -17,7 +19,8 @@ import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
 import { ThemeContext } from "@/context/themeContext";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "react-i18next";
-import NavBarMobile from "./navbar-mobile";
+
+const NavBarMobile = dynamic(() => import("./navbar-mobile"), { ssr: false });
 
 import dark from "../../public/theme/themes-black.png";
 import light from "../../public/theme/themes-light.png";
@@ -153,7 +156,9 @@ export default function HeaderMain() {
           )}
         </NavbarContent>
         {/* Mobile menu */}
-        <NavBarMobile isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+        <Suspense fallback={null}>
+          <NavBarMobile isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+        </Suspense>
       </Navbar>
     </header>
   );

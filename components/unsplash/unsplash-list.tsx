@@ -1,18 +1,34 @@
 "use client";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import MasonryLayout from "@/components/unsplash/masonry-layout";
 import useUnsplashLoadingPage from "@/components/unsplash/hooks";
 import SpinnerItem from "@/components/spinners/spinner";
 import { setSelectedPhoto } from "@/lib/features/unsplash/unsplashSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import PhotoPageUnsplash from "@/app/(content)/unsplash/[slug]/@modal/(.)[slug]/image/page";
 import { isLikeSelector } from "@/lib/selectors/unsplashSelectors";
 import OverlayImage from "./overlay/overlay-image";
 import { useWindowSize } from "@react-hook/window-size";
-import { ScrollToTopButton } from "./scroll/scroll-to-top";
 
 import "@/styles/globals.css";
 import { useCallback } from "react";
+
+const PhotoPageUnsplash = dynamic(
+  () =>
+    import(
+      "@/app/(content)/unsplash/[slug]/@modal/(.)[slug]/image/page"
+    ),
+  { ssr: false }
+);
+
+const ScrollToTopButton = dynamic(
+  () =>
+    import("./scroll/scroll-to-top").then((m) => ({
+      default: m.ScrollToTopButton,
+    })),
+  { ssr: false }
+);
 
 export interface WindowSize {
   width: number;
@@ -70,8 +86,10 @@ export default function UnsplashList() {
           </div>
         )}
       </div>
-      <PhotoPageUnsplash />
-      <ScrollToTopButton />
+      <Suspense fallback={null}>
+        <PhotoPageUnsplash />
+        <ScrollToTopButton />
+      </Suspense>
     </div>
   );
 }

@@ -1,5 +1,11 @@
 import "@/styles/globals.css";
-import ProgressHandler from "@/components/products/modal/progress/ProgressHandler";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const ProgressHandler = dynamic(
+  () => import("@/components/products/modal/progress/ProgressHandler"),
+  { ssr: false }
+);
 
 export default function RootLayout({
   children,
@@ -10,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-      <ProgressHandler />
+      <Suspense fallback={null}>
+        <ProgressHandler />
+      </Suspense>
       {children}
       {modal}
     </div>

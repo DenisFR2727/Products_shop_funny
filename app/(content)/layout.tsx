@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import { Providers } from "../providers";
 import HeaderMain from "@/components/header/header-main";
 import Footer from "@/components/footer/footer-products";
 
 import "@/styles/globals.css";
 import { ThemeContextProvider } from "@/context/themeContext";
-import TelegramChatWidget from "@/components/products/telegram-chat/telegram-chat-widget";
+
+const SpeedInsights = dynamic(
+  () =>
+    import("@vercel/speed-insights/next").then((m) => ({ default: m.SpeedInsights })),
+  { ssr: false }
+);
+
+const TelegramChatWidget = dynamic(
+  () => import("@/components/products/telegram-chat/telegram-chat-widget"),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   title: "Funny Shop",
@@ -28,13 +39,17 @@ export default function RootLayout({
           <div id="overlay-header"></div>
           <div id="page">
             {children}
-            <TelegramChatWidget />
+            <Suspense fallback={null}>
+              <TelegramChatWidget />
+            </Suspense>
           </div>
           <div id="dialog-overlay"></div>
         </Providers>
       </ThemeContextProvider>
       <Footer />
-      <SpeedInsights />
+      <Suspense fallback={null}>
+        <SpeedInsights />
+      </Suspense>
     </section>
   );
 }
