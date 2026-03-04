@@ -1,6 +1,8 @@
 import Link from "next/link";
 import CleaningAfterOrdering from "@/components/products/cart/clear-cart";
 
+import TimerForReturn from "@/components/products/cart/orders/timer-return";
+
 import "./thanks.scss";
 
 export default async function ThanksPage({
@@ -9,6 +11,7 @@ export default async function ThanksPage({
   params: Promise<{ orderId: string }>;
 }) {
   const { orderId } = await params;
+
   return (
     <div className="thanks_page">
       <CleaningAfterOrdering />
@@ -17,6 +20,7 @@ export default async function ThanksPage({
         ORDER NO. <span className="thanks_order">{orderId}</span>
       </p>
       <p>WE WILL SEND YOU ANOTHER EMAIL WHEN IT IS IN TRANSIT</p>
+      <TimerForReturn />
       <Link href="/products">
         <span className="thanks_btn">Return Products</span>
       </Link>

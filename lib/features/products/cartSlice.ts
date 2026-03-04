@@ -15,6 +15,7 @@ interface CartState {
   shippingPriceTotal: number;
   togglePanel: boolean;
   showProgressModal: boolean;
+  visiblePageThanks: boolean;
 }
 
 const initialState: CartState = {
@@ -27,6 +28,7 @@ const initialState: CartState = {
   shippingPriceTotal: 0,
   togglePanel: false,
   showProgressModal: false,
+  visiblePageThanks: true,
 };
 const calculateTotals = (state: CartState): void => {
   state.subtotal = state.cart.reduce(
@@ -82,8 +84,9 @@ const cartSlice = createSlice({
     setShowProgress(state, action: PayloadAction<boolean>) {
       state.showProgressModal = action.payload;
     },
-    clearCart(state, action: PayloadAction) {
+    clearCart(state) {
       state.cart = [];
+      state.visiblePageThanks = false;
     },
   },
 });

@@ -1,0 +1,13 @@
+"use client";
+
+import dynamic from "next/dynamic";
+
+const SpeedInsights = dynamic(
+  () =>
+    import("@vercel/speed-insights/next").then((m) => ({
+      default: m.SpeedInsights,
+    })),
+  { ssr: false }
+);
+
+export default SpeedInsights;

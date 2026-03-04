@@ -1,23 +1,13 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { Providers } from "../providers";
 import HeaderMain from "@/components/header/header-main";
 import Footer from "@/components/footer/footer-products";
+import SpeedInsights from "@/components/SpeedInsightsDynamic";
+import TelegramChatWidget from "@/components/products/telegram-chat/TelegramChatWidgetDynamic";
 
 import "@/styles/globals.css";
 import { ThemeContextProvider } from "@/context/themeContext";
-
-const SpeedInsights = dynamic(
-  () =>
-    import("@vercel/speed-insights/next").then((m) => ({ default: m.SpeedInsights })),
-  { ssr: false }
-);
-
-const TelegramChatWidget = dynamic(
-  () => import("@/components/products/telegram-chat/telegram-chat-widget"),
-  { ssr: false }
-);
 
 export const metadata: Metadata = {
   title: "Funny Shop",

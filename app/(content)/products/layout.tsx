@@ -1,11 +1,6 @@
 import "@/styles/globals.css";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
-
-const ProgressHandler = dynamic(
-  () => import("@/components/products/modal/progress/ProgressHandler"),
-  { ssr: false }
-);
+import ProgressHandler from "@/components/products/modal/progress/ProgressHandlerDynamic";
 
 export default function RootLayout({
   children,

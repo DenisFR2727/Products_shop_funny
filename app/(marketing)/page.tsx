@@ -2,17 +2,12 @@ import Link from "next/link";
 import ProductCard from "@/components/products/product-card";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { getProducts } from "@/lib/api/api";
 import SlideProducts from "@/components/products/slide/slide-products";
+import ProgressHandler from "@/components/products/modal/progress/ProgressHandlerDynamic";
 
 import "./marketing.scss";
-
-const ProgressHandler = dynamic(
-  () => import("@/components/products/modal/progress/ProgressHandler"),
-  { ssr: false }
-);
 
 export const metadata: Metadata = {
   title: "Welcome in my shopping site",
