@@ -36,15 +36,6 @@ export default function CategorySelect({
           </option>
         ))}
       </Field>
-      {/* <label htmlFor="select_category">{t("Select category")}</label>
-      <select>
-        <option value="All">All</option>
-        {uniqCategories.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select> */}
     </div>
   );
 }
