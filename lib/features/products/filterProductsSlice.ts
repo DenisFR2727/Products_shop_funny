@@ -9,7 +9,7 @@ interface FilterProducts {
   serchProducts: string;
   selectedCategory: string;
   rangePrice: number | null;
-  selectAlphabet: boolean;
+  selectAlphabet: "alphabet" | null;
   selectPriceMinOrMax: "min" | "max" | null;
 }
 
@@ -17,7 +17,7 @@ const initialState: FilterProducts = {
   serchProducts: "",
   selectedCategory: "",
   rangePrice: null,
-  selectAlphabet: false,
+  selectAlphabet: null,
   selectPriceMinOrMax: null,
 };
 const filterProductsSlice = createSlice({
@@ -27,10 +27,12 @@ const filterProductsSlice = createSlice({
     setSearchProducts(state, action: PayloadAction<string>) {
       state.serchProducts = action.payload;
     },
-    resetAllValueFilter(state, action: PayloadAction<string>) {
-      state.serchProducts = action.payload;
-      state.selectedCategory = action.payload;
+    resetAllValueFilter(state) {
+      state.serchProducts = "";
+      state.selectedCategory = "All";
       state.rangePrice = null;
+      state.selectAlphabet = null;
+      state.selectPriceMinOrMax = null;
     },
     setRangePrice(state, action: PayloadAction<number>) {
       state.rangePrice = action.payload;
@@ -38,7 +40,7 @@ const filterProductsSlice = createSlice({
     setSelectedCategory(state, action: PayloadAction<string>) {
       state.selectedCategory = action.payload;
     },
-    setSelectAlphabet(state, action: PayloadAction<boolean>) {
+    setSelectAlphabet(state, action: PayloadAction<"alphabet" | null>) {
       state.selectAlphabet = action.payload;
     },
     setSelectPriceSorter(state, action: PayloadAction<"min" | "max" | null>) {

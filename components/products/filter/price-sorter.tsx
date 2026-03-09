@@ -2,15 +2,14 @@
 import { setSelectPriceSorter } from "@/lib/features/products/filterProductsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useTranslation } from "react-i18next";
+import { priceSortSelector } from "@/lib/selectors/filterSelectors";
 import Field from "./field/field";
 
 import classes from "./price-sorter.module.scss";
 
 export default function PriceSorter() {
   const dispatch = useAppDispatch();
-  const priceSort = useAppSelector(
-    (state) => state.filterReducer.selectPriceMinOrMax,
-  );
+  const priceSort = useAppSelector(priceSortSelector);
   const { t } = useTranslation();
 
   function handleMinPrice() {
@@ -31,7 +30,7 @@ export default function PriceSorter() {
       />
       <Field
         label={t("Max price")}
-        id="mix_price"
+        id="max_price"
         type="checkbox"
         onChange={handleMaxPrice}
         checked={priceSort === "max"}

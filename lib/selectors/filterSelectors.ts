@@ -8,3 +8,9 @@ export const selectedCategorySelector = (state: RootState) =>
 
 export const selectedRangeSelector = (state: RootState) =>
   state.filterReducer.rangePrice;
+
+export const selectAlphabetSelector = (state: RootState) =>
+  state.filterReducer.selectAlphabet;
+
+export const priceSortSelector = (state: RootState) =>
+  state.filterReducer.selectPriceMinOrMax;

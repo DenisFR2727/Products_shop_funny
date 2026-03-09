@@ -41,14 +41,18 @@ export function useFilterProducts(products: IProducts[]) {
     if (selectedRange) {
       result = result.filter((p) => p.price <= selectedRange);
     }
-    if (selectedAlphabet) {
-      result.sort((a, b) => a.title.localeCompare(b.title));
-    }
-    if (minMaxPriceSelect === "min") {
-      result.sort((a, b) => a.price - b.price);
-    } else if (minMaxPriceSelect === "max") {
-      result.sort((a, b) => b.price - a.price);
-    }
+    result.sort((a, b) => {
+      if (minMaxPriceSelect === "min") return a.price - b.price;
+      if (minMaxPriceSelect === "max") return b.price - a.price;
+
+      if (selectedAlphabet === "alphabet") {
+        const titleCompare = a.title.localeCompare(b.title);
+        if (titleCompare !== 0) return titleCompare;
+      }
+
+      return 0;
+    });
+
     return result;
   }, [
     products,
@@ -86,9 +90,7 @@ export function useFilterForm() {
     setSearchTitle("");
     setSelectedCategoriesCurrent("All");
     setDefaultRange(3000);
-    dispatch(resetAllValueFilter(""));
-    dispatch(setSelectAlphabet(false));
-    dispatch(setSelectPriceSorter(null));
+    dispatch(resetAllValueFilter());
   };
 
   return {
