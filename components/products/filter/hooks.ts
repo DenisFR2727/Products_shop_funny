@@ -3,11 +3,11 @@ import {
   resetAllValueFilter,
   setRangePrice,
   setSearchProducts,
-  setSelectAlphabet,
   setSelectedCategory,
-  setSelectPriceSorter,
 } from "@/lib/features/products/filterProductsSlice";
 import {
+  priceSortSelector,
+  selectAlphabetSelector,
   selectedCategorySelector,
   selectedRangeSelector,
   serchProductsSelector,
@@ -20,12 +20,8 @@ export function useFilterProducts(products: IProducts[]) {
   const serchProducts = useAppSelector(serchProductsSelector);
   const selectedCategory = useAppSelector(selectedCategorySelector);
   const selectedRange = useAppSelector(selectedRangeSelector);
-  const selectedAlphabet = useAppSelector(
-    (state) => state.filterReducer.selectAlphabet,
-  );
-  const minMaxPriceSelect = useAppSelector(
-    (state) => state.filterReducer.selectPriceMinOrMax,
-  );
+  const selectedAlphabet = useAppSelector(selectAlphabetSelector);
+  const minMaxPriceSelect = useAppSelector(priceSortSelector);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -42,15 +38,19 @@ export function useFilterProducts(products: IProducts[]) {
       result = result.filter((p) => p.price <= selectedRange);
     }
     result.sort((a, b) => {
-      if (minMaxPriceSelect === "min") return a.price - b.price;
-      if (minMaxPriceSelect === "max") return b.price - a.price;
+      let cmp = 0;
 
-      if (selectedAlphabet === "alphabet") {
-        const titleCompare = a.title.localeCompare(b.title);
-        if (titleCompare !== 0) return titleCompare;
+      if (minMaxPriceSelect === "min") {
+        cmp = a.price - b.price;
+      } else if (minMaxPriceSelect === "max") {
+        cmp = b.price - a.price;
       }
 
-      return 0;
+      if (cmp === 0 && selectedAlphabet === "alphabet") {
+        cmp = a.title.localeCompare(b.title);
+      }
+
+      return cmp;
     });
 
     return result;

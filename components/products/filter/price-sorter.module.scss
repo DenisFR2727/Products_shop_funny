@@ -13,6 +13,8 @@
 }
 @media (max-width: 625px) {
   .min_max_price {
+    display: flex;
+    align-items: inherit;
     font-weight: 500;
   }
 }
