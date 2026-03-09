@@ -17,5 +17,7 @@ export const uk = {
     Amount: "Сума",
     remove: "видалити",
     "Shopping Cart": "Кошик для покупок",
+    "Max price": "Макс ціна",
+    "Min price": "Мін ціна",
   },
 };

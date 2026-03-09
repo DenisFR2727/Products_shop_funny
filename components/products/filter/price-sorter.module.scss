@@ -1,0 +1,18 @@
+.min_max_price {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 600;
+}
+.min_max_price input[type="checkbox"] {
+  accent-color: #7c3aed;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+@media (max-width: 625px) {
+  .min_max_price {
+    font-weight: 500;
+  }
+}

@@ -17,5 +17,7 @@ export const en = {
     Amount: "Amount",
     remove: "remove",
     "Shopping Cart": "Shopping Cart",
+    "Max price": "Max price",
+    "Min price": "Min price",
   },
 };

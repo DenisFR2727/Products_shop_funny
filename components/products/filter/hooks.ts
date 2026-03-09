@@ -5,6 +5,7 @@ import {
   setSearchProducts,
   setSelectAlphabet,
   setSelectedCategory,
+  setSelectPriceSorter,
 } from "@/lib/features/products/filterProductsSlice";
 import {
   selectedCategorySelector,
@@ -21,6 +22,9 @@ export function useFilterProducts(products: IProducts[]) {
   const selectedRange = useAppSelector(selectedRangeSelector);
   const selectedAlphabet = useAppSelector(
     (state) => state.filterReducer.selectAlphabet,
+  );
+  const minMaxPriceSelect = useAppSelector(
+    (state) => state.filterReducer.selectPriceMinOrMax,
   );
 
   const filteredProducts = useMemo(() => {
@@ -40,6 +44,11 @@ export function useFilterProducts(products: IProducts[]) {
     if (selectedAlphabet) {
       result.sort((a, b) => a.title.localeCompare(b.title));
     }
+    if (minMaxPriceSelect === "min") {
+      result.sort((a, b) => a.price - b.price);
+    } else if (minMaxPriceSelect === "max") {
+      result.sort((a, b) => b.price - a.price);
+    }
     return result;
   }, [
     products,
@@ -47,6 +56,7 @@ export function useFilterProducts(products: IProducts[]) {
     selectedRange,
     selectedCategory,
     selectedAlphabet,
+    minMaxPriceSelect,
   ]);
 
   return { filteredProducts };
@@ -78,6 +88,7 @@ export function useFilterForm() {
     setDefaultRange(3000);
     dispatch(resetAllValueFilter(""));
     dispatch(setSelectAlphabet(false));
+    dispatch(setSelectPriceSorter(null));
   };
 
   return {

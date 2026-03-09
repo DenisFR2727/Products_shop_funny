@@ -10,6 +10,7 @@ interface FilterProducts {
   selectedCategory: string;
   rangePrice: number | null;
   selectAlphabet: boolean;
+  selectPriceMinOrMax: "min" | "max" | null;
 }
 
 const initialState: FilterProducts = {
@@ -17,6 +18,7 @@ const initialState: FilterProducts = {
   selectedCategory: "",
   rangePrice: null,
   selectAlphabet: false,
+  selectPriceMinOrMax: null,
 };
 const filterProductsSlice = createSlice({
   name: "products",
@@ -39,6 +41,9 @@ const filterProductsSlice = createSlice({
     setSelectAlphabet(state, action: PayloadAction<boolean>) {
       state.selectAlphabet = action.payload;
     },
+    setSelectPriceSorter(state, action: PayloadAction<"min" | "max" | null>) {
+      state.selectPriceMinOrMax = action.payload;
+    },
   },
 });
 export const {
@@ -47,5 +52,6 @@ export const {
   setRangePrice,
   setSelectedCategory,
   setSelectAlphabet,
+  setSelectPriceSorter,
 } = filterProductsSlice.actions;
 export default filterProductsSlice.reducer;
