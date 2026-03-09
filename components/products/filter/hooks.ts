@@ -13,7 +13,7 @@ import {
   serchProductsSelector,
 } from "@/lib/selectors/filterSelectors";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { IProducts } from "@/lib/types";
 
 export function useFilterProducts(products: IProducts[]) {
@@ -73,13 +73,17 @@ export function useFilterForm() {
     useState<string>("All");
   const [defaultRange, setDefaultRange] = useState<number>(3000);
 
-  const changeSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    let searchText = e.target.value;
-    if (/[^a-zA-Zа-яА-ЯґҐєЄіІїЇ]/g.test(searchText)) {
-      return;
-    }
-    setSearchTitle(e.target.value);
-  };
+  const changeSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const searchText = e.target.value;
+
+      if (/[^a-zA-Zа-яА-ЯґҐєЄіІїЇ0-9\s]/g.test(searchText)) {
+        return;
+      }
+      setSearchTitle(searchText);
+    },
+    [],
+  );
 
   const submitSearch = (): void => {
     dispatch(setSearchProducts(searchTitle));

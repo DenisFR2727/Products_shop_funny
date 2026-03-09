@@ -37,6 +37,7 @@ const FilterPanel = memo(function ({
         <SearchProduct
           searchTitleProducts={searchTitle}
           changeSearchProducts={changeSearch}
+          products={products}
           t={t}
         />
         <CategorySelect
