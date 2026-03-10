@@ -11,13 +11,13 @@ import { useState } from "react";
 
 import classes from "../cart.module.scss";
 
+type IsModal = number | null;
+
 export default function OrdersList() {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(selectOrders);
   const { t } = useTranslation();
-  const [openImageOrder, setOpenImageOrder] = useState<
-    number | undefined | null
-  >(null);
+  const [openImageOrder, setOpenImageOrder] = useState<IsModal>(null);
 
   return (
     <ul className={classes.cart_order}>
@@ -31,7 +31,7 @@ export default function OrdersList() {
             />
           </div>
           {openImageOrder === order.id && (
-            <ModalImageOrder onClose={() => setOpenImageOrder(undefined)}>
+            <ModalImageOrder onClose={() => setOpenImageOrder(null)}>
               <img src={order?.thumbnail} alt={order.title} />
             </ModalImageOrder>
           )}
@@ -89,9 +89,15 @@ export function ModalImageOrder({
   onClose: () => void;
 }) {
   return createPortal(
-    <dialog className={classes.overlay} open onClick={onClose}>
+    <dialog
+      className={classes.overlay}
+      open
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className={classes.modal}>{children}</div>
     </dialog>,
-    document.body as HTMLElement,
+    document.body,
   );
-}
+};
