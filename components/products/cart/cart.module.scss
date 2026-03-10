@@ -238,3 +238,34 @@
   flex-direction: column;
   gap: 10px;
 }
+
+// Modal Order
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1000;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.overlay img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 8px;
+  cursor: pointer;
+  border-radius: 5px solid white;
+}
+.overlay .modal {
+  position: relative;
+  background: white;
+  border-radius: 5px;
+}

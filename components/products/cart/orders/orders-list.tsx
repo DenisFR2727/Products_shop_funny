@@ -5,33 +5,47 @@ import {
 } from "@/lib/features/products/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { selectOrders } from "@/lib/selectors/cartSelectors";
-
-import styles from "../cart.module.scss";
 import { useTranslation } from "react-i18next";
+import { createPortal } from "react-dom";
+import { useState } from "react";
+
+import classes from "../cart.module.scss";
 
 export default function OrdersList() {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(selectOrders);
   const { t } = useTranslation();
+  const [openImageOrder, setOpenImageOrder] = useState<
+    number | undefined | null
+  >(null);
 
   return (
-    <ul className={styles.cart_order}>
+    <ul className={classes.cart_order}>
       {orders.map((order) => (
         <li key={order.id}>
-          <div className={styles.order_img}>
-            <img src={order?.thumbnail} alt={order.title} />
+          <div className={classes.order_img}>
+            <img
+              src={order?.thumbnail}
+              alt={order.title}
+              onClick={() => setOpenImageOrder(order.id)}
+            />
           </div>
-          <div className={styles.order_title}>
+          {openImageOrder === order.id && (
+            <ModalImageOrder onClose={() => setOpenImageOrder(undefined)}>
+              <img src={order?.thumbnail} alt={order.title} />
+            </ModalImageOrder>
+          )}
+          <div className={classes.order_title}>
             <h2>{order.title}</h2>
-            <span className={styles.order_title_item}>{order.brand}</span>
-            <span className={styles.order_title_item}>{order.category}</span>
+            <span className={classes.order_title_item}>{order.brand}</span>
+            <span className={classes.order_title_item}>{order.category}</span>
           </div>
-          <div className={styles.amount_price_block}>
-            <div className={styles.order_amount}>
+          <div className={classes.amount_price_block}>
+            <div className={classes.order_amount}>
               <h2>{t("Amount")}</h2>
               <select
                 value={order.amount}
-                className={`${styles.order_amount_item} ${styles.order_select}`}
+                className={`${classes.order_amount_item} ${classes.order_select}`}
                 onChange={(e) =>
                   dispatch(
                     amountToPriceProduct({
@@ -51,18 +65,33 @@ export default function OrdersList() {
                 ))}
               </select>
               <button
-                className={`${styles.order_amount_item} ${styles.order_remove}`}
+                className={`${classes.order_amount_item} ${classes.order_remove}`}
                 onClick={() => dispatch(removeOrder(order.id))}
               >
                 {t("remove")}
               </button>
             </div>
-            <div className={styles.order_price}>
-              <span className={styles.order_price_item}>$ {order.price}</span>
+            <div className={classes.order_price}>
+              <span className={classes.order_price_item}>$ {order.price}</span>
             </div>
           </div>
         </li>
       ))}
     </ul>
+  );
+}
+
+export function ModalImageOrder({
+  children,
+  onClose,
+}: {
+  children: React.ReactNode;
+  onClose: () => void;
+}) {
+  return createPortal(
+    <dialog className={classes.overlay} open onClick={onClose}>
+      <div className={classes.modal}>{children}</div>
+    </dialog>,
+    document.body as HTMLElement,
   );
 }
