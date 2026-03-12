@@ -1,9 +1,13 @@
 "use server";
 
+import { ApiError } from "@/lib/api/error";
+import PostReviews from "@/lib/api/reviews";
+
 export interface ReviewsState {
   errors?: {
     nameUser?: string;
     text?: string;
+    form?: string;
   };
   values?: {
     nameUser?: string;
@@ -42,6 +46,16 @@ export default async function createReviews(
       values: data,
     };
   }
-  console.log(data);
-  return null;
+
+  try {
+    await PostReviews(data);
+    return null;
+  } catch (err) {
+    const message =
+      err instanceof ApiError ? err.message : "Failed to send review. Try again.";
+    return {
+      errors: { form: message },
+      values: data,
+    };
+  }
 }

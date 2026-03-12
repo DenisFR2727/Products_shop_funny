@@ -31,6 +31,7 @@ export async function apiRequest<T>(
     }
     return await res.json();
   } catch (error: unknown) {
+    if (error instanceof ApiError) throw error;
     throw new ApiError(0, handleApiError(error));
   }
 }

@@ -6,7 +6,10 @@ import createReviews, { ReviewsState } from "@/actions/reviews";
 export default function CreateReviews() {
   const [state, formAction] = useActionState<ReviewsState | null>(
     createReviews,
-    { errors: undefined, values: undefined },
+    {
+      errors: undefined,
+      values: undefined,
+    } as ReviewsState | null
   );
   return (
     <div>
@@ -18,6 +21,7 @@ export default function CreateReviews() {
           name="name_user"
           placeholder="Name"
         />
+        <p>{state?.errors?.nameUser && <span>{state.errors.nameUser}</span>}</p>
         <Field
           as="textarea"
           id="textarea_reviews"
@@ -25,6 +29,10 @@ export default function CreateReviews() {
           label="Reviews"
           placeholder="Reviews write..."
         />
+        <p>{state?.errors?.text && <span>{state.errors.text}</span>}</p>
+        {state?.errors?.form && (
+          <p role="alert">{state.errors.form}</p>
+        )}
         <button type="submit">Send</button>
       </form>
     </div>
