@@ -10,7 +10,10 @@ export default function Field({ id, label, ...props }: PropsField) {
           {props.children}
         </select>
       ) : props.as === "textarea" ? (
-        <textarea id={id} {...props} />
+        <div style={{ position: "relative" }}>
+          <textarea id={id} {...props} />
+          {props.children}
+        </div>
       ) : (
         <input id={id} {...props} />
       )}

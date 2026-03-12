@@ -4,6 +4,7 @@ import { ApiError } from "@/lib/api/error";
 import PostReviews from "@/lib/api/reviews";
 
 export interface ReviewsState {
+  success?: boolean;
   errors?: {
     nameUser?: string;
     text?: string;
@@ -49,10 +50,12 @@ export default async function createReviews(
 
   try {
     await PostReviews(data);
-    return null;
+    return { success: true };
   } catch (err) {
     const message =
-      err instanceof ApiError ? err.message : "Failed to send review. Try again.";
+      err instanceof ApiError
+        ? err.message
+        : "Failed to send review. Try again.";
     return {
       errors: { form: message },
       values: data,

@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+.reviews {
+  form {
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    label {
+      font-size: 20px;
+      font-family: "Roboto", sans-serif;
+    }
+    input {
+      border: none;
+      outline: none;
+      border-bottom: 1px solid grey;
+      padding: 0px 5px 10px 0px;
+      font-weight: 600;
+    }
+    textarea {
+      border: 1px solid grey;
+      padding: 10px 10px;
+      border-radius: 10px;
+      height: 300px;
+      font-size: 18px;
+    }
+    .btn_reviews {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      cursor: pointer;
+      border: 1px solid grey;
+      height: 40px;
+
+      color: black;
+      font-weight: 700;
+      border-radius: 20px;
+      background-color: #f5a524;
+      user-select: none;
+      cursor: pointer;
+    }
+    .btn_reviews:hover {
+      filter: brightness(90%);
+    }
+    .spinner {
+      width: 34px;
+      height: 34px;
+    }
+  }
+}
+
+.error {
+  color: red;
+  font-weight: 700;
+}
+
+.textarea {
+  position: relative;
+  width: 100%;
+}
+.counter {
+  position: absolute;
+  left: 0;
+  padding: 0 0 0 10px;
+  bottom: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  filter: brightness(100%);
+  color: grey;
+}
