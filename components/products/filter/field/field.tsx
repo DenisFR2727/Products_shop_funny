@@ -9,6 +9,8 @@ export default function Field({ id, label, ...props }: PropsField) {
         <select id={id} {...props}>
           {props.children}
         </select>
+      ) : props.as === "textarea" ? (
+        <textarea id={id} {...props} />
       ) : (
         <input id={id} {...props} />
       )}

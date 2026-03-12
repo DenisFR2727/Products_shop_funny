@@ -1,3 +1,9 @@
+import CreateReviews from "@/components/reviews/create-reviews";
+
 export default function ReviewsPage() {
-  return <div>reviews page</div>;
+  return (
+    <div>
+      <CreateReviews />
+    </div>
+  );
 }

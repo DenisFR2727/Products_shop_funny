@@ -1,4 +1,9 @@
-import { InputHTMLAttributes, SelectHTMLAttributes, ReactNode } from "react";
+import {
+  InputHTMLAttributes,
+  SelectHTMLAttributes,
+  ReactNode,
+  TextareaHTMLAttributes,
+} from "react";
 
 type BaseProps = {
   label: string;
@@ -15,5 +20,8 @@ type SelectProps = BaseProps &
     as: "select";
     children: ReactNode;
   };
-
-export type PropsField = InputProps | SelectProps;
+type TextareaProps = BaseProps &
+  TextareaHTMLAttributes<HTMLTextAreaElement> & {
+    as: "textarea";
+  };
+export type PropsField = InputProps | SelectProps | TextareaProps;

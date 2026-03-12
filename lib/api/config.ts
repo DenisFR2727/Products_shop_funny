@@ -8,11 +8,14 @@ export const API_ADDRESS_CREATE =
   "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
 export const API_USERS_CREATE =
   "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
+export const API_REVIEWS_CREATE =
+  "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
 
 export const API_ENDPOINTS = {
   PRODUCTS: "/products",
   ADDRESS: "/address",
   USERS: "/users",
+  REVIEWS: "/reviews",
 } as const;
 
 // Rate limiting constants

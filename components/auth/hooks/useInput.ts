@@ -2,19 +2,19 @@ import { useState } from "react";
 
 export default function useInput(defaultValue: any, validationFn: any) {
   const [enteredValue, setEnteredValue] = useState(defaultValue);
-  const [didEdit, setDidEdit] = useState(false);
+  const [didEdit, setDidEdit] = useState<boolean>(false);
 
   const valueIsValid = validationFn(enteredValue);
 
-  function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>): void {
     setEnteredValue(e.target.value);
     setDidEdit(false);
   }
 
-  function handleInputBlur() {
+  function handleInputBlur(): void {
     setDidEdit(true);
   }
-  function reset() {
+  function reset(): void {
     setEnteredValue(defaultValue);
     setDidEdit(false);
   }
