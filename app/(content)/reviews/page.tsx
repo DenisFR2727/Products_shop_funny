@@ -1,6 +1,5 @@
-import ReviewsWrapper, {
-  type ReviewItem,
-} from "@/components/reviews/reviews-wrapper";
+import ReviewsWrapper from "@/components/reviews/reviews-wrapper";
+import { ReviewItem } from "@/components/reviews/types";
 import { getReviews } from "@/lib/api/reviews";
 
 export default async function ReviewsPage() {
