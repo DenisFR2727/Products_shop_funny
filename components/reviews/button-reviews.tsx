@@ -1,3 +1,4 @@
+"use client";
 import { useFormStatus } from "react-dom";
 import { SpinnerCircularSplit } from "spinners-react";
 
