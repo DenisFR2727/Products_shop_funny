@@ -1,12 +1,30 @@
 "use client";
-import { useActionState, useEffect, useRef, useState } from "react";
+import type React from "react";
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import createReviews, { ReviewsState } from "@/actions/reviews";
 import Field from "../products/filter/field/field";
 import ButtonReviews from "./button-reviews";
 
 import classes from "./create-reviews.module.scss";
 
-export default function CreateReviews() {
+interface ReviewItem {
+  id: string | number;
+  nameUser: string;
+  text: string;
+  date?: string;
+}
+
+interface CreateReviewsProps {
+  onAddReview: (review: ReviewItem) => void;
+}
+
+export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
   const [state, formAction] = useActionState<ReviewsState | null>(
     createReviews,
     {
@@ -17,6 +35,30 @@ export default function CreateReviews() {
   const [value, setValue] = useState<string>("");
   const formRef = useRef<HTMLFormElement>(null);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const nameUser = formData.get("name_user") as string;
+    const text = formData.get("textarea_reviews") as string;
+
+    startTransition(() => {
+      if (nameUser?.trim() && text?.trim()) {
+        onAddReview({
+          id: Date.now(),
+          nameUser,
+          text,
+          date: new Date().toISOString(),
+        });
+      }
+
+      (formAction as unknown as (formData: FormData) => void)(formData);
+    });
+    setValue("");
+    formRef.current?.reset();
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
@@ -24,12 +66,13 @@ export default function CreateReviews() {
   useEffect(() => {
     if (state?.success) {
       setValue("");
+      formRef.current?.reset();
     }
   }, [state]);
 
   return (
     <div className={classes.reviews}>
-      <form action={formAction} ref={formRef}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <Field
           id="name_user"
           label="User"
@@ -59,7 +102,11 @@ export default function CreateReviews() {
             <span className={classes.error}>{state.errors.text}</span>
           )}
         </p>
-        {state?.errors?.form && <p role="alert">{state.errors.form}</p>}
+        {state?.errors?.form && (
+          <p className={classes.error} role="alert">
+            {state.errors.form}
+          </p>
+        )}
         <ButtonReviews className={classes.btn_reviews} type="submit">
           Send
         </ButtonReviews>

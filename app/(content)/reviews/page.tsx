@@ -1,14 +1,10 @@
-import CreateReviews from "@/components/reviews/create-reviews";
-import ReviewsSection from "@/components/reviews/list-reviews";
+import ReviewsWrapper, {
+  type ReviewItem,
+} from "@/components/reviews/reviews-wrapper";
 import { getReviews } from "@/lib/api/reviews";
 
 export default async function ReviewsPage() {
-  const reviews = await getReviews();
-  console.log(reviews);
-  return (
-    <div>
-      <CreateReviews />
-      <ReviewsSection reviews={reviews} />
-    </div>
-  );
+  const reviews = (await getReviews()) as ReviewItem[];
+
+  return <ReviewsWrapper reviews={reviews} />;
 }

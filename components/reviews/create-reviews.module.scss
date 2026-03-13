@@ -69,3 +69,23 @@
   filter: brightness(100%);
   color: grey;
 }
+// List reviews
+
+.reviews_list {
+  margin-top: 20px;
+  border: 1px solid grey;
+  border-radius: 5px;
+
+  .review {
+    padding: 5px 5px;
+    border-bottom: 1px solid grey;
+
+    .review_text {
+      text-transform: capitalize;
+    }
+    .review_date {
+      font-size: 13px;
+    }
+  }
+  border-bottom: none;
+}

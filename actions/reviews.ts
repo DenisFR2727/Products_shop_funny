@@ -2,6 +2,7 @@
 
 import { ApiError } from "@/lib/api/error";
 import PostReviews from "@/lib/api/reviews";
+import { revalidatePath } from "next/cache";
 
 export interface ReviewsState {
   success?: boolean;
@@ -13,6 +14,7 @@ export interface ReviewsState {
   values?: {
     nameUser?: string;
     text?: string;
+    date?: string;
   };
 }
 
@@ -25,6 +27,7 @@ export default async function createReviews(
   const data = {
     nameUser: (formData.get("name_user") as string) || "",
     text: (formData.get("textarea_reviews") as string) || "",
+    date: new Date().toISOString(),
   };
 
   let errors: ReviewsState["errors"] = {};
@@ -50,6 +53,9 @@ export default async function createReviews(
 
   try {
     await PostReviews(data);
+
+    revalidatePath("/reviews");
+
     return { success: true };
   } catch (err) {
     const message =
