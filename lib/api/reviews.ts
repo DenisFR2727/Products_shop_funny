@@ -12,3 +12,11 @@ export default function PostReviews(data: { nameUser: string; text: string }) {
     cache: "no-store",
   });
 }
+
+export function getReviews() {
+  return apiRequest(
+    `${API_REVIEWS_CREATE}${API_ENDPOINTS.REVIEWS}`,
+    "Failed get reviews",
+    { cache: "no-store" },
+  );
+}
