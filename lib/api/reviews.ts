@@ -1,8 +1,11 @@
+import { ReviewItem } from "@/components/reviews/types";
 import { apiRequest } from "./api-request";
 import { API_ENDPOINTS, API_REVIEWS_CREATE } from "./config";
 
-export default function PostReviews(data: { nameUser: string; text: string }) {
-  const url = `${API_REVIEWS_CREATE}${API_ENDPOINTS.REVIEWS}`;
+const url = `${API_REVIEWS_CREATE}${API_ENDPOINTS.REVIEWS}`;
+
+export default function postReviews(data: ReviewItem) {
+  
   return apiRequest(url, "Failed post reviews", {
     method: "POST",
     headers: {
@@ -13,10 +16,10 @@ export default function PostReviews(data: { nameUser: string; text: string }) {
   });
 }
 
-export function getReviews() {
-  return apiRequest(
-    `${API_REVIEWS_CREATE}${API_ENDPOINTS.REVIEWS}`,
-    "Failed get reviews",
-    { cache: "no-store" },
-  );
-}
+export function getReviews(): Promise<ReviewItem[]> {
+   return apiRequest<ReviewItem[]>(
+     url,
+     "Failed get reviews",
+     { cache: "no-store" },
+   );
+ }

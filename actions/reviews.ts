@@ -1,7 +1,7 @@
 "use server";
 
 import { ApiError } from "@/lib/api/error";
-import PostReviews from "@/lib/api/reviews";
+import postReviews from "@/lib/api/reviews";
 import { revalidatePath } from "next/cache";
 
 export interface ReviewsState {
@@ -52,7 +52,7 @@ export default async function createReviews(
   }
 
   try {
-    await PostReviews(data);
+    await postReviews(data);
 
     revalidatePath("/reviews");
 
