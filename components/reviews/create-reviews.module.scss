@@ -69,6 +69,76 @@
   filter: brightness(100%);
   color: grey;
 }
+// Toggle button
+.toggle_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f5a524;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.chevron {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+.chevron_open {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+// Animations
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.reviews_list_animated {
+  animation: slideDown 0.28s ease forwards;
+
+  &.closing {
+    animation: slideUp 0.28s ease forwards;
+  }
+}
+
 // List reviews
 
 .reviews_list {
@@ -82,6 +152,10 @@
 
     .review_text {
       text-transform: capitalize;
+      word-break: break-word;  
+      overflow-wrap: break-word;
+      white-space: normal; 
+      padding-right: 5px;
     }
     .review_date {
       font-size: 13px;
