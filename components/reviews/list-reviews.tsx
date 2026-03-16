@@ -1,7 +1,7 @@
 "use client";
 
 import classes from "./create-reviews.module.scss";
-
+// improve
 export default function ReviewsSection({ reviews }: any) {
   return (
     <div className={classes.reviews_list}>
