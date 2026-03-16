@@ -12,6 +12,6 @@ export async function postAddressOrder(data: any) {
       },
       body: JSON.stringify(data),
       cache: "no-store",
-    }
+    },
   );
 }
