@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface ReviewItem {
   id: string | number;
   nameUser: string;
@@ -7,4 +9,7 @@ export interface ReviewItem {
 
 export interface ReviewsWrapperProps {
   reviews: ReviewItem[];
+}
+export interface ReviewsModalProps {
+  children: ReactNode;
 }

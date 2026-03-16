@@ -32,6 +32,7 @@ export default function RootLayout({
             <Suspense fallback={null}>
               <TelegramChatWidget />
             </Suspense>
+            <div id="reviews"></div>
           </div>
           <div id="dialog-overlay"></div>
         </Providers>
