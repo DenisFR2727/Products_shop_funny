@@ -19,5 +19,10 @@ export const en = {
     "Shopping Cart": "Shopping Cart",
     "Max price": "Max price",
     "Min price": "Min price",
+    User: "User",
+    Reviews: "Reviews",
+    Send: "Send",
+    "Reviews write": "Reviews write",
+    Name: "Name",
   },
 };

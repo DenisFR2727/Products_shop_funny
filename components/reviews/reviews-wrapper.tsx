@@ -6,6 +6,7 @@ import ReviewsSection from "./list-reviews";
 import { ReviewItem, ReviewsModalProps, ReviewsWrapperProps } from "./types";
 import { createPortal } from "react-dom";
 import classes from "./create-reviews.module.scss";
+import { useTranslation } from "react-i18next";
 
 export default function ReviewsWrapper({ reviews }: ReviewsWrapperProps) {
   const [optimisticReviews, addOptimisticReview] = useOptimistic<
@@ -17,6 +18,7 @@ export default function ReviewsWrapper({ reviews }: ReviewsWrapperProps) {
   const sortedReviews = [...optimisticReviews].sort(
     (a, b) => Number(b.id) - Number(a.id),
   );
+  const { t } = useTranslation();
 
   function handleVisible() {
     if (visibleReviews) {
@@ -38,7 +40,7 @@ export default function ReviewsWrapper({ reviews }: ReviewsWrapperProps) {
         onClick={handleVisible}
         className={classes.toggle_btn}
       >
-        Reviews
+        {t("Reviews")}
         <span
           className={`${classes.chevron} ${visibleReviews && !isClosing ? classes.chevron_open : ""}`}
         />

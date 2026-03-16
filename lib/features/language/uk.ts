@@ -19,5 +19,10 @@ export const uk = {
     "Shopping Cart": "Кошик для покупок",
     "Max price": "Макс ціна",
     "Min price": "Мін ціна",
+    User: "Користувач",
+    Reviews: "Відгуки",
+    Send: "Відправити",
+    "Reviews write": "Написати відгук",
+    Name: "Ім'я",
   },
 };

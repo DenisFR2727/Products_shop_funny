@@ -12,6 +12,7 @@ import Field from "../products/filter/field/field";
 import ButtonReviews from "./button-reviews";
 
 import classes from "./create-reviews.module.scss";
+import { useTranslation } from "react-i18next";
 
 interface ReviewItem {
   id: string | number;
@@ -34,6 +35,7 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
   );
   const [value, setValue] = useState<string>("");
   const formRef = useRef<HTMLFormElement>(null);
+  const { t } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,10 +77,10 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
       <form ref={formRef} onSubmit={handleSubmit}>
         <Field
           id="name_user"
-          label="User"
+          label={t("User")}
           type="text"
           name="name_user"
-          placeholder="Name"
+          placeholder={`${t("Name")}`}
         />
         <p>
           {state?.errors?.nameUser && (
@@ -89,8 +91,8 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
           as="textarea"
           id="textarea_reviews"
           name="textarea_reviews"
-          label="Reviews"
-          placeholder="Reviews write..."
+          label={t("Reviews")}
+          placeholder={`${t("Reviews write")}...`}
           onChange={handleChange}
           value={value}
           className={classes.textarea}
@@ -108,7 +110,7 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
           </p>
         )}
         <ButtonReviews className={classes.btn_reviews} type="submit">
-          Send
+          {t("Send")}
         </ButtonReviews>
       </form>
     </div>
