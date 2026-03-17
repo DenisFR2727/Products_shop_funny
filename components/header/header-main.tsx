@@ -109,7 +109,7 @@ export default function HeaderMain() {
           <NavbarItem>
             <LanguageSelect />
           </NavbarItem>
-          <NavbarItem className="lg:flex">
+          <NavbarItem className="theme-toggle-nav">
             <span className="header_login-nav" onClick={toggleTheme}>
               {theme === "light_theme" ? (
                 <Image
