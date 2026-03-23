@@ -134,7 +134,9 @@ export default function HeaderMain() {
             {status === "authenticated" ? (
               <div className="user-nav">
                 <span className="user-name">
-                  {session.user?.name || session.user?.email}
+                  <Link href={"/profile"}>
+                    {session.user?.name || session.user?.email}
+                  </Link>
                 </span>
                 <button
                   className="logout-btn"
