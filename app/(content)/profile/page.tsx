@@ -1,12 +1,11 @@
 import { Metadata } from "next";
-
-// export const dynamic = "force-static";
+import ProfileComponent from "@/components/profile/profile";
 
 export const metadata: Metadata = {
-  title: "profile user funny page",
-  description: "Changes user profile funny page",
+  title: "Profile | Funny Shop",
+  description: "Manage your Funny Shop profile settings",
 };
 
-export default async function ProfilePage() {
-  return <>Prifile changes</>;
+export default function ProfilePage() {
+  return <ProfileComponent />;
 }

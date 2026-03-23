@@ -1,0 +1,427 @@
+// ─── Design tokens ───────────────────────────────────────────────────────────
+$clr-primary: #3b82f6;
+$clr-primary-h: #2563eb;
+$clr-success: #166534;
+$clr-success-bg: #f0fdf4;
+$clr-success-bd: #bbf7d0;
+
+$clr-text: #111827;
+$clr-text-sec: #6b7280;
+$clr-text-muted: #9ca3af;
+
+$clr-bg-page: #f3f4f6;
+$clr-bg-card: #ffffff;
+$clr-bg-input: #f9fafb;
+$clr-border: #e5e7eb;
+$clr-border-light: #f3f4f6;
+
+$clr-dark-card: #1e2330;
+$clr-dark-input: #2a3040;
+$clr-dark-border: #374151;
+$clr-dark-text: #f1f5f9;
+
+$radius-card: 16px;
+$radius-field: 8px;
+$shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+$transition: 0.2s ease;
+
+// ─── Mixins ───────────────────────────────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-row($gap: 0) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin btn-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: $radius-field;
+  padding: 6px 18px;
+  transition:
+    background-color $transition,
+    border-color $transition;
+}
+
+@mixin btn-primary {
+  @include btn-reset;
+  background-color: $clr-primary;
+  color: #fff;
+
+  &:hover {
+    background-color: $clr-primary-h;
+  }
+}
+
+@mixin btn-secondary {
+  @include btn-reset;
+  background-color: transparent;
+  border: 1px solid $clr-border;
+  color: $clr-text-sec;
+
+  &:hover {
+    background-color: $clr-bg-input;
+  }
+}
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+.page {
+  min-height: 100vh;
+  background-color: $clr-bg-page;
+  padding: 40px 16px;
+}
+
+.card {
+  max-width: 680px;
+  margin: 0 auto;
+  background-color: $clr-bg-card;
+  border-radius: $radius-card;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+// ─── Banner ───────────────────────────────────────────────────────────────────
+.banner {
+  height: 110px;
+  width: 100%;
+  background: linear-gradient(to right, #bfdbfe, #ddd6fe, #fef3c7);
+}
+
+// ─── Header row (avatar + name + actions) ────────────────────────────────────
+.header {
+  @include flex-row(16px);
+  justify-content: space-between;
+  padding: 0 24px;
+  margin-top: -44px;
+  align-items: flex-end;
+}
+
+.headerLeft {
+  @include flex-row(14px);
+  align-items: flex-end;
+}
+
+// ─── Avatar ───────────────────────────────────────────────────────────────────
+.avatarWrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid $clr-bg-card;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  background-color: #e5e7eb;
+  transition: cursor $transition;
+
+  &.clickable {
+    cursor: pointer;
+  }
+}
+
+.avatarFallback {
+  @include flex-center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #60a5fa, #7c3aed);
+  color: #fff;
+  font-size: 28px;
+}
+
+.avatarOverlay {
+  @include flex-center;
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  transition: opacity $transition;
+  color: #fff;
+  font-size: 18px;
+
+  .avatarWrapper:hover & {
+    opacity: 1;
+  }
+}
+
+.uploadBtn {
+  @include flex-center;
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background-color: $clr-primary;
+  color: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color $transition;
+
+  &:hover {
+    background-color: $clr-primary-h;
+  }
+}
+
+.fileInput {
+  display: none;
+}
+
+// ─── User info ────────────────────────────────────────────────────────────────
+.userInfo {
+  padding-bottom: 6px;
+}
+
+.userName {
+  font-size: 15px;
+  font-weight: 600;
+  color: $clr-text;
+  line-height: 1.3;
+}
+
+.userEmail {
+  font-size: 13px;
+  color: $clr-text-muted;
+}
+
+// ─── Action buttons ───────────────────────────────────────────────────────────
+.actions {
+  @include flex-row(8px);
+  padding-bottom: 6px;
+}
+
+.btnEdit,
+.btnSave {
+  @include btn-primary;
+}
+
+.btnCancel {
+  @include btn-secondary;
+}
+
+// ─── Success banner ───────────────────────────────────────────────────────────
+.success {
+  @include flex-row(8px);
+  margin: 16px 24px 0;
+  padding: 10px 14px;
+  background-color: $clr-success-bg;
+  border: 1px solid $clr-success-bd;
+  border-radius: $radius-field;
+  font-size: 13px;
+  color: $clr-success;
+}
+
+// ─── Divider ─────────────────────────────────────────────────────────────────
+.divider {
+  margin: 16px 24px 0;
+  border: none;
+  border-top: 1px solid $clr-border-light;
+}
+
+// ─── Fields grid ─────────────────────────────────────────────────────────────
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+  padding: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: $clr-text-sec;
+}
+
+.fieldInputWrapper {
+  position: relative;
+}
+
+.fieldIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: $clr-text-muted;
+  font-size: 13px;
+  display: flex;
+}
+
+.fieldInput {
+  width: 100%;
+  padding: 10px 12px 10px 34px;
+  font-size: 14px;
+  border-radius: $radius-field;
+  border: 1px solid $clr-border-light;
+  background-color: $clr-bg-input;
+  color: $clr-text-sec;
+  outline: none;
+  transition:
+    border-color $transition,
+    box-shadow $transition,
+    background-color $transition;
+  cursor: not-allowed;
+
+  &.active {
+    background-color: $clr-bg-card;
+    border-color: $clr-border;
+    color: $clr-text;
+    cursor: text;
+
+    &:focus {
+      border-color: $clr-primary;
+      box-shadow: 0 0 0 3px rgba($clr-primary, 0.15);
+    }
+  }
+
+  &.hasToggle {
+    padding-right: 38px;
+  }
+}
+
+.togglePassBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $clr-text-muted;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  transition: color $transition;
+
+  &:hover {
+    color: $clr-text-sec;
+  }
+}
+
+// ─── Email section ────────────────────────────────────────────────────────────
+.emailSection {
+  padding: 0 24px 24px;
+  border-top: 1px solid $clr-border-light;
+  padding-top: 20px;
+  margin: 0 24px;
+}
+
+.emailTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $clr-text;
+  margin-bottom: 12px;
+}
+
+.emailRow {
+  @include flex-row(12px);
+}
+
+.emailIcon {
+  @include flex-center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #dbeafe;
+  color: $clr-primary;
+  font-size: 13px;
+}
+
+.emailAddress {
+  font-size: 14px;
+  font-weight: 500;
+  color: $clr-text;
+}
+
+.emailStatus {
+  font-size: 12px;
+  color: $clr-text-muted;
+}
+
+// ─── Dark mode ────────────────────────────────────────────────────────────────
+:global(.dark_theme) {
+  .page {
+    background-color: #111827;
+  }
+
+  .card {
+    background-color: $clr-dark-card;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .avatar {
+    border-color: $clr-dark-card;
+  }
+
+  .userName {
+    color: $clr-dark-text;
+  }
+
+  .btnCancel {
+    border-color: $clr-dark-border;
+    color: #94a3b8;
+
+    &:hover {
+      background-color: $clr-dark-input;
+    }
+  }
+
+  .divider,
+  .emailSection {
+    border-color: $clr-dark-border;
+  }
+
+  .fieldInput {
+    background-color: $clr-dark-input;
+    border-color: $clr-dark-border;
+    color: #94a3b8;
+
+    &.active {
+      background-color: lighten($clr-dark-input, 3%);
+      color: $clr-dark-text;
+    }
+  }
+
+  .emailIcon {
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+
+  .emailAddress {
+    color: $clr-dark-text;
+  }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 540px) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
