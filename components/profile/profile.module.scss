@@ -25,6 +25,8 @@ $radius-field: 8px;
 $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
 $transition: 0.2s ease;
 
+@use "sass:color";
+
 // ─── Mixins ───────────────────────────────────────────────────────────────────
 @mixin flex-center {
   display: flex;
@@ -226,6 +228,28 @@ $transition: 0.2s ease;
   color: $clr-success;
 }
 
+.error {
+  @include flex-row(8px);
+  margin: 16px 24px 0;
+  padding: 10px 14px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: $radius-field;
+  font-size: 13px;
+  color: #991b1b;
+}
+
+.noChanges {
+  @include flex-row(8px);
+  margin: 16px 24px 0;
+  padding: 10px 14px;
+  background-color: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: $radius-field;
+  font-size: 13px;
+  color: #0369a1;
+}
+
 // ─── Divider ─────────────────────────────────────────────────────────────────
 .divider {
   margin: 16px 24px 0;
@@ -400,7 +424,7 @@ $transition: 0.2s ease;
     color: #94a3b8;
 
     &.active {
-      background-color: lighten($clr-dark-input, 3%);
+      background-color: color.adjust($clr-dark-input, $lightness: 3%);
       color: $clr-dark-text;
     }
   }

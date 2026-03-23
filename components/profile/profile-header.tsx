@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useFormStatus } from "react-dom";
 import { FaCamera, FaUser } from "react-icons/fa";
 import s from "./profile.module.scss";
 
@@ -7,9 +10,9 @@ interface ProfileHeaderProps {
   displayName: string;
   displayEmail: string;
   isEditing: boolean;
+  isPending: boolean;
   onAvatarClick: () => void;
   onEdit: () => void;
-  onSave: () => void;
   onCancel: () => void;
 }
 
@@ -18,9 +21,9 @@ export default function ProfileHeader({
   displayName,
   displayEmail,
   isEditing,
+  isPending,
   onAvatarClick,
   onEdit,
-  onSave,
   onCancel,
 }: ProfileHeaderProps) {
   return (
@@ -72,12 +75,15 @@ export default function ProfileHeader({
       <div className={s.actions}>
         {isEditing ? (
           <>
-            <button type="button" onClick={onCancel} className={s.btnCancel}>
+            <button
+              type="button"
+              onClick={onCancel}
+              disabled={isPending}
+              className={s.btnCancel}
+            >
               Cancel
             </button>
-            <button type="button" onClick={onSave} className={s.btnSave}>
-              Save
-            </button>
+            <SaveButton />
           </>
         ) : (
           <button type="button" onClick={onEdit} className={s.btnEdit}>
@@ -86,5 +92,14 @@ export default function ProfileHeader({
         )}
       </div>
     </div>
+  );
+}
+
+function SaveButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button type="submit" disabled={pending} className={s.btnSave}>
+      {pending ? "Saving..." : "Save"}
+    </button>
   );
 }

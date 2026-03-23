@@ -1,25 +1,21 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ChangeEvent } from "react";
-
 import s from "./profile.module.scss";
 import { FieldConfig } from "./types";
 
 interface ProfileFieldProps {
   field: FieldConfig;
-  value: string;
+  defaultValue: string;
   isEditing: boolean;
   showPassword: boolean;
   onTogglePassword: () => void;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function ProfileField({
   field,
-  value,
+  defaultValue,
   isEditing,
   showPassword,
   onTogglePassword,
-  onChange,
 }: ProfileFieldProps) {
   const isPassword = field.name === "password";
   const inputType = isPassword
@@ -44,10 +40,10 @@ export default function ProfileField({
         <span className={s.fieldIcon}>{field.icon}</span>
         <input
           id={`profile-${field.name}`}
+          name={field.name}
           type={inputType}
           placeholder={field.placeholder}
-          value={value}
-          onChange={onChange}
+          defaultValue={defaultValue}
           disabled={!isEditing}
           className={inputClass}
         />
