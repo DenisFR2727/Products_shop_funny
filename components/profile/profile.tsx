@@ -15,7 +15,12 @@ import s from "./profile.module.scss";
 import ProfileHeader from "./profile-header";
 import ProfileField from "./profile-field";
 import { FIELDS } from "./profile-config";
-import { updateUserAction, UpdateUserState, UpdatedUserData } from "@/actions/updateUser";
+import {
+  updateUserAction,
+  UpdateUserState,
+  UpdatedUserData,
+  UpdateUserErrors,
+} from "@/actions/updateUser";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -23,7 +28,12 @@ type SavedValues = UpdatedUserData;
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const INITIAL_STATE: UpdateUserState = { success: false, error: null, updatedData: null };
+const INITIAL_STATE: UpdateUserState = {
+  success: false,
+  error: null,
+  errors: null,
+  updatedData: null,
+};
 const EMPTY_SAVED: SavedValues = { username: "", email: "", phone: "" };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -52,7 +62,10 @@ export default function ProfileComponent() {
   }, [session?.user?.name, session?.user?.email]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const boundAction = updateUserAction.bind(null, session?.user?.id ?? "");
-  const [state, formAction, isPending] = useActionState(boundAction, INITIAL_STATE);
+  const [state, formAction, isPending] = useActionState(
+    boundAction,
+    INITIAL_STATE,
+  );
 
   // Sync updatedData → savedValues + JWT session after successful save
   useEffect(() => {
@@ -177,6 +190,7 @@ export default function ProfileComponent() {
                 defaultValue={getFieldDefault(field.name)}
                 isEditing={isEditing}
                 showPassword={showPassword}
+                error={state.errors?.[field.name as keyof UpdateUserErrors]}
                 onTogglePassword={() => setShowPassword((v) => !v)}
               />
             ))}

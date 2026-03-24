@@ -324,6 +324,20 @@ $transition: 0.2s ease;
   }
 }
 
+.fieldError {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #dc2626;
+}
+
+.fieldInputError {
+  border-color: #f87171 !important;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.2) !important;
+  }
+}
+
 .togglePassBtn {
   position: absolute;
   right: 10px;

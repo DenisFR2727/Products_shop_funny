@@ -7,6 +7,7 @@ interface ProfileFieldProps {
   defaultValue: string;
   isEditing: boolean;
   showPassword: boolean;
+  error?: string;
   onTogglePassword: () => void;
 }
 
@@ -15,6 +16,7 @@ export default function ProfileField({
   defaultValue,
   isEditing,
   showPassword,
+  error,
   onTogglePassword,
 }: ProfileFieldProps) {
   const isPassword = field.name === "password";
@@ -23,10 +25,12 @@ export default function ProfileField({
       ? "text"
       : "password"
     : field.type;
+
   const inputClass = [
     s.fieldInput,
     isEditing ? s.active : "",
     isPassword && isEditing ? s.hasToggle : "",
+    error ? s.fieldInputError : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -46,6 +50,8 @@ export default function ProfileField({
           defaultValue={defaultValue}
           disabled={!isEditing}
           className={inputClass}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${field.name}-error` : undefined}
         />
         {isPassword && isEditing && (
           <button
@@ -58,6 +64,11 @@ export default function ProfileField({
           </button>
         )}
       </div>
+      {error && (
+        <p id={`${field.name}-error`} className={s.fieldError}>
+          {error}
+        </p>
+      )}
     </div>
   );
 }
