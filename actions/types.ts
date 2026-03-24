@@ -44,4 +44,24 @@ export type SignUpState = {
   };
 };
 
-// types reviews
+// types updateUser
+export interface UpdatedUserData {
+   username: string;
+   email: string;
+   phone: string;
+ }
+ 
+ export interface UpdateUserErrors {
+   username?: string;
+   email?: string;
+   phone?: string;
+   password?: string;
+ }
+ 
+ export interface UpdateUserState {
+   success: boolean;
+   error: string | null;
+   errors: UpdateUserErrors | null;
+   updatedData: UpdatedUserData | null;
+ }
+ 

@@ -1,4 +1,4 @@
-import { UpdateUserErrors } from "./updateUser";
+import { UpdateUserErrors } from "./types";
 
 interface UpdateUserFields {
   username: string;

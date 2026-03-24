@@ -4,26 +4,7 @@ import { revalidatePath } from "next/cache";
 import { updateUser as updateUserApi } from "@/lib/api/auth";
 import { hashUserPassword } from "@/lib/hash";
 import errorsUpdateUser from "./errors-update-user";
-
-export interface UpdatedUserData {
-  username: string;
-  email: string;
-  phone: string;
-}
-
-export interface UpdateUserErrors {
-  username?: string;
-  email?: string;
-  phone?: string;
-  password?: string;
-}
-
-export interface UpdateUserState {
-  success: boolean;
-  error: string | null;
-  errors: UpdateUserErrors | null;
-  updatedData: UpdatedUserData | null;
-}
+import { UpdateUserState } from "./types";
 
 const INITIAL_RESULT = { updatedData: null } as const;
 
