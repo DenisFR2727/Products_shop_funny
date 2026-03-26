@@ -207,7 +207,4 @@ alwaysApply: false
     - Use proper links
     - Use proper headings
     - Use proper lists
-Add to Cursor
-Add to Cursor
-Add to Cursor
 )

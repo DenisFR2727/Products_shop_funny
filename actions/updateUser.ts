@@ -29,6 +29,7 @@ export async function updateUserAction(
 
   // Field-level validation
   const errors = errorsUpdateUser({ username, email, phone, password });
+
   if (errors) {
     return { success: false, error: null, errors, ...INITIAL_RESULT };
   }
