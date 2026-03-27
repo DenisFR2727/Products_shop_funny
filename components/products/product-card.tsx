@@ -6,6 +6,7 @@ import { log } from "@/lib/log";
 import ImageCard from "./image-card";
 
 import "./product-card.scss";
+import FavoriteButton from "../wishlist/favorite-btn";
 
 export type ProductCardProps = {
   product: IProducts;
@@ -16,6 +17,7 @@ const ProductCard = memo(function ({ product, isToggle }: ProductCardProps) {
   log("ProductCard rendered", 1);
   return (
     <div className={!isToggle ? "card-product" : "card-product-list"}>
+      <FavoriteButton product={product} />
       <Link href={`/products/${product.id}`} prefetch={false}>
         <ImageCard
           src={product.thumbnail}

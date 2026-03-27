@@ -16,6 +16,7 @@ interface CartState {
   togglePanel: boolean;
   showProgressModal: boolean;
   visiblePageThanks: boolean;
+  favorite: IProducts[];
 }
 
 const initialState: CartState = {
@@ -29,6 +30,7 @@ const initialState: CartState = {
   togglePanel: false,
   showProgressModal: false,
   visiblePageThanks: true,
+  favorite: [],
 };
 const calculateTotals = (state: CartState): void => {
   state.subtotal = state.cart.reduce(
@@ -88,6 +90,21 @@ const cartSlice = createSlice({
       state.cart = [];
       state.visiblePageThanks = false;
     },
+    toggleFavoriteProduct(state, action: PayloadAction<IProducts>) {
+      if (!Array.isArray(state.favorite)) {
+        state.favorite = [];
+      }
+
+      const productId = action.payload.id;
+      const existingIndex = state.favorite.findIndex(
+        (item) => item.id === productId,
+      );
+      if (existingIndex >= 0) {
+        state.favorite.splice(existingIndex, 1);
+        return;
+      }
+      state.favorite.push(action.payload);
+    },
   },
 });
 export const {
@@ -97,5 +114,6 @@ export const {
   togglePanel,
   setShowProgress,
   clearCart,
+  toggleFavoriteProduct,
 } = cartSlice.actions;
 export default cartSlice.reducer;
