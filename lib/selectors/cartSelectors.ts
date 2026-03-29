@@ -19,3 +19,6 @@ export const isShowProgressSelector = createSelector(
   [cartState],
   (cart) => cart.showProgressModal
 );
+
+export const favoriteSelector = (state: RootState) =>
+  state.cartReducer.favorite ?? [];
