@@ -12,7 +12,6 @@ interface CartState {
   totalPrice: number;
   discountedTotalPrice: number;
   shipping: number;
-  shippingPriceTotal: number;
   togglePanel: boolean;
   showProgressModal: boolean;
   visiblePageThanks: boolean;
@@ -26,7 +25,6 @@ const initialState: CartState = {
   totalPrice: 0,
   discountedTotalPrice: 0,
   shipping: 10,
-  shippingPriceTotal: 0,
   togglePanel: false,
   showProgressModal: false,
   visiblePageThanks: true,
