@@ -10,7 +10,7 @@ import FavoriteButton from "../wishlist/favorite-btn";
 
 export type ProductCardProps = {
   product: IProducts;
-  isToggle: boolean;
+  isToggle?: boolean;
 };
 
 const ProductCard = memo(function ({ product, isToggle }: ProductCardProps) {
