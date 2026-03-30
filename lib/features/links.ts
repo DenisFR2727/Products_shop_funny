@@ -5,4 +5,5 @@ export const menuItems = [
   { label: "Cart", href: "/cart" },
   { label: "About", href: "/about" },
   { label: "Reviews", href: "/reviews" },
+  { label: "Wishlist", href: "/wishlist" },
 ];

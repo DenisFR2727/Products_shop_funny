@@ -90,6 +90,9 @@ export default function HeaderMain() {
           <NavbarItem className="nav_header">
             <NavLink href="/reviews">{t("Reviews")}</NavLink>
           </NavbarItem>
+          <NavbarItem className="nav_header">
+            <NavLink href="/wishlist">{t("Wishlist")}</NavLink>
+          </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
