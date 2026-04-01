@@ -9,7 +9,7 @@ import {
 type BaseProps = {
   label: string;
   id: string;
-  ref?: Ref<{ focus: () => void } | null>
+  ref?: Ref<{ focus: () => void } | null>;
 };
 
 type InputProps = BaseProps &

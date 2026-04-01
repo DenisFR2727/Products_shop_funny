@@ -1,3 +1,4 @@
+"use client";
 import { useImperativeHandle, useRef } from "react";
 import { PropsField } from "./types";
 
