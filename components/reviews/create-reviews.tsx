@@ -35,7 +35,7 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
   );
   const [value, setValue] = useState<string>("");
   const formRef = useRef<HTMLFormElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<{ focus: () => void } | null>(null);
 
   const { t } = useTranslation();
 
@@ -74,12 +74,12 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
     }
   }, [state]);
 
-  function handleClickFocus() {
-    //  fucus перший інпут після  помилки
+  useEffect(() => {
     if (state?.errors && Object.keys(state?.errors).length > 0) {
       inputRef.current?.focus();
     }
-  }
+  }, [state?.errors]);
+
   return (
     <div className={classes.reviews}>
       <form ref={formRef} onSubmit={handleSubmit}>
@@ -118,11 +118,7 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
             {state.errors.form}
           </p>
         )}
-        <ButtonReviews
-          className={classes.btn_reviews}
-          type="submit"
-          onClick={handleClickFocus}
-        >
+        <ButtonReviews className={classes.btn_reviews} type="submit">
           {t("Send")}
         </ButtonReviews>
       </form>

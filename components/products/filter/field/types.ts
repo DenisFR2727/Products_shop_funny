@@ -3,15 +3,17 @@ import {
   SelectHTMLAttributes,
   ReactNode,
   TextareaHTMLAttributes,
+  Ref,
 } from "react";
 
 type BaseProps = {
   label: string;
   id: string;
+  ref?: Ref<{ focus: () => void } | null>
 };
 
 type InputProps = BaseProps &
-  InputHTMLAttributes<HTMLInputElement> & {
+  Omit<InputHTMLAttributes<HTMLInputElement>, "ref"> & {
     as?: "input";
   };
 

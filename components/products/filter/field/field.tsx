@@ -7,7 +7,7 @@ export default function Field({ id, label, ref, ...props }: PropsField) {
   useImperativeHandle(ref, () => {
     return {
       focus() {
-        inputRef?.current.focus();
+        inputRef.current?.focus();
       },
     };
   }, []);
