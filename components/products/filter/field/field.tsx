@@ -1,6 +1,17 @@
+import { useImperativeHandle, useRef } from "react";
 import { PropsField } from "./types";
 
-export default function Field({ id, label, ...props }: PropsField) {
+export default function Field({ id, label, ref, ...props }: PropsField) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        inputRef?.current.focus();
+      },
+    };
+  }, []);
+
   return (
     <>
       <label htmlFor={id}>{label}</label>
@@ -15,7 +26,7 @@ export default function Field({ id, label, ...props }: PropsField) {
           {props.children}
         </div>
       ) : (
-        <input id={id} {...props} />
+        <input ref={inputRef} id={id} {...props} />
       )}
     </>
   );
