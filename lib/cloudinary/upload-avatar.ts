@@ -1,12 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 
 const MAX_BYTES = 2 * 1024 * 1024;
-const ALLOWED = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-]);
+const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
 
 function ensureConfigured() {
   const cloud_name = process.env.CLOUDINARY_CLOUD_NAME;

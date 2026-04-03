@@ -31,6 +31,20 @@ import { normalizeAvatarSrc } from "@/components/profile/resolve-avatar-src";
 
 import "./header-main.scss";
 
+interface ImageLoaderProps {
+  src: string;
+  width: number;
+  quality?: number;
+}
+
+function imageLoader(config: ImageLoaderProps) {
+  const urlStart = config.src.split("upload/")[0];
+  const urlEnd = config.src.split("upload/")[1];
+  const trasformations = `w_30,h_30,q_${config.quality}`;
+
+  return `${urlStart}upload/${trasformations}/${urlEnd}`;
+}
+
 export default function HeaderMain() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -150,10 +164,12 @@ export default function HeaderMain() {
                       <Image
                         className="user-avatar-img"
                         src={headerAvatarSrc}
-                        alt=""
+                        loader={imageLoader}
                         width={30}
                         height={30}
+                        alt={session?.user.name || ""}
                         sizes="30px"
+                        quality={30}
                       />
                     ) : (
                       <span className="user-avatar-fallback" aria-hidden>

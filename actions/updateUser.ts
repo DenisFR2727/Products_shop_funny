@@ -41,7 +41,7 @@ export async function updateUserAction(
     try {
       const bytes = await avatar.arrayBuffer();
       const buffer = Buffer.from(bytes);
-      imageUrl = await uploadAvatarToCloudinary(buffer, avatar.type);
+      imageUrl = await uploadAvatarToCloudinary(buffer, avatar.type); // upload avatar to cloudinary
     } catch (e) {
       const message =
         e instanceof Error ? e.message : "Failed to upload avatar.";
