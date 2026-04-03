@@ -24,5 +24,6 @@ export const en = {
     Send: "Send",
     "Reviews write": "Reviews write",
     Name: "Name",
+    Wishlist: "Wishlist",
   },
 };

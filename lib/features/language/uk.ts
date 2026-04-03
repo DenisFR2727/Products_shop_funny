@@ -24,5 +24,6 @@ export const uk = {
     Send: "Відправити",
     "Reviews write": "Написати відгук",
     Name: "Ім'я",
+    Wishlist: "Улюблені",
   },
 };
