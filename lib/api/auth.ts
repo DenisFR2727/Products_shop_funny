@@ -1,5 +1,6 @@
 import { apiRequest } from "./api-request";
 import { API_ENDPOINTS, API_USERS_CREATE } from "./config";
+import { CreateUserPayload } from "./types";
 
 export async function updateUser(id: string, data: Record<string, string>) {
   const url = `${API_USERS_CREATE}/${API_ENDPOINTS.USERS}/${id}`;
@@ -11,7 +12,7 @@ export async function updateUser(id: string, data: Record<string, string>) {
   });
 }
 
-export default function PostUserCreate(data: any) {
+export default function PostUserCreate(data: CreateUserPayload) {
   const url = `${API_USERS_CREATE}/${API_ENDPOINTS.USERS}`;
 
   return apiRequest(url, "Failed post user", {
@@ -29,7 +30,7 @@ export async function getEmailUser(email: string) {
     `${API_USERS_CREATE}/${API_ENDPOINTS.USERS}?email=${email}`,
     {
       cache: "no-store",
-    }
+    },
   );
 
   if (res.status === 404) {

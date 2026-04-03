@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import PostUserCreate from "@/lib/api/auth";
+import PostUserCreate, { getEmailUser } from "@/lib/api/auth";
 import errorsLoginForm from "./errors-login";
 import { hashUserPassword } from "@/lib/hash";
 import { SignUpState } from "./types";
@@ -30,6 +30,25 @@ export default async function userCreate(
       values: data,
     };
   }
+
+  try {
+   const existing = await getEmailUser(data.email.trim());
+   if (Array.isArray(existing) && existing.length > 0) {
+     return {
+       errors: {
+         email: "An account with this email already exists",
+       },
+       values: data,
+     };
+   }
+ } catch {
+   return {
+     errors: {
+       email: "Could not verify email. Please try again.",
+     },
+     values: data,
+   };
+ }
   const hashedPass = await hashUserPassword(data.password);
 
   const dataToSave = {
