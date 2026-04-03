@@ -1,4 +1,3 @@
-
 import { UpdatedUserData, UpdateUserState } from "@/actions/types";
 import { Session } from "next-auth";
 import { FormEvent } from "react";
@@ -11,6 +10,7 @@ export interface ProfileFormValues {
   email: string;
   phone: string;
   password: string;
+  image: string;
 }
 
 export interface FieldConfig {
@@ -22,20 +22,24 @@ export interface FieldConfig {
 }
 
 export interface UseProfileFormParams {
-   userId: string;
-   session: Session | null;
-   updateSession: (data: { name?: string; email?: string }) => Promise<Session | null>;
- }
- 
+  userId: string;
+  session: Session | null;
+  updateSession: (data: {
+    name?: string;
+    email?: string;
+    image?: string | null;
+  }) => Promise<Session | null>;
+}
+
 export interface UseProfileFormReturn {
-   state: UpdateUserState;
-   formAction: (payload: FormData) => void;
-   isPending: boolean;
-   isEditing: boolean;
-   savedValues: SavedValues;
-   noChanges: boolean;
-   formKey: number;
-   handleEdit: () => void;
-   handleCancel: () => void;
-   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
- }
+  state: UpdateUserState;
+  formAction: (payload: FormData) => void;
+  isPending: boolean;
+  isEditing: boolean;
+  savedValues: SavedValues;
+  noChanges: boolean;
+  formKey: number;
+  handleEdit: () => void;
+  handleCancel: () => void;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}

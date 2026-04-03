@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
   useCallback,
+  useEffect,
   ChangeEvent,
 } from "react";
 import { useSession } from "next-auth/react";
@@ -15,6 +16,7 @@ import { FIELDS } from "./profile-config";
 import { SavedValues } from "./types";
 import { useProfileForm } from "./hooks";
 import { UpdateUserErrors } from "@/actions/types";
+import { normalizeAvatarSrc } from "@/components/profile/resolve-avatar-src";
 
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -41,6 +43,15 @@ export default function ProfileComponent() {
    updateSession,
  });
 
+  useEffect(() => {
+    if (state.success) setAvatarPreview(null);
+  }, [state.success]);
+
+  const handleCancelWithPreviewReset = useCallback(() => {
+    setAvatarPreview(null);
+    handleCancel();
+  }, [handleCancel]);
+
   const handleAvatarClick = useCallback(() => {
    if (isEditing) fileInputRef.current?.click();
  }, [isEditing]);
@@ -57,7 +68,9 @@ export default function ProfileComponent() {
 
   // ─── Derived values ────────────────────────────────────────────────────────
 
-  const avatarSrc = avatarPreview ?? session?.user?.image ?? null;
+  const avatarSrc = normalizeAvatarSrc(
+    avatarPreview ?? session?.user?.image ?? savedValues.image,
+  );
   const displayName = savedValues.username || session?.user?.name || "User";
   const displayEmail = savedValues.email || session?.user?.email || "No email";
 
@@ -80,13 +93,14 @@ export default function ProfileComponent() {
             isPending={isPending}
             onAvatarClick={handleAvatarClick}
             onEdit={handleEdit}
-            onCancel={handleCancel}
+            onCancel={handleCancelWithPreviewReset}
           />
 
           <input
             ref={fileInputRef}
+            name="avatar"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp,image/gif"
             className={s.fileInput}
             onChange={handleFileChange}
           />
@@ -109,6 +123,13 @@ export default function ProfileComponent() {
             <div className={s.error}>
               <span>✕</span>
               <span>{state.error}</span>
+            </div>
+          )}
+
+          {state.errors?.avatar && (
+            <div className={s.error}>
+              <span>✕</span>
+              <span>{state.errors.avatar}</span>
             </div>
           )}
 

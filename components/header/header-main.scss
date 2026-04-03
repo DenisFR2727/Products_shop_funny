@@ -204,3 +204,40 @@ header {
     }
   }
 }
+.user-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 4px;
+}
+
+.user-avatar-link {
+   display: flex;
+   gap: 2px;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-avatar-img {
+  border-radius: 50%;
+  object-fit: cover;
+ 
+}
+
+.user-avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(161, 161, 170, 0.25);
+  color: #a1a1aa;
+  font-size: 14px;
+}
+@media(max-width: 575px){
+   .user-name {
+      display: none;
+   }
+}

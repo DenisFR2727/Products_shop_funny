@@ -22,10 +22,16 @@ export async function authorizeUser(email: string, password: string) {
       return null;
     }
 
+    const u = user as Record<string, unknown>;
+    const imageRaw = u.image ?? u.avatar ?? u.logo;
+    const image =
+      typeof imageRaw === "string" && imageRaw.length > 0 ? imageRaw : undefined;
+
     return {
       id: user.id || user.userId,
       email: user.email,
       name: user.username,
+      ...(image ? { image } : {}),
     };
   } catch (error) {
     console.error("Auth error:", error);

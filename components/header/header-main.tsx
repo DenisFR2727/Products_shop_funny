@@ -14,6 +14,7 @@ import Link from "next/link";
 import Image from "next/image";
 import NavLink from "./nav-link";
 import { TiShoppingCart } from "react-icons/ti";
+import { FaUser } from "react-icons/fa";
 import { useAppSelector } from "@/lib/hooks";
 import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
 import { ThemeContext } from "@/context/themeContext";
@@ -26,6 +27,7 @@ import dark from "../../public/theme/themes-black.png";
 import light from "../../public/theme/themes-light.png";
 
 import LanguageSelect from "../language-select/language-select";
+import { normalizeAvatarSrc } from "@/components/profile/resolve-avatar-src";
 
 import "./header-main.scss";
 
@@ -35,6 +37,10 @@ export default function HeaderMain() {
   const { data: session, status } = useSession();
   const isCartItems = useAppSelector(isCartItemsSelector);
   const { t } = useTranslation();
+  const headerAvatarSrc =
+    status === "authenticated"
+      ? normalizeAvatarSrc(session?.user?.image)
+      : null;
 
   return (
     <header className={`${theme}`}>
@@ -138,11 +144,28 @@ export default function HeaderMain() {
           <NavbarItem className="lg:flex login-nav">
             {status === "authenticated" ? (
               <div className="user-nav">
-                <span className="user-name">
-                  <Link href={"/profile"}>
-                    {session.user?.name || session.user?.email}
+                <div className="user-avatar">
+                  <Link href="/profile" className="user-avatar-link">
+                    {headerAvatarSrc ? (
+                      <Image
+                        className="user-avatar-img"
+                        src={headerAvatarSrc}
+                        alt=""
+                        width={30}
+                        height={30}
+                        sizes="30px"
+                      />
+                    ) : (
+                      <span className="user-avatar-fallback" aria-hidden>
+                        <FaUser />
+                      </span>
+                    )}
+                    <span className="user-name">
+                      {(session.user?.name || session.user?.email)?.slice(0, 3)}
+                    </span>
                   </Link>
-                </span>
+                </div>
+
                 <button
                   className="logout-btn"
                   onClick={() => signOut({ callbackUrl: "/login" })}

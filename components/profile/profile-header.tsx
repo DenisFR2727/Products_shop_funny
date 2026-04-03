@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useFormStatus } from "react-dom";
 import { FaCamera, FaUser } from "react-icons/fa";
+import { isDataImageAvatarSrc } from "@/components/profile/resolve-avatar-src";
 import s from "./profile.module.scss";
 
 interface ProfileHeaderProps {
@@ -35,13 +36,22 @@ export default function ProfileHeader({
             onClick={onAvatarClick}
           >
             {avatarSrc ? (
-              <Image
-                src={avatarSrc}
-                alt="avatar"
-                fill
-                sizes="80px"
-                style={{ objectFit: "cover" }}
-              />
+              isDataImageAvatarSrc(avatarSrc) ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={avatarSrc}
+                  alt=""
+                  className={s.avatarNativeImg}
+                />
+              ) : (
+                <Image
+                  src={avatarSrc}
+                  alt=""
+                  fill
+                  sizes="80px"
+                  style={{ objectFit: "cover" }}
+                />
+              )
             ) : (
               <div className={s.avatarFallback}>
                 <FaUser />

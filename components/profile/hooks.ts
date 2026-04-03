@@ -24,7 +24,11 @@ const INITIAL_STATE: UpdateUserState = {
   errors: null,
   updatedData: null,
 };
-const EMPTY_SAVED: SavedValues = { username: "", email: "", phone: "" };
+const EMPTY_SAVED: SavedValues = {
+  username: "",
+  email: "",
+  phone: "",
+};
 
 export function useProfileForm({
   userId,
@@ -52,17 +56,29 @@ export function useProfileForm({
       username: session.user.name ?? "",
       email: session.user.email ?? "",
       phone: "",
+      image: session.user.image ?? undefined,
     });
   }, [session?.user]);
 
   // Sync updatedData → savedValues + JWT session after successful save
   useEffect(() => {
     if (state.success && state.updatedData) {
-      setSavedValues(state.updatedData);
+      setSavedValues((prev) => ({
+        username: state.updatedData!.username,
+        email: state.updatedData!.email,
+        phone: state.updatedData!.phone,
+        image:
+          state.updatedData!.image !== undefined
+            ? state.updatedData!.image
+            : prev.image,
+      }));
       setIsEditing(false);
       updateSession({
         name: state.updatedData.username,
         email: state.updatedData.email,
+        ...(state.updatedData.image !== undefined
+          ? { image: state.updatedData.image }
+          : {}),
       });
     }
   }, [state.success, state.updatedData]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -84,11 +100,14 @@ export function useProfileForm({
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       const data = new FormData(e.currentTarget);
+      const avatar = data.get("avatar");
+      const hasNewAvatar = avatar instanceof File && avatar.size > 0;
       const hasChanges =
         (data.get("username") as string) !== savedValues.username ||
         (data.get("email") as string) !== savedValues.email ||
         (data.get("phone") as string) !== savedValues.phone ||
-        !!(data.get("password") as string);
+        !!(data.get("password") as string) ||
+        hasNewAvatar;
 
       if (!hasChanges) {
         e.preventDefault();
