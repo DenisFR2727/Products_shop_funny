@@ -25,5 +25,9 @@ export const en = {
     "Reviews write": "Reviews write",
     Name: "Name",
     Wishlist: "Wishlist",
+    "Sign Up": "Sign Up",
+    Home: "Home",
+    Cart: " Cart",
+    About: "About",
   },
 };

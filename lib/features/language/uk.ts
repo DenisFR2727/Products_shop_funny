@@ -25,5 +25,9 @@ export const uk = {
     "Reviews write": "Написати відгук",
     Name: "Ім'я",
     Wishlist: "Улюблені",
+    "Sign Up": "Зареєструватися",
+    Home: "Додому",
+    Cart: "Корзина",
+    About: "Про нас",
   },
 };

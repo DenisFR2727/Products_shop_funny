@@ -5,15 +5,14 @@ import { NavbarMenuItem } from "@heroui/react";
 import { NavbarMenu } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
-
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@heroui/react";
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import LanguageSelect from "../language-select/language-select";
+import { useTranslation } from "react-i18next";
 
 import "./header-main.scss";
-
 
 interface NavBarMobileProps {
   isMenuOpen: boolean;
@@ -25,6 +24,7 @@ const NavBarMobile = React.memo(function NavBarMobile({
   setIsMenuOpen,
 }: NavBarMobileProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const { data: session, status } = useSession();
 
   const closeAndGo = (href: string) => {
@@ -63,7 +63,7 @@ const NavBarMobile = React.memo(function NavBarMobile({
               size="lg"
               onClick={() => closeAndGo(item.href)}
             >
-              {item.label}
+              {t(`${item.label}`)}
             </Link>
           </NavbarMenuItem>
         ))}
@@ -94,11 +94,11 @@ const NavBarMobile = React.memo(function NavBarMobile({
                 variant="flat"
                 onClick={() => closeAndGo("/login")}
               >
-                Login
+                {t("Login")}
               </Link>
 
               <Link color="primary" onClick={() => closeAndGo("/signup")}>
-                Sign Up
+                {t("Sign Up")}
               </Link>
             </div>
           )}

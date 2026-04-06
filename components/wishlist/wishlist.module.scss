@@ -5,3 +5,18 @@
   font-size: 25px;
   cursor: pointer;
 }
+.wishlist_title {
+  color: #71717a;
+  text-transform: capitalize;
+  font-family: Roboto, sans-serif;
+  font-size: 1.875rem;
+  font-weight: 600;
+}
+.wishlist_line {
+  background: #8e0d0d;
+  width: 100%;
+  max-width: 1200px;
+  height: 10px;
+  margin: 20px 0;
+  display: flex;
+}
