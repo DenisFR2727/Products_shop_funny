@@ -29,5 +29,7 @@ export const uk = {
     Home: "Додому",
     Cart: "Корзина",
     About: "Про нас",
+    "No favorite products": "Улюблені продукти відсутні",
+    "Favorite products": "Улюблені продукти",
   },
 };

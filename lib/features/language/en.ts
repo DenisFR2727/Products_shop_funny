@@ -29,5 +29,7 @@ export const en = {
     Home: "Home",
     Cart: " Cart",
     About: "About",
+    "No favorite products": "No favorite products",
+    "Favorite products": "Favorite products",
   },
 };
