@@ -14,14 +14,13 @@ export default function WishListPage() {
 
   return (
     <div className={classes.wishlist}>
-   
-    <div className={classes.wishlist_content}>
-    <h1 className={classes.wishlist_title}>
-        {t(isEmpty ? "No favorite products" : "Favorite products")}
-      </h1>
-      <span className={classes.wishlist_line}></span>
-      {!isEmpty && <PaginationList products={favorites} />}
-    </div>
+      <div className={classes.wishlist_content}>
+        <h1 className={classes.wishlist_title}>
+          {t(isEmpty ? "No favorite products" : "Favorite products")}
+        </h1>
+        <span className={classes.wishlist_line}></span>
+        {!isEmpty && <PaginationList products={favorites} />}
+      </div>
     </div>
   );
 }
