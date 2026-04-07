@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { favoriteSelector } from "@/lib/selectors/cartSelectors";
 import { useTranslation } from "react-i18next";
@@ -10,18 +11,18 @@ import PaginationList from "../products/pagination/pagination ";
 import classes from "./wishlist.module.scss";
 
 import "@/styles/globals.css";
-import { useEffect, useState } from "react";
+
 
 
 export default function WishListPage() {
   const favorites = useAppSelector(favoriteSelector);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { t } = useTranslation();
- 
+  
   const isEmpty = favorites.length === 0;
  
   useEffect(() => {
-   setIsOpen(isEmpty); // пусто -> open, не пусто -> close
+   setIsOpen(isEmpty); 
  }, [isEmpty]);
 
    function onClose() {

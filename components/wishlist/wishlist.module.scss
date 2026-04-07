@@ -81,7 +81,7 @@
 
 .modal_wishlist {
   position: fixed;
-  top: 15%;
+  top: 22%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
@@ -98,7 +98,16 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
 }
 .modal_wishlist_button {
-   cursor: pointer;
-   user-select: none;
-   font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+@media (max-width: 450px) {
+  .modal_wishlist {
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    top: 24%;
+  }
 }
