@@ -12,26 +12,24 @@ import classes from "./wishlist.module.scss";
 
 import "@/styles/globals.css";
 
-
-
 export default function WishListPage() {
   const favorites = useAppSelector(favoriteSelector);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { t } = useTranslation();
-  
-  const isEmpty = favorites.length === 0;
- 
-  useEffect(() => {
-   setIsOpen(isEmpty); 
- }, [isEmpty]);
 
-   function onClose() {
-      setIsOpen(false)
-   }
-   
+  const isEmpty = favorites.length === 0;
+
+  useEffect(() => {
+    setIsOpen(isEmpty);
+  }, [isEmpty]);
+
+  function onClose() {
+    setIsOpen(false);
+  }
+
   return (
     <div className={classes.wishlist}>
-     {isEmpty && isOpen && <ModalWishlist onClose={onClose} />}
+      {isEmpty && isOpen && <ModalWishlist onClose={onClose} />}
       <div className={classes.wishlist_content}>
         <h1 className={classes.wishlist_title}>
           {t(isEmpty ? "No favorite products" : "Favorite products")}
@@ -44,14 +42,14 @@ export default function WishListPage() {
 }
 
 export function ModalWishlist({ onClose }: { onClose: () => void }) {
-   const router = useRouter();
-   const target = document.getElementById("dialog-wishlist");
-   if (!target) return null;
-  
-   function handleClickProducts() {
-      router.push("/products");
-      onClose();
-   }
+  const router = useRouter();
+  const target = document.getElementById("dialog-wishlist");
+  if (!target) return null;
+
+  function handleClickProducts() {
+    router.push("/products");
+    onClose();
+  }
 
   return createPortal(
     <div className={classes.modal_backdrop} onClick={onClose}>
@@ -60,7 +58,12 @@ export function ModalWishlist({ onClose }: { onClose: () => void }) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2>No favorite products! Please add favorite product!</h2>
-        <button className={classes.modal_wishlist_button} onClick={handleClickProducts}>Go to home</button>
+        <button
+          className={classes.modal_wishlist_button}
+          onClick={handleClickProducts}
+        >
+          Go to home
+        </button>
       </div>
     </div>,
     target,
