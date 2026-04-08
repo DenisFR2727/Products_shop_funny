@@ -3,7 +3,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}
-  <div id="dialog-wishlist"></div>
-  </div>;
+  return (
+    <div>
+      {children}
+      <div id="dialog-wishlist"></div>
+    </div>
+  );
 }
