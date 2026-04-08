@@ -10,4 +10,3 @@ export default function RootLayout({
     </div>
   );
 }
-// git not connect
