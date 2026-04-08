@@ -31,5 +31,7 @@ export const en = {
     About: "About",
     "No favorite products": "No favorite products",
     "Favorite products": "Favorite products",
+    "No favorite products! Please add favorite product!": "No favorite products! Please add favorite product!",
+    "Go to home": "Go to home",
   },
 };

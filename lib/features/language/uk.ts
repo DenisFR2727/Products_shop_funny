@@ -31,5 +31,7 @@ export const uk = {
     About: "Про нас",
     "No favorite products": "Улюблені продукти відсутні",
     "Favorite products": "Улюблені продукти",
+    "No favorite products! Please add favorite product!": "Улюблені продукти відсутні! Додайте улюблений продукт!",
+    "Go to home": "Перейти на головну",
   },
 };
