@@ -7,15 +7,17 @@ import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
-import {  MouseEvent } from "react";
+import { MouseEvent } from "react";
 import { t } from "i18next";
-
 import PaginationList from "../products/pagination/pagination ";
 
 import classes from "./wishlist.module.scss";
 
 import "@/styles/globals.css";
 
+interface ModalWishlistProps {
+  onClose: () => void;
+}
 
 const WishListPage: FC = () => {
   const favorites = useAppSelector(favoriteSelector);
@@ -48,12 +50,6 @@ const WishListPage: FC = () => {
 
 export default WishListPage;
 
-
-
-interface ModalWishlistProps {
-  onClose: () => void;
-}
-
 export const ModalWishlist: FC<ModalWishlistProps> = ({ onClose }) => {
   const router = useRouter();
   const target = document.getElementById("dialog-wishlist");
@@ -70,10 +66,7 @@ export const ModalWishlist: FC<ModalWishlistProps> = ({ onClose }) => {
 
   return createPortal(
     <div className={classes.modal_backdrop} onClick={onClose}>
-      <div
-        className={classes.modal_wishlist}
-        onClick={handleModalClick}
-      >
+      <div className={classes.modal_wishlist} onClick={handleModalClick}>
         <h2>{t("No favorite products! Please add favorite product!")}</h2>
         <button
           className={classes.modal_wishlist_button}
@@ -83,6 +76,6 @@ export const ModalWishlist: FC<ModalWishlistProps> = ({ onClose }) => {
         </button>
       </div>
     </div>,
-    target
+    target,
   );
 };
