@@ -1,19 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { favoriteSelector } from "@/lib/selectors/cartSelectors";
 import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
-import { MouseEvent } from "react";
-import { t } from "i18next";
+import { FC, MouseEvent } from "react";
 import PaginationList from "../products/pagination/pagination ";
 
 import classes from "./wishlist.module.scss";
-
-import "@/styles/globals.css";
 
 interface ModalWishlistProps {
   onClose: () => void;
@@ -51,14 +47,36 @@ const WishListPage: FC = () => {
 export default WishListPage;
 
 export const ModalWishlist: FC<ModalWishlistProps> = ({ onClose }) => {
+  const { t } = useTranslation();
   const router = useRouter();
-  const target = document.getElementById("dialog-wishlist");
-  if (!target) return null;
+  const [target, setTarget] = useState<HTMLElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
 
-  function handleClickProducts(): void {
+  useEffect(() => {
+    setTarget(document.getElementById("dialog-wishlist"));
+  }, []);
+
+  useEffect(() => {
+    dialogRef.current?.focus();
+
+    function handleEscape(event: KeyboardEvent): void {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    window.addEventListener("keydown", handleEscape);
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [onClose]);
+
+  const handleNavigateToProducts = useCallback((): void => {
     router.push("/products");
     onClose();
-  }
+  }, [onClose, router]);
+
+  if (!target) return null;
 
   function handleModalClick(e: MouseEvent<HTMLDivElement>): void {
     e.stopPropagation();
@@ -66,11 +84,18 @@ export const ModalWishlist: FC<ModalWishlistProps> = ({ onClose }) => {
 
   return createPortal(
     <div className={classes.modal_backdrop} onClick={onClose}>
-      <div className={classes.modal_wishlist} onClick={handleModalClick}>
+      <div
+        ref={dialogRef}
+        className={classes.modal_wishlist}
+        onClick={handleModalClick}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+      >
         <h2>{t("No favorite products! Please add favorite product!")}</h2>
         <button
           className={classes.modal_wishlist_button}
-          onClick={handleClickProducts}
+          onClick={handleNavigateToProducts}
         >
           {t("Go to home")}
         </button>
