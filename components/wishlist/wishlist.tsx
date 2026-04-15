@@ -10,6 +10,7 @@ import { FC, MouseEvent } from "react";
 import PaginationList from "../products/pagination/pagination ";
 
 import classes from "./wishlist.module.scss";
+import useModalBehavior from "./hooks/useModalBehavior";
 
 interface ModalWishlistProps {
   onClose: () => void;
@@ -48,28 +49,10 @@ export default WishListPage;
 
 export const ModalWishlist: FC<ModalWishlistProps> = ({ onClose }) => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const [target, setTarget] = useState<HTMLElement | null>(null);
-  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const {target, dialogRef, handleModalClick } = useModalBehavior({ targetId: "dialog-wishlist",
+   onClose,});
+   const router = useRouter();
 
-  useEffect(() => {
-    setTarget(document.getElementById("dialog-wishlist"));
-  }, []);
-
-  useEffect(() => {
-    dialogRef.current?.focus();
-
-    function handleEscape(event: KeyboardEvent): void {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    }
-
-    window.addEventListener("keydown", handleEscape);
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, [onClose]);
 
   const handleNavigateToProducts = useCallback((): void => {
     router.push("/products");
@@ -78,9 +61,6 @@ export const ModalWishlist: FC<ModalWishlistProps> = ({ onClose }) => {
 
   if (!target) return null;
 
-  function handleModalClick(e: MouseEvent<HTMLDivElement>): void {
-    e.stopPropagation();
-  }
 
   return createPortal(
     <div className={classes.modal_backdrop} onClick={onClose}>
