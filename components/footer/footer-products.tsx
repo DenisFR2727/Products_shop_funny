@@ -1,7 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
+
 import Image from "next/image";
 import Link from "next/link";
+import LinkItemMotionHover from "./link-item";
 
 import "./footer-products.scss";
 
@@ -24,89 +25,32 @@ function Footer() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href={"/"}>
-                <motion.span
-                  className="footer_nav_link"
-                  whileHover={{
-                    y: -2,
-                    scale: 1.06,
-                    color: "#ffffff",
-                    backgroundColor: "rgba(255, 255, 255, 0.18)",
-                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                >
-                  Home
-                </motion.span>
-              </Link>
+              <LinkItemMotionHover path={"/"} className="footer_nav_link">
+                Home
+              </LinkItemMotionHover>
             </li>
             <li className="nav-item">
-              <Link href={"/products"}>
-                <motion.span
-                  className="footer_nav_link"
-                  whileHover={{
-                    y: -2,
-                    scale: 1.06,
-                    color: "#ffffff",
-                    backgroundColor: "rgba(255, 255, 255, 0.18)",
-                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                >
-                  Products
-                </motion.span>
-              </Link>
+              <LinkItemMotionHover
+                path={"/products"}
+                className="footer_nav_link"
+              >
+                Products
+              </LinkItemMotionHover>
             </li>
             <li className="nav-item">
-              <Link href={"/cart"}>
-                <motion.span
-                  className="footer_nav_link"
-                  whileHover={{
-                    y: -2,
-                    scale: 1.06,
-                    color: "#ffffff",
-                    backgroundColor: "rgba(255, 255, 255, 0.18)",
-                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                >
-                  Cart
-                </motion.span>
-              </Link>
+              <LinkItemMotionHover path={"/cart"} className="footer_nav_link">
+                Cart
+              </LinkItemMotionHover>
             </li>
             <li className="nav-item">
-              <Link href="#" className="">
-                <motion.span
-                  className="footer_nav_link"
-                  whileHover={{
-                    y: -2,
-                    scale: 1.06,
-                    color: "#ffffff",
-                    backgroundColor: "rgba(255, 255, 255, 0.18)",
-                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                >
-                  FAQs
-                </motion.span>
-              </Link>
+              <LinkItemMotionHover path={"/#"} className="footer_nav_link">
+                FAQs
+              </LinkItemMotionHover>
             </li>
             <li className="nav-item">
-              <Link href={"/about"}>
-                <motion.span
-                  className="footer_nav_link"
-                  whileHover={{
-                    y: -2,
-                    scale: 1.06,
-                    color: "#ffffff",
-                    backgroundColor: "rgba(255, 255, 255, 0.18)",
-                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                >
-                  About
-                </motion.span>
-              </Link>
+              <LinkItemMotionHover path={"/about"} className="footer_nav_link">
+                About
+              </LinkItemMotionHover>
             </li>
           </ul>
           <div className="line"></div>
