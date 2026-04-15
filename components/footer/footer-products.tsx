@@ -1,10 +1,11 @@
-"use server";
+"use client";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
 import "./footer-products.scss";
 
-const Footer = () => {
+function Footer() {
   return (
     <div className="container">
       <footer className="footer">
@@ -23,21 +24,89 @@ const Footer = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href={"/"}>Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link href={"/products"}>Products</Link>
-            </li>
-            <li className="nav-item">
-              <Link href={"/cart"}>Cart</Link>
-            </li>
-            <li className="nav-item">
-              <Link href="#" className="">
-                FAQs
+              <Link href={"/"}>
+                <motion.span
+                  className="footer_nav_link"
+                  whileHover={{
+                    y: -2,
+                    scale: 1.06,
+                    color: "#ffffff",
+                    backgroundColor: "rgba(255, 255, 255, 0.18)",
+                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
+                  }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  Home
+                </motion.span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href={"/about"}> About</Link>
+              <Link href={"/products"}>
+                <motion.span
+                  className="footer_nav_link"
+                  whileHover={{
+                    y: -2,
+                    scale: 1.06,
+                    color: "#ffffff",
+                    backgroundColor: "rgba(255, 255, 255, 0.18)",
+                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
+                  }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  Products
+                </motion.span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href={"/cart"}>
+                <motion.span
+                  className="footer_nav_link"
+                  whileHover={{
+                    y: -2,
+                    scale: 1.06,
+                    color: "#ffffff",
+                    backgroundColor: "rgba(255, 255, 255, 0.18)",
+                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
+                  }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  Cart
+                </motion.span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="#" className="">
+                <motion.span
+                  className="footer_nav_link"
+                  whileHover={{
+                    y: -2,
+                    scale: 1.06,
+                    color: "#ffffff",
+                    backgroundColor: "rgba(255, 255, 255, 0.18)",
+                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
+                  }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  FAQs
+                </motion.span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href={"/about"}>
+                <motion.span
+                  className="footer_nav_link"
+                  whileHover={{
+                    y: -2,
+                    scale: 1.06,
+                    color: "#ffffff",
+                    backgroundColor: "rgba(255, 255, 255, 0.18)",
+                    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.18)",
+                  }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  About
+                </motion.span>
+              </Link>
             </li>
           </ul>
           <div className="line"></div>
@@ -112,6 +181,6 @@ const Footer = () => {
       </footer>
     </div>
   );
-};
+}
 
 export default Footer;

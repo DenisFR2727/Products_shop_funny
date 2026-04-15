@@ -23,6 +23,14 @@
         .nav-item {
           font-weight: 600;
         }
+
+        .footer_nav_link {
+          display: inline-block;
+          transform-origin: center;
+          color: inherit;
+          border-radius: 8px;
+          padding: 6px 10px;
+        }
       }
       .line {
         width: 100%;
