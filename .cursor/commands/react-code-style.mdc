@@ -1,6 +1,6 @@
 ---
 globs: *.tsx
-alwaysApply: true
+alwaysApply: false
 ---
 
 Create functions via the 'function' keyword, NOT as arrow functions.

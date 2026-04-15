@@ -81,9 +81,9 @@
 
 .modal_wishlist {
   position: fixed;
-  top: 22%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 15%;
+//   left: 50%;
+  transform: translateX(-50%);
   width: 300px;
   height: 300px;
   background-color: #000;
@@ -109,6 +109,6 @@
     width: 200px;
     height: 200px;
     text-align: center;
-    top: 24%;
+    top: 15%;
   }
 }
