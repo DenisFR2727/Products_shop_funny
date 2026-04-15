@@ -1,0 +1,7 @@
+---
+globs: *.tsx
+alwaysApply: true
+---
+
+Create functions via the 'function' keyword, NOT as arrow functions.
+Exeption Anonymous functions / closures are arrow functions.

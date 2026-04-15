@@ -1,16 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect,  useState } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { favoriteSelector } from "@/lib/selectors/cartSelectors";
 import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { FC, MouseEvent } from "react";
+import { FC, } from "react";
 import PaginationList from "../products/pagination/pagination ";
+import useModalBehavior from "./hooks/useModalBehavior";
 
 import classes from "./wishlist.module.scss";
-import useModalBehavior from "./hooks/useModalBehavior";
 
 interface ModalWishlistProps {
   onClose: () => void;
