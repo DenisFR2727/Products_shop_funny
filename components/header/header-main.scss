@@ -1,4 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+$color-accent: #f5a524;
+$color-muted: #a1a1aa;
+$color-white: #fff;
+$color-cart-success: #17c964;
+$color-gray: grey;
+
 header {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -59,7 +66,7 @@ header {
   z-index: 30;
 }
 .w-full {
-  color: #f5a524;
+  color: $color-accent;
   cursor: pointer;
 }
 .text-large {
@@ -73,12 +80,12 @@ header {
   animation: leftBurgerOut 0.5s ease forwards;
 }
 .header_login-nav {
-  color: #a1a1aa !important;
+  color: $color-muted !important;
   font-weight: 600 !important;
 }
 .nav-cart-icon {
   font-size: 35px;
-  color: #a1a1aa;
+  color: $color-muted;
 }
 .header-cart {
   position: relative;
@@ -91,8 +98,8 @@ header {
   width: 30px;
   height: 25px;
   border-radius: 50%;
-  background: #17c964;
-  color: #fff;
+  background: $color-cart-success;
+  color: $color-white;
 
   span {
     position: absolute;
@@ -115,7 +122,7 @@ header {
 @media (max-width: 475px) {
   .nav-cart-icon {
     font-size: 25px;
-    color: #a1a1aa;
+    color: $color-muted;
   }
   .nav-cart-count {
     position: absolute;
@@ -125,8 +132,8 @@ header {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #17c964;
-    color: #fff;
+    background: $color-cart-success;
+    color: $color-white;
 
     span {
       position: absolute;
@@ -143,7 +150,7 @@ header {
   }
 }
 .logo-nav {
-  color: #f5a524;
+  color: $color-accent;
 }
 
 .logout-btn {
@@ -182,13 +189,13 @@ header {
 .mobile_language {
   display: block;
   height: 50px;
-  border: 1px solid grey !important;
+  border: 1px solid $color-gray !important;
   max-width: 60px;
   height: 43px;
   border-radius: 6px;
 }
 .mobile_language option {
-  background: grey;
+  background: $color-gray;
 }
 
 @media (max-width: 900px) {
@@ -212,8 +219,8 @@ header {
 }
 
 .user-avatar-link {
-   display: flex;
-   gap: 2px;
+  display: flex;
+  gap: 2px;
   align-items: center;
   text-decoration: none;
   color: inherit;
@@ -222,7 +229,6 @@ header {
 .user-avatar-img {
   border-radius: 50%;
   object-fit: cover;
- 
 }
 
 .user-avatar-fallback {
@@ -233,11 +239,53 @@ header {
   height: 30px;
   border-radius: 50%;
   background: rgba(161, 161, 170, 0.25);
-  color: #a1a1aa;
+  color: $color-muted;
   font-size: 14px;
 }
-@media(max-width: 575px){
-   .user-name {
-      display: none;
-   }
+@media (max-width: 575px) {
+  .user-name {
+    display: none;
+  }
 }
+.nav_header-wishlist {
+  position: relative;
+  .is_favorite {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: -12px;
+    font-size: 15px;
+    width: 100%;
+    height: 20px;
+    left: 0;
+    right: 0;
+    border-radius: 10px 10px 10px 10px;
+    background: #6d6d7b;
+    color: $color-accent;
+    pointer-events: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+}
+.nav_header-wishlist:hover {
+  .is_favorite {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 975px) {
+   .nav_header {
+     a {
+       font-size: 18px;
+     }
+   }
+ }
+ @media (max-width: 745px) {
+   .nav_header {
+     a {
+       font-size: 15px;
+     }
+   }
+ }

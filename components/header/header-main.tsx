@@ -50,6 +50,7 @@ export default function HeaderMain() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { data: session, status } = useSession();
   const isCartItems = useAppSelector(isCartItemsSelector);
+  const isFavorite = useAppSelector((state) => state.cartReducer.favorite);
   const { t } = useTranslation();
   const headerAvatarSrc =
     status === "authenticated"
@@ -112,8 +113,15 @@ export default function HeaderMain() {
               <NavLink href="/reviews">{t("Reviews")}</NavLink>
             </NavbarItem>
           )}
-          <NavbarItem className="nav_header">
-            <NavLink href="/wishlist">{t("Wishlist")}</NavLink>
+          <NavbarItem className="nav_header nav_header-wishlist">
+            <NavLink href="/wishlist">
+              {t("Wishlist")}
+              {isFavorite.length === 0 ? (
+                ""
+              ) : (
+                <span className="is_favorite">{isFavorite.length}</span>
+              )}
+            </NavLink>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
