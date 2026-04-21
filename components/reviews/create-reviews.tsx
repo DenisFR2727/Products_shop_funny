@@ -3,6 +3,7 @@ import type React from "react";
 import {
   startTransition,
   useActionState,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -13,6 +14,9 @@ import ButtonReviews from "./button-reviews";
 
 import classes from "./create-reviews.module.scss";
 import { useTranslation } from "react-i18next";
+import { ReviewsModal } from "./reviews-wrapper";
+import Progress from "./progress";
+
 
 interface ReviewItem {
   id: string | number;
@@ -34,6 +38,7 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
     } as ReviewsState | null,
   );
   const [value, setValue] = useState<string>("");
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<{ focus: () => void } | null>(null);
 
@@ -70,18 +75,29 @@ export default function CreateReviews({ onAddReview }: CreateReviewsProps) {
   useEffect(() => {
     if (state?.success) {
       setValue("");
-      formRef.current?.reset();
+      setIsSuccessDialogOpen(true)
     }
   }, [state]);
 
   useEffect(() => {
     if (state?.errors && Object.keys(state?.errors).length > 0) {
+      formRef.current?.reset();
       inputRef.current?.focus();
     }
   }, [state?.errors]);
+ 
+  const handleComplete = useCallback(() => {
+    setIsSuccessDialogOpen(false)
+  }, [setIsSuccessDialogOpen])
 
   return (
     <div className={classes.reviews}>
+      {isSuccessDialogOpen && <ReviewsModal  onClose={handleComplete}>
+         <div>
+          <p>Review sent successfully</p>
+          <Progress onComplete={handleComplete}/>
+         </div>
+      </ReviewsModal>}
       <form ref={formRef} onSubmit={handleSubmit}>
         <Field
           id="name_user"

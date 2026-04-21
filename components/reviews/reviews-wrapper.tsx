@@ -56,10 +56,21 @@ export default function ReviewsWrapper({ reviews }: ReviewsWrapperProps) {
   );
 }
 
-export function ReviewsModal({ children }: ReviewsModalProps) {
+export function ReviewsModal({ children, onClose }: ReviewsModalProps) {
   const element = document.getElementById("reviews");
 
   if (!element) return null;
 
-  return createPortal(<div>{children}</div>, element);
+  return createPortal(   <div className={classes.modal_overlay} onClick={onClose}>
+   <div
+     className={classes.modal_dialog}
+     onClick={(e) => e.stopPropagation()}
+     role="dialog"
+     aria-modal="true"
+   >
+     {children}
+   </div>
+ </div>,
+ element,
+);
 }

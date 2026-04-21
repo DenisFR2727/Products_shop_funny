@@ -12,4 +12,5 @@ export interface ReviewsWrapperProps {
 }
 export interface ReviewsModalProps {
   children: ReactNode;
+  onClose: () => void;
 }
