@@ -113,6 +113,11 @@ export default function HeaderMain() {
               <NavLink href="/reviews">{t("Reviews")}</NavLink>
             </NavbarItem>
           )}
+          {session?.user && (
+            <NavbarItem className="nav_header">
+              <NavLink href="/dashboard-user">{t("Dashboard")}</NavLink>
+            </NavbarItem>
+          )}
           <NavbarItem className="nav_header nav_header-wishlist">
             <NavLink href="/wishlist">
               {t("Wishlist")}

@@ -12,7 +12,7 @@ export default function useModalBehavior({onClose, targetId}: UseModalBehaviorPr
    
  
    useEffect(() => {
-     setTarget(document.getElementById(targetId));
+    setTarget(document.getElementById(targetId) ?? document.body);
    }, [targetId]);
  
    useEffect(() => {

@@ -67,6 +67,19 @@ const NavBarMobile = React.memo(function NavBarMobile({
             </Link>
           </NavbarMenuItem>
         ))}
+        {status === "authenticated" && (
+          <NavbarMenuItem>
+            <Link
+              href="/dashboard-user"
+              className="w-full link-underline"
+              color="foreground"
+              size="lg"
+              onClick={() => closeAndGo("/dashboard-user")}
+            >
+              {t("Dashboard")}
+            </Link>
+          </NavbarMenuItem>
+        )}
 
         {/* AUTH BLOCK */}
         <NavbarMenuItem className="mt-4">
