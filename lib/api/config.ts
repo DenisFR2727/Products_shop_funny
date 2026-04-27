@@ -11,14 +11,14 @@ export const API_USERS_CREATE =
 // Base URL for MockAPI instance; reviews resource is at /reviews
 export const API_REVIEWS_CREATE = "https://692dacb6e5f67cd80a4c7d05.mockapi.io";
 
-type API_ENDPOINTS_TYPES = "PRODUCTS" | "ADDRESS" | "USERS" | "REVIEWS";
-
-export const API_ENDPOINTS: Record<API_ENDPOINTS_TYPES, string> = {
+export const API_ENDPOINTS = {
   PRODUCTS: "/products",
   ADDRESS: "/address",
   USERS: "/users",
   REVIEWS: "/reviews",
 } as const;
+
+export type API_ENDPOINTS_TYPES = keyof typeof API_ENDPOINTS;
 
 // Rate limiting constants
 export const REQUEST_DELAY = 150; // Delay between requests in milliseconds

@@ -10,7 +10,7 @@ export async function apiRequest<T>(
   url: string,
   errorMessage: string,
   cache: RequestInit = {},
-  retryCount = 0
+  retryCount = 0,
 ): Promise<T> {
   try {
     const res = await fetch(url, cache);
@@ -22,7 +22,7 @@ export async function apiRequest<T>(
       }
       throw new ApiError(
         res.status,
-        "Too many requests. Please try again later."
+        "Too many requests. Please try again later.",
       );
     }
 

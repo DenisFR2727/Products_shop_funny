@@ -189,9 +189,9 @@ export default function HeaderMain() {
                         <FaUser />
                       </span>
                     )}
-                    <span className="user-name">
+                    {/* <span className="user-name">
                       {(session.user?.name || session.user?.email)?.slice(0, 3)}
-                    </span>
+                    </span> */}
                   </Link>
                 </div>
 

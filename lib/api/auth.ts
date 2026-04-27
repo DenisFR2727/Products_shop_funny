@@ -1,10 +1,13 @@
 import { apiRequest } from "./api-request";
 import { API_ENDPOINTS, API_USERS_CREATE } from "./config";
-import { CreateUserPayload } from "./types";
+import { UserByEmail } from "./types";
 
-export async function updateUser(id: string, data: Record<string, string>) {
+export async function updateUser<TRequest extends object, TResponse>(
+  id: string,
+  data: TRequest,
+): Promise<TResponse> {
   const url = `${API_USERS_CREATE}/${API_ENDPOINTS.USERS}/${id}`;
-  return apiRequest(url, "Failed to update user", {
+  return apiRequest<TResponse>(url, "Failed to update user", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -12,10 +15,12 @@ export async function updateUser(id: string, data: Record<string, string>) {
   });
 }
 
-export default function PostUserCreate(data: CreateUserPayload) {
+export default function PostUserCreate<TRequest extends object, TResponse>(
+  data: TRequest,
+): Promise<TResponse> {
   const url = `${API_USERS_CREATE}/${API_ENDPOINTS.USERS}`;
 
-  return apiRequest(url, "Failed post user", {
+  return apiRequest<TResponse>(url, "Failed post user", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -25,7 +30,7 @@ export default function PostUserCreate(data: CreateUserPayload) {
   });
 }
 
-export async function getEmailUser(email: string) {
+export async function getEmailUser(email: string): Promise<UserByEmail[]> {
   const res = await fetch(
     `${API_USERS_CREATE}/${API_ENDPOINTS.USERS}?email=${email}`,
     {

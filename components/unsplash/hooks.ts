@@ -17,7 +17,7 @@ export default function useUnsplashLoadingPage() {
         const merged = [...prev, ...data];
         const unique = merged.filter(
           (photo, index, self) =>
-            index === self.findIndex((p) => p.id === photo.id)
+            index === self.findIndex((p) => p.id === photo.id),
         );
         return unique;
       });
@@ -36,7 +36,7 @@ export default function useUnsplashLoadingPage() {
       },
       {
         rootMargin: "1500px",
-      }
+      },
     );
 
     if (srollTrigger.current) {
