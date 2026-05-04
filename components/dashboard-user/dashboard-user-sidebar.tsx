@@ -1,5 +1,5 @@
 import { HiOutlineHome } from "react-icons/hi2";
-import { LuHeart, LuShoppingCart, LuUserRound } from "react-icons/lu";
+import { LuHeart, LuList, LuShoppingCart, LuUserRound } from "react-icons/lu";
 
 import styles from "./dashboard-user-sidebar.module.scss";
 
@@ -8,6 +8,7 @@ export const sidebarItems = [
   { id: "wishlist", label: "Wishlist", icon: LuHeart },
   { id: "cart", label: "Cart", icon: LuShoppingCart },
   { id: "profile", label: "Profile", icon: LuUserRound },
+  { id: "todo", label: "Todo", icon: LuList },
 ] as const;
 
 type DashboardSidebarItemId = (typeof sidebarItems)[number]["id"];
