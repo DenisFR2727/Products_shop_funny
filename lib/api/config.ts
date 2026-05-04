@@ -9,13 +9,18 @@ export const API_ADDRESS_CREATE =
 export const API_USERS_CREATE =
   "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
 // Base URL for MockAPI instance; reviews resource is at /reviews
-export const API_REVIEWS_CREATE = "https://692dacb6e5f67cd80a4c7d05.mockapi.io";
+
+const MOCKAPI_BASE_URL = "https://692dacb6e5f67cd80a4c7d05.mockapi.io";
+
+export const API_REVIEWS_CREATE = MOCKAPI_BASE_URL;
+export const API_TODOS_CREATE = MOCKAPI_BASE_URL;
 
 export const API_ENDPOINTS = {
   PRODUCTS: "/products",
   ADDRESS: "/address",
   USERS: "/users",
   REVIEWS: "/reviews",
+  TODO: "/todo",
 } as const;
 
 export type API_ENDPOINTS_TYPES = keyof typeof API_ENDPOINTS;
