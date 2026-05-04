@@ -6,3 +6,8 @@ export type Todo = {
 };
 
 export type TodoDraft = Pick<Todo, "title" | "userId">;
+
+export type TodoFormProps = {
+  addOptimistic: (todo: Todo) => void;
+  onTodoCreated: (todo: Todo) => void;
+};
