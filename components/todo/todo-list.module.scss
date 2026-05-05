@@ -81,6 +81,7 @@ $white: #fff;
 }
 
 .addBtn {
+  width: 60px;
   flex-shrink: 0;
   padding: 0.55rem 1.1rem;
   font-size: 0.9rem;
@@ -91,7 +92,9 @@ $white: #fff;
   border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.15s ease, transform 0.1s ease;
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease;
 
   &:hover {
     background: #2563eb;

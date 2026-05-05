@@ -25,3 +25,10 @@ export default async function createTodoPost(
     cache: "no-store",
   });
 }
+
+export async function deleteTodoTask(id: string): Promise<Todo> {
+  return apiRequest<Todo>(`${url}/${id}`, "Failed to delete todo", {
+    method: "DELETE",
+    cache: "no-store",
+  });
+}

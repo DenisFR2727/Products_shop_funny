@@ -28,13 +28,21 @@ const createTodo = async (
     return { errors: validation.errors };
   }
 
-  const todo = await createTodoPost({
-    title: validation.title,
-    userId: validation.userId,
-    createAt: new Date().toISOString(),
-  });
+  try {
+    const todo = await createTodoPost({
+      title: validation.title,
+      userId: validation.userId,
+      createAt: new Date().toISOString(),
+    });
 
-  return { errors: null, todo };
+    return { errors: null, todo };
+  } catch (error) {
+    console.error("Failed to create todo:", error);
+
+    return {
+      errors: ["Server is unavailable. Please try again later."],
+    };
+  }
 };
 
 export default createTodo;

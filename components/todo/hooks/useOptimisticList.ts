@@ -22,6 +22,7 @@ export type UseOptimisticListReturn<T> = {
   optimisticItems: T[];
   addOptimistic: (item: T) => void;
   appendItem: (item: T) => void;
+  updateItems: (updater: (prev: T[]) => T[]) => void;
   reload: () => Promise<void>;
   loading: boolean;
   error: string | null;
@@ -61,6 +62,10 @@ export default function useOptimisticList<T>(
     setItems((prev) => [...prev, item]);
   }, []);
 
+  const updateItems = useCallback((updater: (prev: T[]) => T[]) => {
+    setItems(updater);
+  }, []);
+
   const reload = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -85,6 +90,7 @@ export default function useOptimisticList<T>(
     optimisticItems,
     addOptimistic,
     appendItem,
+    updateItems,
     reload,
     loading,
     error,

@@ -6,18 +6,26 @@ import type { Todo } from "../types";
  * Готовий пресет для todo: той самий API, що раніше ({ optimisticTodos, appendTodo, … }).
  */
 export default function useOptimisticTodoList() {
-  const { optimisticItems, addOptimistic, appendItem, reload, loading, error } =
-    useOptimisticList<Todo>({
-      queryFn: async () => {
-        const r = await getUserTodos();
-        return { data: r.todos, error: r.error };
-      },
-    });
+  const {
+    optimisticItems,
+    addOptimistic,
+    appendItem,
+    updateItems,
+    reload,
+    loading,
+    error,
+  } = useOptimisticList<Todo>({
+    queryFn: async () => {
+      const r = await getUserTodos();
+      return { data: r.todos, error: r.error };
+    },
+  });
 
   return {
     optimisticTodos: optimisticItems,
     addOptimistic,
     appendTodo: appendItem,
+    updateTodos: updateItems,
     reloadTodos: reload,
     loading,
     error,
