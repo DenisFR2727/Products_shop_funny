@@ -10,10 +10,10 @@ type DeleteTodoState = {
   deletedId?: string;
 };
 
-export const deleteTodoById = async (id: string): Promise<DeleteTodoState> => {
-  const normalizedId = id.trim();
-
-  if (!normalizedId) {
+export const deleteTodoById = async (
+  todoId: string,
+): Promise<DeleteTodoState> => {
+  if (!todoId) {
     return { errors: ["Todo id is required"] };
   }
 
@@ -24,8 +24,8 @@ export const deleteTodoById = async (id: string): Promise<DeleteTodoState> => {
   }
 
   try {
-    await deleteTodoTask(normalizedId);
-    return { errors: null, deletedId: normalizedId };
+    await deleteTodoTask(todoId);
+    return { errors: null, deletedId: todoId };
   } catch (error) {
     console.error("Failed to delete todo:", error);
 
@@ -37,14 +37,4 @@ export const deleteTodoById = async (id: string): Promise<DeleteTodoState> => {
   }
 };
 
-const deleteTodo = async (
-  _prevState: DeleteTodoState,
-  formData: FormData,
-): Promise<DeleteTodoState> => {
-  const rawId = formData.get("id");
-  const id = typeof rawId === "string" ? rawId : "";
-
-  return deleteTodoById(id);
-};
-
-export default deleteTodo;
+export default deleteTodoById;
