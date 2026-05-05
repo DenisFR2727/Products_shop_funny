@@ -11,3 +11,8 @@ export type TodoFormProps = {
   addOptimistic: (todo: Todo) => void;
   onTodoCreated: (todo: Todo) => void;
 };
+
+export type UseTodoDeleteParams = {
+  optimisticTodos: Todo[];
+  updateTodos: (updater: (prev: Todo[]) => Todo[]) => void;
+};

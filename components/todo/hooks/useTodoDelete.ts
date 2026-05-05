@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { deleteTodoById } from "@/actions/todo/delete-todo";
-import type { Todo } from "../types";
-
-type UseTodoDeleteParams = {
-  optimisticTodos: Todo[];
-  updateTodos: (updater: (prev: Todo[]) => Todo[]) => void;
-};
+import type { Todo, UseTodoDeleteParams } from "../types";
 
 export function useTodoDelete({
   optimisticTodos,
