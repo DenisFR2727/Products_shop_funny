@@ -8,6 +8,8 @@ import useTodoForm from "./hooks/useTodoForm";
 export default function TodoForm({
   addOptimistic,
   onTodoCreated,
+  title,
+  onTitleChange,
 }: TodoFormProps) {
   const { isPendingTransition, composedAction, isPendingAction, state } =
     useTodoForm({
@@ -31,6 +33,8 @@ export default function TodoForm({
           name="title"
           placeholder="Add a new task"
           disabled={isPending}
+          value={title}
+          onChange={(e) => onTitleChange(e.target.value)}
           styles={inputStyles}
         />
         <button className={styles.addBtn} type="submit" disabled={isPending}>

@@ -32,3 +32,23 @@ export async function deleteTodoTask(id: string): Promise<Todo> {
     cache: "no-store",
   });
 }
+
+export async function fetchTodoById(id: string): Promise<Todo> {
+  return apiRequest<Todo>(`${url}/${id}`, "Failed to fetch todo", {
+    cache: "no-store",
+  });
+}
+
+export async function updateTodoPatch(
+  id: string,
+  payload: Partial<Pick<Todo, "title" | "userId">>,
+): Promise<Todo> {
+  return apiRequest<Todo>(`${url}/${id}`, "Failed to update todo", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    cache: "no-store",
+  });
+}

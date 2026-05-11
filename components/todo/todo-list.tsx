@@ -1,12 +1,17 @@
 "use client";
-import { FaSpinner, FaTrash } from "react-icons/fa";
+import { useCallback, useState } from "react";
 import { useTodoDelete } from "./hooks/useTodoDelete";
 import TodoForm from "./todo-form";
 import useOptimisticTodoList from "./hooks/useOptimisticTodoList";
 
 import styles from "./todo-list.module.scss";
+import useTodoEdit from "./hooks/useTodoEdit";
+import TodoErrorsList from "./utils/todo-errors-list";
+import TodoListItem from "./todo-list-item";
+import type { Todo } from "./types";
 
 export default function TodoList() {
+  const [title, setTitle] = useState("");
   const {
     optimisticTodos,
     addOptimistic,
@@ -19,19 +24,33 @@ export default function TodoList() {
     optimisticTodos,
     updateTodos,
   });
+  const { editingTodoId, pendingEditId, editErrors, editTodoItem } =
+    useTodoEdit({
+      optimisticTodos,
+      updateTodos,
+      setFormTitle: setTitle,
+    });
+
+  const handleTodoCreated = useCallback(
+    (todo: Todo) => {
+      appendTodo(todo);
+      setTitle("");
+    },
+    [appendTodo],
+  );
 
   return (
     <div className={styles.shell}>
       <div className={styles.card}>
         <h1 className={styles.title}>Todo List</h1>
-        <TodoForm addOptimistic={addOptimistic} onTodoCreated={appendTodo} />
-        {deleteErrors && deleteErrors.length > 0 && (
-          <ul className={styles.errorList} role="alert">
-            {deleteErrors.map((deleteError, index) => (
-              <li key={index}>{deleteError}</li>
-            ))}
-          </ul>
-        )}
+        <TodoForm
+          addOptimistic={addOptimistic}
+          onTodoCreated={handleTodoCreated}
+          title={title}
+          onTitleChange={setTitle}
+        />
+        <TodoErrorsList errors={deleteErrors} />
+        <TodoErrorsList errors={editErrors} />
         {loading && <p className={styles.status}>Loading…</p>}
         {!loading && error && (
           <p className={styles.alert} role="alert">
@@ -43,27 +62,18 @@ export default function TodoList() {
             {optimisticTodos.length === 0 ? (
               <li className={styles.empty}>No tasks</li>
             ) : (
-              optimisticTodos.map((todo) => {
-                const isDeletePending = pendingDeleteId === todo.id;
-                return (
-                  <li key={todo.id} className={styles.listItem}>
-                    <span className={styles.listItemText}>{todo.title}</span>
-                    <button
-                      type="button"
-                      className={styles.deleteBtn}
-                      aria-label="Delete task"
-                      disabled={isDeletePending}
-                      onClick={() => deleteTodoItem(todo.id)}
-                    >
-                      {isDeletePending ? (
-                        <FaSpinner aria-hidden />
-                      ) : (
-                        <FaTrash aria-hidden />
-                      )}
-                    </button>
-                  </li>
-                );
-              })
+              optimisticTodos.map((todo) => (
+                <TodoListItem
+                  key={todo.id}
+                  todo={todo}
+                  draftTitle={title}
+                  pendingDeleteId={pendingDeleteId}
+                  pendingEditId={pendingEditId}
+                  editingTodoId={editingTodoId}
+                  onDelete={deleteTodoItem}
+                  onEditOrSave={editTodoItem}
+                />
+              ))
             )}
           </ul>
         )}

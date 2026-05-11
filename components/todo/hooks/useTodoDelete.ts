@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { deleteTodoById } from "@/actions/todo/delete-todo";
-import type { Todo, UseTodoDeleteParams } from "../types";
+import { withPendingId } from "../utils/with-pending-id";
+import type { Todo, UseTodoParams } from "../types";
 
-export function useTodoDelete({
-  optimisticTodos,
-  updateTodos,
-}: UseTodoDeleteParams) {
+export function useTodoDelete({ optimisticTodos, updateTodos }: UseTodoParams) {
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [deleteErrors, setDeleteErrors] = useState<string[] | null>(null);
 
@@ -23,16 +21,13 @@ export function useTodoDelete({
     deletedTodo: Todo,
     deletedTodoIndex: number,
   ) {
-    setPendingDeleteId(id);
-    try {
+    await withPendingId(id, setPendingDeleteId, async () => {
       const result = await deleteTodoById(id);
       if (result.errors) {
         setDeleteErrors(result.errors);
         restoreDeletedTodo(deletedTodo, deletedTodoIndex);
       }
-    } finally {
-      setPendingDeleteId((prev) => (prev === id ? null : prev));
-    }
+    });
   }
 
   function deleteTodoItem(id: string) {

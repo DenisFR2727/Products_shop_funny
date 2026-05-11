@@ -1,13 +1,13 @@
 import createTodo, { CreateTodoState } from "@/actions/todo/create-todo";
 import { useActionState, useEffect, useRef, useTransition } from "react";
-import { TodoFormProps } from "../types";
+import { TodoFormHookParams } from "../types";
 
 const initialTodoState: CreateTodoState = { errors: null };
 
 export default function useTodoForm({
   addOptimistic,
   onTodoCreated,
-}: TodoFormProps) {
+}: TodoFormHookParams) {
   const [state, formAction, isPendingAction] = useActionState(
     createTodo,
     initialTodoState,

@@ -27,3 +27,15 @@ export function validateTodoCreate(
 
   return { ok: true, title, userId };
 }
+
+export type TodoTitleValidation =
+  | { ok: false; errors: string[] }
+  | { ok: true; title: string };
+
+export function validateTodoTitle(rawTitle: unknown): TodoTitleValidation {
+  const title = typeof rawTitle === "string" ? rawTitle.trim() : "";
+  if (!title) {
+    return { ok: false, errors: ["Title is required"] };
+  }
+  return { ok: true, title };
+}
