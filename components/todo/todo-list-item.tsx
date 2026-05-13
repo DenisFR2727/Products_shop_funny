@@ -43,7 +43,7 @@ export default function TodoListItem({
       </button>
       <button
         type="button"
-        className={styles.deleteBtn}
+        className={isRowSaveMode ? styles.saveBtn : styles.editBtn}
         aria-label={isRowSaveMode ? "Save task" : "Edit task"}
         disabled={isDeletePending || Boolean(pendingEditId) || isOptimisticRow}
         onClick={() => onEditOrSave(id, draftTitle)}
@@ -51,9 +51,9 @@ export default function TodoListItem({
         {isEditPending ? (
           <FaSpinner aria-hidden />
         ) : isRowSaveMode ? (
-          "Save"
+          <span>Save</span>
         ) : (
-          "Edit"
+          <span>Edit</span>
         )}
       </button>
     </li>

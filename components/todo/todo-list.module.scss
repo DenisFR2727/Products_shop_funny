@@ -5,6 +5,27 @@ $item-border: #b8ccd1;
 $delete-bg: #1a2f4a;
 $text: #1a1a1a;
 $white: #fff;
+$edit-bg: #0ba56f;
+
+@mixin todo-row-icon-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  color: $white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
 
 .shell {
   min-height: 100%;
@@ -177,26 +198,20 @@ $white: #fff;
 }
 
 .deleteBtn {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  padding: 0;
-  color: $white;
+  @include todo-row-icon-button;
   background: $delete-bg;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.15s ease;
 
   &:hover {
     background: #152238;
   }
+}
 
-  svg {
-    width: 1rem;
-    height: 1rem;
-  }
+.saveBtn {
+  @include todo-row-icon-button;
+  background: $edit-bg;
+}
+
+.editBtn {
+  @include todo-row-icon-button;
+  background: $delete-bg;
 }
