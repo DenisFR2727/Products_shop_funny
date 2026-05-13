@@ -1,10 +1,11 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTodoDelete } from "./hooks/useTodoDelete";
 import TodoForm from "./todo-form";
 import useOptimisticTodoList from "./hooks/useOptimisticTodoList";
 
 import styles from "./todo-list.module.scss";
+import TodoHeader from "./todo-header";
 import useTodoEdit from "./hooks/useTodoEdit";
 import TodoErrorsList from "./utils/todo-errors-list";
 import TodoListItem from "./todo-list-item";
@@ -12,6 +13,7 @@ import type { Todo } from "./types";
 
 export default function TodoList() {
   const [title, setTitle] = useState("");
+
   const {
     optimisticTodos,
     addOptimistic,
@@ -19,6 +21,7 @@ export default function TodoList() {
     updateTodos,
     loading,
     error,
+    todosCount,
   } = useOptimisticTodoList();
   const { pendingDeleteId, deleteErrors, deleteTodoItem } = useTodoDelete({
     optimisticTodos,
@@ -41,8 +44,10 @@ export default function TodoList() {
 
   return (
     <div className={styles.shell}>
+      <TodoHeader />
       <div className={styles.card}>
         <h1 className={styles.title}>Todo List</h1>
+        <p className={styles.tasksCount}>tasks:{todosCount}</p>
         <TodoForm
           addOptimistic={addOptimistic}
           onTodoCreated={handleTodoCreated}

@@ -29,5 +29,6 @@ export default function useOptimisticTodoList() {
     reloadTodos: reload,
     loading,
     error,
+    todosCount: optimisticItems.length,
   };
 }

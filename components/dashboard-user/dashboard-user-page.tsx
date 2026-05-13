@@ -1,7 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import WishListPage from "@/components/wishlist/wishlist";
 import CartProducts from "@/components/products/cart/cart";
 import ProfileComponent from "@/components/profile/profile";
@@ -12,6 +13,8 @@ import TodoList from "../todo/todo-list";
 
 type DashboardSidebarItemId = (typeof sidebarItems)[number]["id"];
 
+const DEFAULT_ACTIVE_ITEM: DashboardSidebarItemId = "dashboard";
+
 const dashboardContentByItem: Record<DashboardSidebarItemId, ReactNode> = {
   dashboard: <DashboardUserOverview />,
   wishlist: <WishListPage />,
@@ -20,9 +23,24 @@ const dashboardContentByItem: Record<DashboardSidebarItemId, ReactNode> = {
   todo: <TodoList />,
 };
 
+const getActiveItemFromSection = (
+  section: string | null,
+): DashboardSidebarItemId => {
+  const isKnownSection = sidebarItems.some(({ id }) => id === section);
+
+  return isKnownSection ? (section as DashboardSidebarItemId) : DEFAULT_ACTIVE_ITEM;
+};
+
 const DashboardUserPage = () => {
-  const [activeItem, setActiveItem] =
-    useState<DashboardSidebarItemId>("dashboard");
+  const searchParams = useSearchParams();
+  const section = searchParams.get("section");
+  const [activeItem, setActiveItem] = useState<DashboardSidebarItemId>(() =>
+    getActiveItemFromSection(section),
+  );
+
+  useEffect(() => {
+    setActiveItem(getActiveItemFromSection(section));
+  }, [section]);
 
   const contentNode = useMemo(
     () =>

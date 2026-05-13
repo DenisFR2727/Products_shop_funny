@@ -30,9 +30,9 @@ $edit-bg: #0ba56f;
 .shell {
   min-height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 1.5rem 1rem;
+  padding: 0 1rem 1.5rem;
   background: $bg-page;
   font-family: system-ui, "Segoe UI", Roboto, sans-serif;
 }
@@ -214,4 +214,8 @@ $edit-bg: #0ba56f;
 .editBtn {
   @include todo-row-icon-button;
   background: $delete-bg;
+}
+
+.tasksCount {
+  text-align: center;
 }
