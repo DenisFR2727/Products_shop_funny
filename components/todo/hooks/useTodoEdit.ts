@@ -1,14 +1,13 @@
 import { useState } from "react";
 import getTodoById from "@/actions/todo/get-todo-by-id";
 import { updateTodoById } from "@/actions/todo/update-todo";
+import { isOptimisticTodoId } from "../types";
 import { withPendingId } from "../utils/with-pending-id";
 import type { UseTodoEditParams } from "../types";
 
-export default function useTodoEdit({
-  updateTodos,
-  setFormTitle,
-}: UseTodoEditParams) {
+export default function useTodoEdit({ updateTodos }: UseTodoEditParams) {
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
+  const [editingTitle, setEditingTitle] = useState("");
   const [pendingEditId, setPendingEditId] = useState<string | null>(null);
   const [editErrors, setEditErrors] = useState<string[] | null>(null);
 
@@ -21,7 +20,7 @@ export default function useTodoEdit({
         return;
       }
       if (result.todo) {
-        setFormTitle(result.todo.title);
+        setEditingTitle(result.todo.title);
         setEditingTodoId(id);
       }
     });
@@ -47,27 +46,32 @@ export default function useTodoEdit({
         updateTodos((prev) =>
           prev.map((t) => (t.id === id ? result.todo! : t)),
         );
-        setFormTitle("");
       }
       setEditingTodoId(null);
+      setEditingTitle("");
     });
   }
 
-  function editTodoItem(id: string, currentTitle: string) {
-    const isPersistedTask = !id.startsWith("optimistic-");
-
+  function editTodoItem(id: string) {
+    if (isOptimisticTodoId(id)) return;
     if (pendingEditId) return;
 
     if (editingTodoId === id) {
-      void saveEdit(id, currentTitle);
+      void saveEdit(id, editingTitle);
       return;
     }
 
     setEditingTodoId(null);
-    if (!isPersistedTask) return;
-
+    setEditingTitle("");
     void startEdit(id);
   }
 
-  return { editingTodoId, pendingEditId, editErrors, editTodoItem };
+  return {
+    editingTodoId,
+    editingTitle,
+    setEditingTitle,
+    pendingEditId,
+    editErrors,
+    editTodoItem,
+  };
 }

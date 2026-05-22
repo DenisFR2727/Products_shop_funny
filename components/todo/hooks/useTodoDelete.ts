@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { deleteTodoById } from "@/actions/todo/delete-todo";
 import { withPendingId } from "../utils/with-pending-id";
-import type { Todo, UseTodoParams } from "../types";
+import {
+  isOptimisticTodoId,
+  isPersistedTodo,
+  type Todo,
+  type UseTodoParams,
+} from "../types";
 
 export function useTodoDelete({ optimisticTodos, updateTodos }: UseTodoParams) {
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
@@ -42,7 +47,8 @@ export function useTodoDelete({ optimisticTodos, updateTodos }: UseTodoParams) {
     updateTodos((prev) => prev.filter((todo) => todo.id !== id));
     setDeleteErrors(null);
 
-    if (id.startsWith("optimistic-")) return;
+    if (isOptimisticTodoId(id) || !isPersistedTodo(deletedTodo)) return;
+
     void handleDeleteRequest(id, deletedTodo, deletedTodoIndex);
   }
 

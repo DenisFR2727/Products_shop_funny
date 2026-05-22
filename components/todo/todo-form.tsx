@@ -1,6 +1,6 @@
 "use client";
 
-import Input from "../products/cart/orders/input/input";
+import LabeledInput from "@/components/ui/labeled-input";
 import styles from "./todo-list.module.scss";
 import type { TodoFormProps } from "./types";
 import useTodoForm from "./hooks/useTodoForm";
@@ -17,16 +17,12 @@ export default function TodoForm({
       onTodoCreated,
     });
 
-  const inputStyles = {
-    shipping_title: styles.formField,
-    error: styles.fieldError,
-  };
   const isPending = Boolean(isPendingAction) || isPendingTransition;
 
   return (
     <form className={styles.form} action={composedAction}>
       <div className={styles.formRow}>
-        <Input
+        <LabeledInput
           id="todo-title"
           label="Title"
           type="text"
@@ -35,7 +31,10 @@ export default function TodoForm({
           disabled={isPending}
           value={title}
           onChange={(e) => onTitleChange(e.target.value)}
-          styles={inputStyles}
+          styles={{
+            field: styles.formField,
+            error: styles.fieldError,
+          }}
         />
         <button className={styles.addBtn} type="submit" disabled={isPending}>
           {isPending ? "…" : "Add"}

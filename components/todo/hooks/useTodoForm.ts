@@ -1,6 +1,6 @@
 import createTodo, { CreateTodoState } from "@/actions/todo/create-todo";
 import { useActionState, useEffect, useRef, useTransition } from "react";
-import { TodoFormHookParams } from "../types";
+import type { OptimisticTodo, TodoFormHookParams } from "../types";
 
 const initialTodoState: CreateTodoState = { errors: null };
 
@@ -14,13 +14,15 @@ export default function useTodoForm({
   );
   const [isPendingTransition, startTransition] = useTransition();
   const prevTodoIdRef = useRef<string | undefined>(undefined);
+  const pendingOptimisticIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     const id = state.todo?.id;
     if (!id || id === prevTodoIdRef.current) return;
 
     prevTodoIdRef.current = id;
-    onTodoCreated(state.todo!);
+    onTodoCreated(state.todo!, pendingOptimisticIdRef.current);
+    pendingOptimisticIdRef.current = null;
   }, [state.todo, onTodoCreated]);
 
   function composedAction(formData: FormData) {
@@ -29,11 +31,11 @@ export default function useTodoForm({
 
     startTransition(() => {
       if (title) {
-        addOptimistic({
-          id: `optimistic-${crypto.randomUUID()}`,
-          title,
-          userId: "",
-        });
+        const optimisticId = `optimistic-${crypto.randomUUID()}` as const;
+        pendingOptimisticIdRef.current = optimisticId;
+        addOptimistic({ id: optimisticId, title });
+      } else {
+        pendingOptimisticIdRef.current = null;
       }
       formAction(formData);
     });
@@ -41,8 +43,6 @@ export default function useTodoForm({
 
   return {
     isPendingTransition,
-    addOptimistic,
-    onTodoCreated,
     composedAction,
     isPendingAction,
     state,

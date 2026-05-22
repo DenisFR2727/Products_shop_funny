@@ -1,11 +1,10 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTodoDelete } from "./hooks/useTodoDelete";
 import TodoForm from "./todo-form";
 import useOptimisticTodoList from "./hooks/useOptimisticTodoList";
 
 import styles from "./todo-list.module.scss";
-import TodoHeader from "./todo-header";
 import useTodoEdit from "./hooks/useTodoEdit";
 import TodoErrorsList from "./utils/todo-errors-list";
 import TodoListItem from "./todo-list-item";
@@ -17,37 +16,39 @@ export default function TodoList() {
   const {
     optimisticTodos,
     addOptimistic,
-    appendTodo,
+    confirmTodo,
     updateTodos,
     loading,
     error,
-    todosCount,
   } = useOptimisticTodoList();
   const { pendingDeleteId, deleteErrors, deleteTodoItem } = useTodoDelete({
     optimisticTodos,
     updateTodos,
   });
-  const { editingTodoId, pendingEditId, editErrors, editTodoItem } =
-    useTodoEdit({
-      optimisticTodos,
-      updateTodos,
-      setFormTitle: setTitle,
-    });
+  const {
+    editingTodoId,
+    editingTitle,
+    setEditingTitle,
+    pendingEditId,
+    editErrors,
+    editTodoItem,
+  } = useTodoEdit({ updateTodos });
 
   const handleTodoCreated = useCallback(
-    (todo: Todo) => {
-      appendTodo(todo);
+    (todo: Todo, optimisticId: string | null) => {
+      confirmTodo(optimisticId, todo);
       setTitle("");
     },
-    [appendTodo],
+    [confirmTodo],
   );
 
   return (
     <div className={styles.shell}>
-      <TodoHeader />
       <div className={styles.card}>
         <h1 className={styles.title}>Todo List</h1>
-        <p className={styles.tasksCount}>tasks:{todosCount}</p>
+        {!loading && (
+          <p className={styles.tasksCount}>Tasks: {optimisticTodos.length}</p>
+        )}
         <TodoForm
           addOptimistic={addOptimistic}
           onTodoCreated={handleTodoCreated}
@@ -71,10 +72,11 @@ export default function TodoList() {
                 <TodoListItem
                   key={todo.id}
                   todo={todo}
-                  draftTitle={title}
+                  editingTodoId={editingTodoId}
+                  editingTitle={editingTitle}
+                  onEditingTitleChange={setEditingTitle}
                   pendingDeleteId={pendingDeleteId}
                   pendingEditId={pendingEditId}
-                  editingTodoId={editingTodoId}
                   onDelete={deleteTodoItem}
                   onEditOrSave={editTodoItem}
                 />

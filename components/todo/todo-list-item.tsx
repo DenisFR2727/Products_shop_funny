@@ -1,25 +1,17 @@
 "use client";
 
 import { FaSpinner, FaTrash } from "react-icons/fa";
-import type { Todo } from "./types";
+import type { TodoListItemProps } from "./types";
+import { isOptimisticTodoId } from "./types";
 import styles from "./todo-list.module.scss";
-
-export type TodoListItemProps = {
-  todo: Todo;
-  draftTitle: string;
-  pendingDeleteId: string | null;
-  pendingEditId: string | null;
-  editingTodoId: string | null;
-  onDelete: (id: string) => void;
-  onEditOrSave: (id: string, currentDraftTitle: string) => void;
-};
 
 export default function TodoListItem({
   todo,
-  draftTitle,
+  editingTodoId,
+  editingTitle,
+  onEditingTitleChange,
   pendingDeleteId,
   pendingEditId,
-  editingTodoId,
   onDelete,
   onEditOrSave,
 }: TodoListItemProps) {
@@ -27,11 +19,22 @@ export default function TodoListItem({
   const isDeletePending = pendingDeleteId === id;
   const isEditPending = pendingEditId === id;
   const isRowSaveMode = editingTodoId === id;
-  const isOptimisticRow = id.startsWith("optimistic-");
+  const isOptimisticRow = isOptimisticTodoId(id);
 
   return (
     <li className={styles.listItem}>
-      <span className={styles.listItemText}>{todo.title}</span>
+      {isRowSaveMode ? (
+        <input
+          className={styles.listItemInput}
+          type="text"
+          value={editingTitle}
+          aria-label="Edit task title"
+          disabled={isEditPending}
+          onChange={(e) => onEditingTitleChange(e.target.value)}
+        />
+      ) : (
+        <span className={styles.listItemText}>{todo.title}</span>
+      )}
       <button
         type="button"
         className={styles.deleteBtn}
@@ -46,7 +49,7 @@ export default function TodoListItem({
         className={isRowSaveMode ? styles.saveBtn : styles.editBtn}
         aria-label={isRowSaveMode ? "Save task" : "Edit task"}
         disabled={isDeletePending || Boolean(pendingEditId) || isOptimisticRow}
-        onClick={() => onEditOrSave(id, draftTitle)}
+        onClick={() => onEditOrSave(id)}
       >
         {isEditPending ? (
           <FaSpinner aria-hidden />

@@ -21,9 +21,8 @@ export type UseOptimisticListOptions<T> = {
 export type UseOptimisticListReturn<T> = {
   optimisticItems: T[];
   addOptimistic: (item: T) => void;
-  appendItem: (item: T) => void;
+  confirmItem: (tempId: string | null, item: T) => void;
   updateItems: (updater: (prev: T[]) => T[]) => void;
-  reload: () => Promise<void>;
   loading: boolean;
   error: string | null;
 };
@@ -58,8 +57,30 @@ export default function useOptimisticList<T>(
     mergeOptimistic,
   );
 
-  const appendItem = useCallback((item: T) => {
-    setItems((prev) => [...prev, item]);
+  const confirmItem = useCallback((tempId: string | null, item: T) => {
+    setItems((prev) => {
+      const getId = (entry: T) => (entry as { id: string }).id;
+      const withoutOptimistic = prev.filter(
+        (entry) => !getId(entry).startsWith("optimistic-"),
+      );
+
+      if (tempId) {
+        const index = withoutOptimistic.findIndex(
+          (entry) => getId(entry) === tempId,
+        );
+        if (index >= 0) {
+          const next = [...withoutOptimistic];
+          next[index] = item;
+          return next;
+        }
+      }
+
+      if (withoutOptimistic.some((entry) => getId(entry) === getId(item))) {
+        return withoutOptimistic;
+      }
+
+      return [...withoutOptimistic, item];
+    });
   }, []);
 
   const updateItems = useCallback((updater: (prev: T[]) => T[]) => {
@@ -89,9 +110,8 @@ export default function useOptimisticList<T>(
   return {
     optimisticItems,
     addOptimistic,
-    appendItem,
+    confirmItem,
     updateItems,
-    reload,
     loading,
     error,
   };

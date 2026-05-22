@@ -1,34 +1,33 @@
 import { getUserTodos } from "@/actions/todo/get-user-todos";
 import useOptimisticList from "./useOptimisticList";
-import type { Todo } from "../types";
+import type { OptimisticTodo, Todo } from "../types";
 
-/**
- * Готовий пресет для todo: той самий API, що раніше ({ optimisticTodos, appendTodo, … }).
- */
 export default function useOptimisticTodoList() {
   const {
     optimisticItems,
     addOptimistic,
-    appendItem,
+    confirmItem,
     updateItems,
-    reload,
     loading,
     error,
-  } = useOptimisticList<Todo>({
+  } = useOptimisticList<Todo | OptimisticTodo>({
     queryFn: async () => {
       const r = await getUserTodos();
       return { data: r.todos, error: r.error };
     },
   });
 
+  const addOptimisticTodo = (todo: OptimisticTodo) => {
+    addOptimistic(todo);
+  };
+
   return {
     optimisticTodos: optimisticItems,
-    addOptimistic,
-    appendTodo: appendItem,
-    updateTodos: updateItems,
-    reloadTodos: reload,
+    addOptimistic: addOptimisticTodo,
+    confirmTodo: (optimisticId: string | null, todo: Todo) =>
+      confirmItem(optimisticId, todo),
+    updateTodos: updateItems as (updater: (prev: Todo[]) => Todo[]) => void,
     loading,
     error,
-    todosCount: optimisticItems.length,
   };
 }
