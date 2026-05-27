@@ -1,6 +1,8 @@
 .order-total {
   font-family: "Roboto", sans-serif;
-  width: 400px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   height: 300px;
   display: flex;
   background: rgb(59 130 246 / 0.5);

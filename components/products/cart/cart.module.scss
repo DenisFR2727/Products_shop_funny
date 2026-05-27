@@ -237,6 +237,19 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 300px;
+  max-width: 100%;
+
+  a {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media (max-width: 975px) {
+  .order_products_total {
+    width: 100%;
+  }
 }
 
 // Modal Order
