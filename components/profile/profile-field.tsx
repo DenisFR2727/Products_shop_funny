@@ -1,4 +1,5 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import s from "./profile.module.scss";
 import { FieldConfig } from "./types";
 
@@ -6,25 +7,28 @@ interface ProfileFieldProps {
   field: FieldConfig;
   defaultValue: string;
   isEditing: boolean;
-  showPassword: boolean;
   error?: string;
-  onTogglePassword: () => void;
 }
 
 export default function ProfileField({
   field,
   defaultValue,
   isEditing,
-  showPassword,
   error,
-  onTogglePassword,
 }: ProfileFieldProps) {
+  const [showPassword, setShowPassword] = useState(false);
   const isPassword = field.name === "password";
   const inputType = isPassword
     ? showPassword
       ? "text"
       : "password"
     : field.type;
+
+  useEffect(() => {
+    if (!isEditing) {
+      setShowPassword(false);
+    }
+  }, [isEditing]);
 
   const inputClass = [
     s.fieldInput,
@@ -56,7 +60,7 @@ export default function ProfileField({
         {isPassword && isEditing && (
           <button
             type="button"
-            onClick={onTogglePassword}
+            onClick={() => setShowPassword((v) => !v)}
             className={s.togglePassBtn}
             aria-label={showPassword ? "Hide password" : "Show password"}
           >

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useRef,
-  useState,
-  useCallback,
-  useEffect,
-  ChangeEvent,
-} from "react";
+import { useRef, useState, useCallback, useEffect, ChangeEvent } from "react";
 import { useSession } from "next-auth/react";
 import { FaEnvelope } from "react-icons/fa";
 import s from "./profile.module.scss";
@@ -17,31 +11,31 @@ import { SavedValues } from "./types";
 import { useProfileForm } from "./hooks";
 import { UpdateUserErrors } from "@/actions/types";
 import { normalizeAvatarSrc } from "@/components/profile/resolve-avatar-src";
-
+import { stat } from "fs";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function ProfileComponent() {
-   const { data: session, update: updateSession } = useSession();
+  const { data: session, update: updateSession } = useSession();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const {
-   state,
-   formAction,
-   isPending,
-   isEditing,
-   savedValues,
-   noChanges,
-   formKey,
-   handleEdit,
-   handleCancel,
-   handleSubmit,
- } = useProfileForm({
-   userId: session?.user?.id ?? "",
-   session,
-   updateSession,
- });
+    state,
+    formAction,
+    isPending,
+    isEditing,
+    savedValues,
+    noChanges,
+    formKey,
+    handleEdit,
+    handleCancel,
+    handleSubmit,
+  } = useProfileForm({
+    userId: session?.user?.id ?? "",
+    session,
+    updateSession,
+  });
 
   useEffect(() => {
     if (state.success) setAvatarPreview(null);
@@ -53,18 +47,16 @@ export default function ProfileComponent() {
   }, [handleCancel]);
 
   const handleAvatarClick = useCallback(() => {
-   if (isEditing) fileInputRef.current?.click();
- }, [isEditing]);
+    if (isEditing) fileInputRef.current?.click();
+  }, [isEditing]);
 
- const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-   const file = e.target.files?.[0];
-   if (!file) return;
-   const reader = new FileReader();
-   reader.onloadend = () => setAvatarPreview(reader.result as string);
-   reader.readAsDataURL(file);
- }, []);
-
-
+  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => setAvatarPreview(reader.result as string);
+    reader.readAsDataURL(file);
+  }, []);
 
   // ─── Derived values ────────────────────────────────────────────────────────
 
@@ -78,6 +70,17 @@ export default function ProfileComponent() {
     if (fieldName === "password") return "";
     return savedValues[fieldName as keyof SavedValues] ?? "";
   };
+
+  useEffect(() => {
+    if (!state.success) return;
+    setShowSuccess(true);
+
+    const timer = setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [state.success, isEditing]);
 
   return (
     <div className={s.page}>
@@ -105,7 +108,7 @@ export default function ProfileComponent() {
             onChange={handleFileChange}
           />
 
-          {state.success && !isEditing && (
+          {showSuccess && !isEditing && (
             <div className={s.success}>
               <span>✓</span>
               <span>Profile updated successfully</span>
@@ -142,9 +145,7 @@ export default function ProfileComponent() {
                 field={field}
                 defaultValue={getFieldDefault(field.name)}
                 isEditing={isEditing}
-                showPassword={showPassword}
                 error={state.errors?.[field.name as keyof UpdateUserErrors]}
-                onTogglePassword={() => setShowPassword((v) => !v)}
               />
             ))}
           </div>
