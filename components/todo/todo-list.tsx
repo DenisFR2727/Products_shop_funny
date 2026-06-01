@@ -6,6 +6,7 @@ import useOptimisticTodoList from "./hooks/useOptimisticTodoList";
 
 import styles from "./todo-list.module.scss";
 import useTodoEdit from "./hooks/useTodoEdit";
+import { useTodoComplete } from "./hooks/useTodoComplete";
 import TodoErrorsList from "./utils/todo-errors-list";
 import TodoListItem from "./todo-list-item";
 import type { Todo } from "./types";
@@ -33,6 +34,11 @@ export default function TodoList() {
     editErrors,
     editTodoItem,
   } = useTodoEdit({ updateTodos });
+  const { pendingCompleteId, completeErrors, toggleComplete } = useTodoComplete(
+    {
+      updateTodos,
+    },
+  );
 
   const handleTodoCreated = useCallback(
     (todo: Todo, optimisticId: string | null) => {
@@ -57,6 +63,7 @@ export default function TodoList() {
         />
         <TodoErrorsList errors={deleteErrors} />
         <TodoErrorsList errors={editErrors} />
+        <TodoErrorsList errors={completeErrors} />
         {loading && <p className={styles.status}>Loading…</p>}
         {!loading && error && (
           <p className={styles.alert} role="alert">
@@ -77,8 +84,10 @@ export default function TodoList() {
                   onEditingTitleChange={setEditingTitle}
                   pendingDeleteId={pendingDeleteId}
                   pendingEditId={pendingEditId}
+                  pendingCompleteId={pendingCompleteId}
                   onDelete={deleteTodoItem}
                   onEditOrSave={editTodoItem}
+                  onToggleComplete={toggleComplete}
                 />
               ))
             )}

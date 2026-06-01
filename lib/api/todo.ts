@@ -41,7 +41,7 @@ export async function fetchTodoById(id: string): Promise<Todo> {
 
 export async function updateTodoPatch(
   id: string,
-  payload: Partial<Pick<Todo, "title" | "userId">>,
+  payload: Partial<Pick<Todo, "title" | "userId" | "completed">>,
 ): Promise<Todo> {
   return apiRequest<Todo>(`${url}/${id}`, "Failed to update todo", {
     method: "PATCH",

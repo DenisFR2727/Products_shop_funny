@@ -3,6 +3,7 @@ export type Todo = {
   title: string;
   userId: string;
   createAt?: string;
+  completed?: boolean;
 };
 
 /** Temporary row shown during create; never persisted as-is. */
@@ -49,12 +50,14 @@ export type TodoErrorsListProps = {
 };
 
 export type TodoListItemProps = {
-  todo: Pick<Todo, "id" | "title">;
+  todo: Pick<Todo, "id" | "title" | "completed">;
   editingTodoId: string | null;
   editingTitle: string;
   onEditingTitleChange: (next: string) => void;
   pendingDeleteId: string | null;
   pendingEditId: string | null;
+  pendingCompleteId: string | null;
   onDelete: (id: string) => void;
   onEditOrSave: (id: string) => void;
+  onToggleComplete: (id: string, completed: boolean) => void;
 };

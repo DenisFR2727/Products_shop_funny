@@ -11,7 +11,6 @@ import { SavedValues } from "./types";
 import { useProfileForm } from "./hooks";
 import { UpdateUserErrors } from "@/actions/types";
 import { normalizeAvatarSrc } from "@/components/profile/resolve-avatar-src";
-import { stat } from "fs";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 

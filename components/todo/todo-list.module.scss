@@ -239,3 +239,8 @@ $edit-bg: #0ba56f;
   font-size: 0.9rem;
   color: #4a5568;
 }
+
+.completedTodo {
+  text-decoration: line-through;
+  color: #64748b;
+}

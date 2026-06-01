@@ -56,4 +56,42 @@ export async function updateTodoById(
   }
 }
 
+export async function updateTodoCompletedById(
+  todoId: string,
+  completed: boolean,
+): Promise<UpdateTodoState> {
+  if (!todoId) {
+    return { errors: ["Todo id is required"] };
+  }
+
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return { errors: ["Authorization required"] };
+  }
+
+  if (todoId.startsWith("optimistic-")) {
+    return { errors: ["Save the task before updating"] };
+  }
+
+  try {
+    const existing = await fetchTodoById(todoId);
+    if (existing.userId !== session.user.id) {
+      return { errors: ["Todo not found"] };
+    }
+
+    const todo = await updateTodoPatch(todoId, { completed });
+
+    return { errors: null, todo };
+  } catch (error) {
+    console.error("Failed to update todo completed:", error);
+
+    if (error instanceof ApiError && error.code === 404) {
+      return { errors: ["Todo not found. Please refresh the list."] };
+    }
+
+    return { errors: ["Server is unavailable. Please try again later."] };
+  }
+}
+
 export default updateTodoById;

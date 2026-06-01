@@ -12,12 +12,16 @@ export default function TodoListItem({
   onEditingTitleChange,
   pendingDeleteId,
   pendingEditId,
+  pendingCompleteId,
   onDelete,
   onEditOrSave,
+  onToggleComplete,
 }: TodoListItemProps) {
   const id = todo.id;
+  const isCompleted = Boolean(todo.completed);
   const isDeletePending = pendingDeleteId === id;
   const isEditPending = pendingEditId === id;
+  const isCompletePending = pendingCompleteId === id;
   const isRowSaveMode = editingTodoId === id;
   const isOptimisticRow = isOptimisticTodoId(id);
 
@@ -33,7 +37,11 @@ export default function TodoListItem({
           onChange={(e) => onEditingTitleChange(e.target.value)}
         />
       ) : (
-        <span className={styles.listItemText}>{todo.title}</span>
+        <span className={styles.listItemText}>
+          <span className={isCompleted ? styles.completedTodo : undefined}>
+            {todo.title}
+          </span>
+        </span>
       )}
       <button
         type="button"
@@ -59,6 +67,21 @@ export default function TodoListItem({
           <span>Edit</span>
         )}
       </button>
+      <label className={styles.completeBtn}>
+        {isCompletePending ? (
+          <FaSpinner aria-hidden />
+        ) : (
+          <input
+            type="checkbox"
+            checked={isCompleted}
+            disabled={isOptimisticRow || isCompletePending}
+            aria-label={
+              isCompleted ? "Mark task incomplete" : "Mark task complete"
+            }
+            onChange={() => void onToggleComplete(id, !isCompleted)}
+          />
+        )}
+      </label>
     </li>
   );
 }
