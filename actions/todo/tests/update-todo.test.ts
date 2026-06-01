@@ -1,7 +1,7 @@
 import {
   updateTodoById,
   updateTodoCompletedById,
-} from "@/actions/todo/update-todo";
+} from "../update-todo";
 import { fetchTodoById, updateTodoPatch } from "@/lib/api/todo";
 import { getServerSession } from "next-auth";
 import { ApiError } from "@/lib/api/error";
@@ -28,7 +28,7 @@ const existingTodo = {
   completed: false,
 };
 
-describe("update-todo actions", () => {
+describe("actions/todo/update-todo", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockedGetServerSession.mockResolvedValue(session);
@@ -38,7 +38,9 @@ describe("update-todo actions", () => {
   describe("updateTodoById", () => {
     it("returns error when todo id is missing", async () => {
       const result = await updateTodoById("", "Title");
+
       expect(result.errors).toEqual(["Todo id is required"]);
+      expect(mockedGetServerSession).not.toHaveBeenCalled();
     });
 
     it("returns error when user is not authorized", async () => {
@@ -47,6 +49,20 @@ describe("update-todo actions", () => {
       const result = await updateTodoById("13", "Title");
 
       expect(result.errors).toEqual(["Authorization required"]);
+    });
+
+    it("returns error for optimistic todo ids", async () => {
+      const result = await updateTodoById("optimistic-abc", "Title");
+
+      expect(result.errors).toEqual(["Save the task before updating"]);
+      expect(mockedFetchTodoById).not.toHaveBeenCalled();
+    });
+
+    it("returns validation error for empty title", async () => {
+      const result = await updateTodoById("13", "   ");
+
+      expect(result.errors).toEqual(["Title is required"]);
+      expect(mockedFetchTodoById).not.toHaveBeenCalled();
     });
 
     it("updates title for owner", async () => {
@@ -72,16 +88,48 @@ describe("update-todo actions", () => {
       expect(result.errors).toEqual(["Todo not found"]);
       expect(mockedUpdateTodoPatch).not.toHaveBeenCalled();
     });
+
+    it("maps ApiError 404 to refresh message", async () => {
+      mockedFetchTodoById.mockRejectedValueOnce(new ApiError(404, "missing"));
+
+      const result = await updateTodoById("13", "Title");
+
+      expect(result.errors).toEqual([
+        "Todo not found. Please refresh the list.",
+      ]);
+    });
+
+    it("returns generic error for unexpected failures", async () => {
+      mockedFetchTodoById.mockRejectedValueOnce(new Error("network"));
+
+      const result = await updateTodoById("13", "Title");
+
+      expect(result.errors).toEqual([
+        "Server is unavailable. Please try again later.",
+      ]);
+    });
   });
 
   describe("updateTodoCompletedById", () => {
+    it("returns error when todo id is missing", async () => {
+      const result = await updateTodoCompletedById("", true);
+
+      expect(result.errors).toEqual(["Todo id is required"]);
+    });
+
+    it("returns error when user is not authorized", async () => {
+      mockedGetServerSession.mockResolvedValueOnce(null);
+
+      const result = await updateTodoCompletedById("13", true);
+
+      expect(result.errors).toEqual(["Authorization required"]);
+    });
+
     it("returns error for optimistic ids", async () => {
-      const result = await updateTodoCompletedById(
-        "optimistic-1",
-        true,
-      );
+      const result = await updateTodoCompletedById("optimistic-1", true);
 
       expect(result.errors).toEqual(["Save the task before updating"]);
+      expect(mockedFetchTodoById).not.toHaveBeenCalled();
     });
 
     it("updates completed flag for owner", async () => {
@@ -94,6 +142,18 @@ describe("update-todo actions", () => {
         completed: true,
       });
       expect(result).toEqual({ errors: null, todo: updated });
+    });
+
+    it("returns not found when todo belongs to another user", async () => {
+      mockedFetchTodoById.mockResolvedValueOnce({
+        ...existingTodo,
+        userId: "other-user",
+      });
+
+      const result = await updateTodoCompletedById("13", false);
+
+      expect(result.errors).toEqual(["Todo not found"]);
+      expect(mockedUpdateTodoPatch).not.toHaveBeenCalled();
     });
 
     it("maps ApiError 404 to refresh message", async () => {
