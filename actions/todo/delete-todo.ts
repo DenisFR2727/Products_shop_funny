@@ -1,9 +1,13 @@
 "use server";
 
 import { deleteTodoTask } from "@/lib/api/todo";
-import { ApiError } from "@/lib/api/error";
-import { authOptions } from "@/lib/auth/nextauth-options";
-import { getServerSession } from "next-auth";
+import {
+  loadTodoForUser,
+  mapTodoActionError,
+  rejectMissingTodoId,
+  rejectOptimisticTodoId,
+  requireTodoSession,
+} from "./todo-action-helpers";
 
 type DeleteTodoState = {
   errors: string[] | null;
@@ -13,14 +17,24 @@ type DeleteTodoState = {
 export const deleteTodoById = async (
   todoId: string,
 ): Promise<DeleteTodoState> => {
-  if (!todoId) {
-    return { errors: ["Todo id is required"] };
+  const missingId = rejectMissingTodoId(todoId);
+  if (missingId) {
+    return { errors: missingId.errors };
   }
 
-  const session = await getServerSession(authOptions);
+  const session = await requireTodoSession();
+  if (!session.ok) {
+    return { errors: session.errors };
+  }
 
-  if (!session?.user?.id) {
-    return { errors: ["Authorization required"] };
+  const optimistic = rejectOptimisticTodoId(todoId, "update");
+  if (optimistic) {
+    return { errors: optimistic.errors };
+  }
+
+  const loaded = await loadTodoForUser(todoId, session.userId);
+  if (!loaded.ok) {
+    return { errors: loaded.errors };
   }
 
   try {
@@ -28,12 +42,7 @@ export const deleteTodoById = async (
     return { errors: null, deletedId: todoId };
   } catch (error) {
     console.error("Failed to delete todo:", error);
-
-    if (error instanceof ApiError && error.code === 404) {
-      return { errors: ["Todo not found. Please refresh the list."] };
-    }
-
-    return { errors: ["Server is unavailable. Please try again later."] };
+    return { errors: mapTodoActionError(error) };
   }
 };
 

@@ -3,38 +3,44 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
 import type { TodoListItemProps } from "./types";
 import { isOptimisticTodoId } from "./types";
+import { getTodoListItemRowState } from "./utils/todo-list-item-row-state";
 import styles from "./todo-list.module.scss";
 
 export default function TodoListItem({
   todo,
-  editingTodoId,
-  editingTitle,
-  onEditingTitleChange,
+  activeEditId,
+  editTitle,
+  onEditTitleChange,
   pendingDeleteId,
   pendingEditId,
   pendingCompleteId,
   onDelete,
-  onEditOrSave,
+  onEditSave,
   onToggleComplete,
 }: TodoListItemProps) {
   const id = todo.id;
   const isCompleted = Boolean(todo.completed);
-  const isDeletePending = pendingDeleteId === id;
-  const isEditPending = pendingEditId === id;
-  const isCompletePending = pendingCompleteId === id;
-  const isRowSaveMode = editingTodoId === id;
-  const isOptimisticRow = isOptimisticTodoId(id);
+
+  const { isEditing, isDeletePending, isEditPending, isCompletePending, disabled } =
+    getTodoListItemRowState({
+      rowId: id,
+      activeEditId,
+      pendingDeleteId,
+      pendingEditId,
+      pendingCompleteId,
+      isOptimisticRow: isOptimisticTodoId(id),
+    });
 
   return (
     <li className={styles.listItem}>
-      {isRowSaveMode ? (
+      {isEditing ? (
         <input
           className={styles.listItemInput}
           type="text"
-          value={editingTitle}
+          value={editTitle}
           aria-label="Edit task title"
-          disabled={isEditPending}
-          onChange={(e) => onEditingTitleChange(e.target.value)}
+          disabled={disabled.editTitleInput}
+          onChange={(e) => onEditTitleChange(e.target.value)}
         />
       ) : (
         <span className={styles.listItemText}>
@@ -47,21 +53,21 @@ export default function TodoListItem({
         type="button"
         className={styles.deleteBtn}
         aria-label="Delete task"
-        disabled={isDeletePending}
+        disabled={disabled.deleteButton}
         onClick={() => onDelete(id)}
       >
         {isDeletePending ? <FaSpinner aria-hidden /> : <FaTrash aria-hidden />}
       </button>
       <button
         type="button"
-        className={isRowSaveMode ? styles.saveBtn : styles.editBtn}
-        aria-label={isRowSaveMode ? "Save task" : "Edit task"}
-        disabled={isDeletePending || Boolean(pendingEditId) || isOptimisticRow}
-        onClick={() => onEditOrSave(id)}
+        className={isEditing ? styles.saveBtn : styles.editBtn}
+        aria-label={isEditing ? "Save task" : "Edit task"}
+        disabled={disabled.editButton}
+        onClick={() => onEditSave(id)}
       >
         {isEditPending ? (
           <FaSpinner aria-hidden />
-        ) : isRowSaveMode ? (
+        ) : isEditing ? (
           <span>Save</span>
         ) : (
           <span>Edit</span>
@@ -74,7 +80,7 @@ export default function TodoListItem({
           <input
             type="checkbox"
             checked={isCompleted}
-            disabled={isOptimisticRow || isCompletePending}
+            disabled={disabled.completeCheckbox}
             aria-label={
               isCompleted ? "Mark task incomplete" : "Mark task complete"
             }

@@ -1,0 +1,15 @@
+---
+description: Use current official documentation for dependencies
+alwaysApply: true
+---
+
+Before implementing tasks involving external libraries or frameworks:
+
+1. Check the installed package version in package.json and lock files.
+2. Use official documentation for that exact major version.
+3. Prefer @Docs or @Web when API behavior may have changed.
+4. Do not rely only on model memory for library APIs.
+5. Before editing, briefly state:
+   - detected package version
+   - documentation source used
+   - any relevant breaking changes

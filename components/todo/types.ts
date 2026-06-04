@@ -23,10 +23,10 @@ export function isPersistedTodo(entry: TodoListEntry): entry is Todo {
 export type TodoDraft = Pick<Todo, "title" | "userId">;
 
 export type TodoFormProps = {
-  addOptimistic: (todo: OptimisticTodo) => void;
-  onTodoCreated: (todo: Todo, optimisticId: string | null) => void;
   title: string;
   onTitleChange: (next: string) => void;
+  composedAction: (formData: FormData) => void;
+  isPending: boolean;
 };
 
 export type TodoListEntry = Todo | OptimisticTodo;
@@ -40,10 +40,10 @@ export type UseTodoEditParams = {
   updateTodos: (updater: (prev: Todo[]) => Todo[]) => void;
 };
 
-export type TodoFormHookParams = Pick<
-  TodoFormProps,
-  "addOptimistic" | "onTodoCreated"
->;
+export type TodoFormHookParams = {
+  addOptimistic: (todo: OptimisticTodo) => void;
+  onTodoCreated: (todo: Todo, optimisticId: string | null) => void;
+};
 
 export type TodoErrorsListProps = {
   errors: string[] | null | undefined;
@@ -51,13 +51,13 @@ export type TodoErrorsListProps = {
 
 export type TodoListItemProps = {
   todo: Pick<Todo, "id" | "title" | "completed">;
-  editingTodoId: string | null;
-  editingTitle: string;
-  onEditingTitleChange: (next: string) => void;
+  activeEditId: string | null;
+  editTitle: string;
+  onEditTitleChange: (next: string) => void;
   pendingDeleteId: string | null;
   pendingEditId: string | null;
   pendingCompleteId: string | null;
   onDelete: (id: string) => void;
-  onEditOrSave: (id: string) => void;
+  onEditSave: (id: string) => void;
   onToggleComplete: (id: string, completed: boolean) => void;
 };

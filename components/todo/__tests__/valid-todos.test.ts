@@ -37,7 +37,7 @@ describe("validateTodoCreate", () => {
     expect(result.ok).toBe(false);
     if (!result.ok) {
       expect(result.errors).toContain("Title is required");
-      expect(result.errors).toContain("Потрібна авторизація");
+      expect(result.errors).toContain("Authorization required");
     }
   });
 });

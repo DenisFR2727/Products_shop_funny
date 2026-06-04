@@ -2,8 +2,9 @@
 
 import createTodoPost from "@/lib/api/todo";
 import type { Todo } from "@/components/todo/types";
-import { authOptions } from "@/lib/auth/nextauth-options";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/nextauth-options";
+import { mapTodoActionError } from "./todo-action-helpers";
 import { validateTodoCreate } from "./valid-todos";
 
 export type CreateTodoState = {
@@ -38,10 +39,7 @@ const createTodo = async (
     return { errors: null, todo };
   } catch (error) {
     console.error("Failed to create todo:", error);
-
-    return {
-      errors: ["Server is unavailable. Please try again later."],
-    };
+    return { errors: mapTodoActionError(error) };
   }
 };
 

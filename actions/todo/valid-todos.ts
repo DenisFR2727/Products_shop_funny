@@ -1,3 +1,5 @@
+import { TODO_ERRORS } from "./todo-errors";
+
 export type TodoCreateValidation =
   | { ok: false; errors: string[] }
   | { ok: true; title: string; userId: string };
@@ -14,18 +16,14 @@ export function validateTodoCreate(
   }
 
   if (!userId) {
-    errors.push("Потрібна авторизація");
+    errors.push(...TODO_ERRORS.authRequired);
   }
 
   if (errors.length > 0) {
     return { ok: false, errors };
   }
 
-  if (!userId) {
-    return { ok: false, errors: ["Потрібна авторизація"] };
-  }
-
-  return { ok: true, title, userId };
+  return { ok: true, title, userId: userId! };
 }
 
 export type TodoTitleValidation =

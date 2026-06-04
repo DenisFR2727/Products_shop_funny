@@ -3,22 +3,13 @@
 import LabeledInput from "@/components/ui/labeled-input";
 import styles from "./todo-list.module.scss";
 import type { TodoFormProps } from "./types";
-import useTodoForm from "./hooks/useTodoForm";
 
 export default function TodoForm({
-  addOptimistic,
-  onTodoCreated,
   title,
   onTitleChange,
+  composedAction,
+  isPending,
 }: TodoFormProps) {
-  const { isPendingTransition, composedAction, isPendingAction, state } =
-    useTodoForm({
-      addOptimistic,
-      onTodoCreated,
-    });
-
-  const isPending = Boolean(isPendingAction) || isPendingTransition;
-
   return (
     <form className={styles.form} action={composedAction}>
       <div className={styles.formRow}>
@@ -40,13 +31,6 @@ export default function TodoForm({
           {isPending ? "…" : "Add"}
         </button>
       </div>
-      {state.errors && state.errors.length > 0 && (
-        <ul className={styles.errorList} role="alert">
-          {state.errors.map((error, index) => (
-            <li key={index}>{error}</li>
-          ))}
-        </ul>
-      )}
     </form>
   );
 }

@@ -9,14 +9,14 @@ jest.mock("react-icons/fa", () => ({
 
 const baseProps: TodoListItemProps = {
   todo: { id: "1", title: "Buy milk", completed: false },
-  editingTodoId: null,
-  editingTitle: "",
-  onEditingTitleChange: jest.fn(),
+  activeEditId: null,
+  editTitle: "",
+  onEditTitleChange: jest.fn(),
   pendingDeleteId: null,
   pendingEditId: null,
   pendingCompleteId: null,
   onDelete: jest.fn(),
-  onEditOrSave: jest.fn(),
+  onEditSave: jest.fn(),
   onToggleComplete: jest.fn(),
 };
 
@@ -44,8 +44,8 @@ describe("TodoListItem", () => {
     render(
       <TodoListItem
         {...baseProps}
-        editingTodoId="1"
-        editingTitle="Updated title"
+        activeEditId="1"
+        editTitle="Updated title"
       />,
     );
 
@@ -55,14 +55,14 @@ describe("TodoListItem", () => {
     expect(screen.getByRole("button", { name: "Save task" })).toBeInTheDocument();
   });
 
-  it("calls onDelete and onEditOrSave from action buttons", () => {
+  it("calls onDelete and onEditSave from action buttons", () => {
     render(<TodoListItem {...baseProps} />);
 
     fireEvent.click(screen.getByRole("button", { name: "Delete task" }));
     fireEvent.click(screen.getByRole("button", { name: "Edit task" }));
 
     expect(baseProps.onDelete).toHaveBeenCalledWith("1");
-    expect(baseProps.onEditOrSave).toHaveBeenCalledWith("1");
+    expect(baseProps.onEditSave).toHaveBeenCalledWith("1");
   });
 
   it("disables complete checkbox for optimistic rows", () => {

@@ -1,6 +1,6 @@
 import createTodo, { CreateTodoState } from "@/actions/todo/create-todo";
 import { useActionState, useEffect, useRef, useTransition } from "react";
-import type { OptimisticTodo, TodoFormHookParams } from "../types";
+import type { TodoFormHookParams } from "../types";
 
 const initialTodoState: CreateTodoState = { errors: null };
 
