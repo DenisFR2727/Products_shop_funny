@@ -244,3 +244,16 @@ $edit-bg: #0ba56f;
   text-decoration: line-through;
   color: #64748b;
 }
+.completeBtn {
+  @include todo-row-icon-button;
+  background: $delete-bg;
+  input {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 4px;
+    border: 1.5px solid $primary-blue;
+    background: $white;
+    outline: none;
+    transition: box-shadow 0.15s ease;
+  }
+}
