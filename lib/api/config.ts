@@ -4,13 +4,17 @@ export const API_UNSPLASH_URL = "https://api.unsplash.com/photos";
 export const NEXT_PUBLIC_UNSPLASH_ACCESS_KEY =
   process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
 
-export const API_ADDRESS_CREATE =
-  "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
-export const API_USERS_CREATE =
-  "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
-// Base URL for MockAPI instance; reviews resource is at /reviews
-
+// export const API_ADDRESS_CREATE =
+//   "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
+// export const API_USERS_CREATE =
+//   "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
 const MOCKAPI_BASE_URL = "https://692dacb6e5f67cd80a4c7d05.mockapi.io";
+
+const MOCKAPI_ADDRESS_CREATE_BASE = `${MOCKAPI_BASE_URL}/address_create`;
+export const API_ADDRESS_CREATE = MOCKAPI_ADDRESS_CREATE_BASE;
+export const API_USERS_CREATE = MOCKAPI_ADDRESS_CREATE_BASE;
+
+// Base URL for MockAPI instance; reviews resource is at /reviews
 
 export const API_REVIEWS_CREATE = MOCKAPI_BASE_URL;
 export const API_TODOS_CREATE = MOCKAPI_BASE_URL;

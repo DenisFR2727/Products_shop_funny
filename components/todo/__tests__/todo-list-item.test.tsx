@@ -52,7 +52,9 @@ describe("TodoListItem", () => {
     expect(
       screen.getByRole("textbox", { name: "Edit task title" }),
     ).toHaveValue("Updated title");
-    expect(screen.getByRole("button", { name: "Save task" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Save task" }),
+    ).toBeInTheDocument();
   });
 
   it("calls onDelete and onEditSave from action buttons", () => {
