@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { updateUser as updateUserApi } from "@/lib/api/auth";
-import { hashUserPassword } from "@/lib/hash";
 import { uploadAvatarToCloudinary } from "@/lib/cloudinary/upload-avatar";
 import errorsUpdateUser from "./errors-update-user";
 import { UpdateUserState } from "./types";
@@ -58,7 +57,7 @@ export async function updateUserAction(
     const payload: Record<string, string> = { username, email, phone };
 
     if (password) {
-      payload.password = await hashUserPassword(password);
+      payload.password = password;
     }
     if (imageUrl) {
       payload.image = imageUrl;

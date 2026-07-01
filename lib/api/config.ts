@@ -8,11 +8,15 @@ export const NEXT_PUBLIC_UNSPLASH_ACCESS_KEY =
 //   "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
 // export const API_USERS_CREATE =
 //   "https://692dacb6e5f67cd80a4c7d05.mockapi.io/address_create";
-const MOCKAPI_BASE_URL = "https://692dacb6e5f67cd80a4c7d05.mockapi.io";
+export const MOCKAPI_BASE_URL =
+  process.env.MOCKAPI_BASE_URL ?? "https://692dacb6e5f67cd80a4c7d05.mockapi.io";
 
-const MOCKAPI_ADDRESS_CREATE_BASE = `${MOCKAPI_BASE_URL}/address_create`;
-export const API_ADDRESS_CREATE = MOCKAPI_ADDRESS_CREATE_BASE;
-export const API_USERS_CREATE = MOCKAPI_ADDRESS_CREATE_BASE;
+export const API_ADDRESS_CREATE = MOCKAPI_BASE_URL;
+
+// Users are served by the dedicated MongoDB/Mongoose backend (see /backend).
+// Falls back to the local dev server; other resources stay on MockAPI.
+export const API_USERS_CREATE =
+  process.env.USERS_API_URL ?? "http://localhost:4000";
 
 // Base URL for MockAPI instance; reviews resource is at /reviews
 

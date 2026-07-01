@@ -14,7 +14,13 @@ import { normalizeAvatarSrc } from "@/components/profile/resolve-avatar-src";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function ProfileComponent() {
+interface ProfileComponentProps {
+  initialValues?: SavedValues | null;
+}
+
+export default function ProfileComponent({
+  initialValues,
+}: ProfileComponentProps) {
   const { data: session, update: updateSession } = useSession();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -33,6 +39,7 @@ export default function ProfileComponent() {
   } = useProfileForm({
     userId: session?.user?.id ?? "",
     session,
+    initialValues,
     updateSession,
   });
 

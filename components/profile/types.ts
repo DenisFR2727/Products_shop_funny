@@ -24,6 +24,7 @@ export interface FieldConfig {
 export interface UseProfileFormParams {
   userId: string;
   session: Session | null;
+  initialValues?: SavedValues | null;
   updateSession: (data: {
     name?: string;
     email?: string;

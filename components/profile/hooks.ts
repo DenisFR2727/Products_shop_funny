@@ -33,6 +33,7 @@ const EMPTY_SAVED: SavedValues = {
 export function useProfileForm({
   userId,
   session,
+  initialValues,
   updateSession,
 }: UseProfileFormParams): UseProfileFormReturn {
   const boundAction = useMemo(
@@ -40,7 +41,9 @@ export function useProfileForm({
     [userId],
   );
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [savedValues, setSavedValues] = useState<SavedValues>(EMPTY_SAVED);
+  const [savedValues, setSavedValues] = useState<SavedValues>(
+    initialValues ?? EMPTY_SAVED,
+  );
   const [noChanges, setNoChanges] = useState<boolean>(false);
   const [formKey, setFormKey] = useState<number>(0);
   const [state, formAction, isPending] = useActionState(
@@ -48,16 +51,18 @@ export function useProfileForm({
     INITIAL_STATE,
   );
 
-  // Sync session data → savedValues on initial load
+  // Sync session data → savedValues when the session changes.
+  // Phone is preserved from the server-loaded initial values, since the
+  // NextAuth session does not carry it.
   useEffect(() => {
     if (!session?.user) return;
 
-    setSavedValues({
-      username: session.user.name ?? "",
-      email: session.user.email ?? "",
-      phone: "",
-      image: session.user.image ?? undefined,
-    });
+    setSavedValues((prev) => ({
+      username: session.user.name ?? prev.username,
+      email: session.user.email ?? prev.email,
+      phone: prev.phone,
+      image: session.user.image ?? prev.image,
+    }));
   }, [session?.user]);
 
   // Sync updatedData → savedValues + JWT session after successful save

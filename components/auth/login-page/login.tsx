@@ -6,13 +6,13 @@ import useInput from "../hooks/useInput";
 import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
 import { useActionState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
-import isLogin from "@/actions/login";
+import loginAction from "@/actions/login/login";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ButtonReturn from "../btn-return";
 
 export default function Login() {
-  const [state, formAction] = useActionState(isLogin, null);
+  const [state, formAction] = useActionState(loginAction, null);
   const {
     value: emailValue,
     handleChangeInput: handleEmailChange,
