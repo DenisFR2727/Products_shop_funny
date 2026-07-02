@@ -51,8 +51,3 @@ export interface UpdateUserState {
 export type SignUpUserFields = Omit<UserFields, "userId">;
 
 export type SignUpData = Omit<UserFields, "userId">;
-
-// export interface SignUpData {
-//   signUpUserFields: Omit<UserFields, "userId">;
-//   signUpData: Omit<UserFields, "userId">;
-// }
