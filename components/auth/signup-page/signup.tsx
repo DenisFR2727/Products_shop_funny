@@ -1,6 +1,6 @@
 "use client";
 
-import userCreate from "@/actions/signup";
+import userCreate from "@/actions/signup/signup";
 import { useActionState, useEffect, useRef } from "react";
 
 import styles from "../auth.module.scss";

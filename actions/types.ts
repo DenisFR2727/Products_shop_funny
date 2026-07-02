@@ -25,25 +25,6 @@ export type FormErrors<T> = Partial<Record<keyof T, string>>;
 export type AddressErrors = FormErrors<AddressDetails>;
 export type UserErrors = FormErrors<UserFields>;
 
-// types.ts signup
-export type SignUpState = {
-  errors: {
-    username?: string;
-    email?: string;
-    phone?: string;
-    password?: string;
-    confirmPass?: string;
-  } | null;
-  values: {
-    userId?: string;
-    username?: string;
-    email?: string;
-    phone?: string;
-    password?: string;
-    confirmPass?: string;
-  };
-};
-
 // types updateUser
 export interface UpdatedUserData {
   username: string;
@@ -59,11 +40,19 @@ export interface UpdateUserErrors {
   password?: string;
   avatar?: string;
 }
- 
- export interface UpdateUserState {
-   success: boolean;
-   error: string | null;
-   errors: UpdateUserErrors | null;
-   updatedData: UpdatedUserData | null;
- }
- 
+
+export interface UpdateUserState {
+  success: boolean;
+  error: string | null;
+  errors: UpdateUserErrors | null;
+  updatedData: UpdatedUserData | null;
+}
+
+export type SignUpUserFields = Omit<UserFields, "userId">;
+
+export type SignUpData = Omit<UserFields, "userId">;
+
+// export interface SignUpData {
+//   signUpUserFields: Omit<UserFields, "userId">;
+//   signUpData: Omit<UserFields, "userId">;
+// }
