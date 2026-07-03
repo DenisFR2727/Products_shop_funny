@@ -22,7 +22,7 @@ const REVIEWS_LIST: ReviewItem[] = [
   { id: "2", nameUser: "Bob", text: "Pretty good.", date: "2026-02-01T00:00:00.000Z" },
 ];
 
-const EXPECTED_URL = "https://692dacb6e5f67cd80a4c7d05.mockapi.io/reviews";
+const EXPECTED_URL = "http://localhost:4000/reviews";
 
 // ── Tests ──────────────────────────────────────────────────────────────────
 

@@ -13,14 +13,15 @@ export const MOCKAPI_BASE_URL =
 
 export const API_ADDRESS_CREATE = MOCKAPI_BASE_URL;
 
-// Users are served by the dedicated MongoDB/Mongoose backend (see /backend).
+// Users and reviews are served by the dedicated MongoDB/Mongoose backend (see /backend).
 // Falls back to the local dev server; other resources stay on MockAPI.
-export const API_USERS_CREATE =
+export const BACKEND_API_URL =
   process.env.USERS_API_URL ?? "http://localhost:4000";
 
-// Base URL for MockAPI instance; reviews resource is at /reviews
+export const API_USERS_CREATE = BACKEND_API_URL;
 
-export const API_REVIEWS_CREATE = MOCKAPI_BASE_URL;
+export const API_REVIEWS_CREATE =
+  process.env.REVIEWS_API_URL ?? BACKEND_API_URL;
 export const API_TODOS_CREATE = MOCKAPI_BASE_URL;
 
 export const API_ENDPOINTS = {
