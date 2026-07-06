@@ -17,6 +17,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { FaUser } from "react-icons/fa";
 import { useAppSelector } from "@/lib/hooks";
 import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
+import { THEME_LIGHT } from "@/config/theme";
 import { ThemeContext } from "@/context/themeContext";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "react-i18next";
@@ -149,7 +150,7 @@ export default function HeaderMain() {
           </NavbarItem>
           <NavbarItem className="theme-toggle-nav">
             <span className="header_login-nav" onClick={toggleTheme}>
-              {theme === "light_theme" ? (
+              {theme === THEME_LIGHT ? (
                 <Image
                   style={{ maxWidth: "30px" }}
                   src={light}

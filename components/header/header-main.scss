@@ -265,7 +265,9 @@ header {
     pointer-events: none;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease;
   }
 }
 .nav_header-wishlist:hover {
@@ -276,16 +278,16 @@ header {
 }
 
 @media (max-width: 975px) {
-   .nav_header {
-     a {
-       font-size: 18px;
-     }
-   }
- }
- @media (max-width: 745px) {
-   .nav_header {
-     a {
-       font-size: 15px;
-     }
-   }
- }
+  .nav_header {
+    a {
+      font-size: 18px;
+    }
+  }
+}
+@media (max-width: 745px) {
+  .nav_header {
+    a {
+      font-size: 15px;
+    }
+  }
+}

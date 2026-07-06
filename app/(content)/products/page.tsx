@@ -15,10 +15,10 @@ export default async function ProductsPage() {
   const data = response.products;
 
   return (
-    <>
+    <div id="page-content">
       <div id="dialog-overlay"></div>
       <ProductsServices products={data} />
       <AutoOpenSaleModal delay={2000} />
-    </>
+    </div>
   );
 }

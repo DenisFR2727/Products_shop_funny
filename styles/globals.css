@@ -23,10 +23,6 @@
 #home-page {
   margin: 0 auto;
 }
-/* body {
-  padding-left: 1rem;
-  padding-right: 1rem;
-} */
 
 .not_found-product {
   text-align: center;
@@ -86,14 +82,30 @@
   cursor: pointer;
 }
 
+:root {
+  --dark-theme-background-image: url("/background/pexels-rahmadhimawan-38153320.jpg");
+}
+
 .light_theme {
   background-color: #ecedee !important;
   color: #000 !important;
 }
 
 .dark_theme {
-  background-color: #3f3f46 !important;
   color: #f5a524 !important;
+}
+
+body.dark_theme {
+  background-image: var(--dark-theme-background-image) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+#header.dark_theme,
+#page.dark_theme {
+  background-color: transparent !important;
 }
 
 @media (max-width: 520px) {

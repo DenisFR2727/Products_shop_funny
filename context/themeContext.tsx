@@ -2,66 +2,84 @@
 import "@/lib/features/language/i18n";
 import { createContext, useEffect, useState } from "react";
 
+import {
+  THEME_CLASSES,
+  THEME_DARK,
+  THEME_FILTER_BTN,
+  THEME_LIGHT,
+  type ThemeClass,
+} from "@/config/theme";
+
 interface ThemeContextProps {
-  theme: string;
+  theme: ThemeClass;
   toggleTheme: () => void;
   themeFilterBtn: string;
 }
 
 export const ThemeContext = createContext<ThemeContextProps>({
-  theme: "light_theme",
+  theme: THEME_LIGHT,
   toggleTheme: () => {},
-  themeFilterBtn: "light_theme-btn",
+  themeFilterBtn: THEME_FILTER_BTN[THEME_LIGHT],
 });
+
+function isThemeClass(value: unknown): value is ThemeClass {
+  return value === THEME_LIGHT || value === THEME_DARK;
+}
+
+function applyThemeClass(theme: ThemeClass) {
+  document.body.classList.remove(...THEME_CLASSES);
+  document.body.classList.add(theme);
+
+  const page = document.getElementById("page");
+  const headers = document.getElementsByTagName("header");
+
+  for (const header of headers) {
+    header.classList.remove(...THEME_CLASSES);
+    header.classList.add(theme);
+  }
+
+  if (page) {
+    page.classList.remove(...THEME_CLASSES);
+    page.classList.add(theme);
+  }
+}
 
 export function ThemeContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<string>("light_theme");
-  const [themeFilterBtn, setThemeFilterBtn] =
-    useState<string>("light_theme-btn");
+  const [theme, setTheme] = useState<ThemeClass>(THEME_LIGHT);
+  const [themeFilterBtn, setThemeFilterBtn] = useState<string>(
+    THEME_FILTER_BTN[THEME_LIGHT],
+  );
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) {
+    if (!storedTheme) return;
+
+    try {
       const parsedTheme = JSON.parse(storedTheme);
+      if (!isThemeClass(parsedTheme)) return;
+
       setTheme(parsedTheme);
-      setThemeFilterBtn(
-        parsedTheme === "light_theme" ? "light_theme-btn" : "dark_theme-btn"
-      );
+      setThemeFilterBtn(THEME_FILTER_BTN[parsedTheme]);
+    } catch {
+      localStorage.removeItem("theme");
     }
   }, []);
 
   const toggleTheme = () => {
-    setTheme((prevTheme: string) => {
-      const newTheme =
-        prevTheme === "light_theme" ? "dark_theme" : "light_theme";
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
       localStorage.setItem("theme", JSON.stringify(newTheme));
+      setThemeFilterBtn(THEME_FILTER_BTN[newTheme]);
       return newTheme;
     });
-
-    setThemeFilterBtn((prevTheme) =>
-      prevTheme === "light_theme-btn" ? "dark_theme-btn" : "light_theme-btn"
-    );
   };
 
   useEffect(() => {
-    document.body.classList.remove("light_theme", "dark_theme");
-    document.body.classList.add(theme);
-
-    const page = document.getElementById("page");
-    const headers = document.getElementsByTagName("header");
-
-    for (const header of headers) {
-      header.classList.remove("light_theme", "dark_theme");
-      header.classList.add(theme);
-    }
-    if (page) {
-      page.classList.remove("light_theme", "dark_theme");
-      page.classList.add(theme);
-    }
+    applyThemeClass(theme);
   }, [theme]);
 
   return (

@@ -258,3 +258,11 @@
     color: #fafafa !important;
   }
 }
+
+.dark_theme {
+  .card-product,
+  .card-product-list {
+    background-color: rgba(24, 24, 27, 0.65);
+    backdrop-filter: blur(4px);
+  }
+}

@@ -38,6 +38,14 @@
         display: flex;
         border-bottom: 1px solid grey;
 
+        :global(.dark_theme) & {
+          background-color: rgba(24, 24, 27, 0.65);
+          backdrop-filter: blur(4px);
+          border-bottom-color: rgba(161, 161, 170, 0.35);
+          border-radius: 8px;
+          padding: 12px;
+        }
+
         .order_img {
           width: 125px;
           height: 125px;
