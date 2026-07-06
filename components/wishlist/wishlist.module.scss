@@ -2,8 +2,25 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  font-size: 25px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  color: #fafafa;
   cursor: pointer;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.6);
+  }
 }
 .wishlist_title {
   color: #71717a;
@@ -82,7 +99,7 @@
 .modal_wishlist {
   position: fixed;
   top: 15%;
-//   left: 50%;
+  //   left: 50%;
   transform: translateX(-50%);
   width: 300px;
   height: 300px;

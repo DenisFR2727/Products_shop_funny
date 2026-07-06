@@ -43,7 +43,8 @@
   .card-product-img {
     width: 100%;
     border-radius: 10px;
-    background: #d4d4d8;
+    //  background: #d4d4d8;
+    background: rgba(26, 26, 27, 0.4);
   }
   .card-info {
     width: 100%;
@@ -250,5 +251,10 @@
         font-size: 14px;
       }
     }
+  }
+}
+.featured-card {
+  .title-card {
+    color: #fafafa !important;
   }
 }

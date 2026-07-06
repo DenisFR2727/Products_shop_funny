@@ -1,0 +1,24 @@
+.marketing-layout {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background-color: #000;
+
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-color: #000;
+    background-image: url("/background/pexels-rahmadhimawan-38153320.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}

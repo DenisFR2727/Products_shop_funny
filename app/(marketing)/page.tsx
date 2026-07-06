@@ -1,11 +1,11 @@
 import Link from "next/link";
-import ProductCard from "@/components/products/product-card";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getProducts } from "@/lib/api/api";
 import SlideProducts from "@/components/products/slide/slide-products";
 import ProgressHandler from "@/components/products/modal/progress/ProgressHandlerDynamic";
+import FeaturedProductsList from "@/components/products/home/featured-products-list";
 
 import "./marketing.scss";
 
@@ -47,17 +47,9 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
-        <h2>Featured products</h2>
+        <h2 className="featured-products-title">Featured products</h2>
         <div className="home_line"></div>
-        <div className="home_products-marketing">
-          {featuredProducts?.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              isToggle={isToggle}
-            />
-          ))}
-        </div>
+        <FeaturedProductsList products={featuredProducts} isToggle={isToggle} />
       </div>
     </div>
   );

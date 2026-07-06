@@ -8,8 +8,8 @@
   max-width: 1920px;
   margin: 0 auto;
   padding-top: 100px;
-  background: #ecedee;
-  min-height: 100vh;
+  background: transparent;
+  min-height: 100dvh;
   padding-left: 1rem;
   padding-right: 1rem;
 
@@ -33,13 +33,14 @@
           line-height: 2.5rem;
           letter-spacing: -0.025em;
           max-width: 42rem;
-          color: #27272a;
+          color: #fafafa;
         }
         p {
           line-height: 2rem;
           font-size: 1.125rem;
           margin-top: 2rem;
           max-width: 36rem;
+          color: #e4e4e7;
         }
         button {
           margin-top: 30px;
@@ -74,6 +75,10 @@
       margin-top: 50px;
       padding-bottom: 50px;
 
+      &__item {
+        width: 100%;
+      }
+
       .card-product:hover {
         transform: scale(1.15);
         transition: 1s all;
@@ -86,10 +91,13 @@
   #home {
     height: 100%;
   }
-  .home_marketing {
-    .slide-products {
-      display: none;
+  .home_layout {
+    .home_marketing {
+      display: flex;
+      flex-direction: column !important;
     }
+  }
+  .home_marketing {
     .home_text {
       // width: 100%;
       max-width: 100% !important;
@@ -122,19 +130,34 @@
     }
   }
 }
+
+@media (max-width: 725px) {
+  .home_marketing {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 30px;
+
+    .slide-products {
+      width: 100%;
+      max-width: 500px;
+      height: 320px;
+      margin: 0 auto;
+    }
+  }
+}
 @media (max-width: 376px) {
   #home {
     height: 100%;
     padding-top: 20px;
   }
   .home_marketing {
-    display: flex;
-    flex-wrap: wrap-reverse;
-
     .slide-products {
-      display: block;
       height: 400px;
       border: 1px solid #52525b;
     }
   }
+}
+
+.featured-products-title {
+  color: #fafafa !important;
 }

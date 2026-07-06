@@ -31,6 +31,7 @@ export default function SlideProducts({ products }: ProductsProps) {
 
   return (
     <div className="slide-products">
+      <div className="slide-products__bg" aria-hidden="true"></div>
       {products.map((product, i) =>
         product.thumbnail ? (
           <img
@@ -39,7 +40,7 @@ export default function SlideProducts({ products }: ProductsProps) {
             alt={`Product ${i}`}
             className={i === index ? "active" : ""}
           />
-        ) : null
+        ) : null,
       )}
     </div>
   );
