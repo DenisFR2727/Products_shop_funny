@@ -3,11 +3,11 @@ import { Suspense } from "react";
 import { Providers } from "../providers";
 import HeaderMain from "@/components/header/header-main";
 import Footer from "@/components/footer/footer-products";
+import PageThemeContainer from "@/components/layout/page-theme-container";
 import SpeedInsights from "@/components/SpeedInsightsDynamic";
 import TelegramChatWidget from "@/components/products/telegram-chat/TelegramChatWidgetDynamic";
 
 import "@/styles/globals.css";
-import { ThemeContextProvider } from "@/context/themeContext";
 
 export const metadata: Metadata = {
   title: "Funny Shop",
@@ -21,23 +21,21 @@ export default function RootLayout({
 }>) {
   return (
     <section>
-      <ThemeContextProvider>
-        <Providers>
-          <div id="header">
-            <HeaderMain />
-          </div>
-          <div id="overlay-header"></div>
-          <div id="page">
-            {children}
-            <Suspense fallback={null}>
-              <TelegramChatWidget />
-            </Suspense>
-            <div id="reviews"></div>
-          </div>
-          <div id="dialog-overlay"></div>
-        </Providers>
-      </ThemeContextProvider>
-      <Footer />
+      <Providers>
+        <div id="header">
+          <HeaderMain />
+        </div>
+        <div id="overlay-header"></div>
+        <PageThemeContainer>
+          {children}
+          <Suspense fallback={null}>
+            <TelegramChatWidget />
+          </Suspense>
+          <div id="reviews"></div>
+        </PageThemeContainer>
+        <div id="dialog-overlay"></div>
+        <Footer />
+      </Providers>
       <Suspense fallback={null}>
         <SpeedInsights />
       </Suspense>

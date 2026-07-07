@@ -1,16 +1,19 @@
 "use client";
 
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LinkItemMotionHover from "./link-item";
+import { ThemeContext } from "@/context/themeContext";
 
 import "./footer-products.scss";
 
 function Footer() {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <div className="container">
-      <footer className="footer">
-        <div className="footer_content">
+    <div className={`container footer-theme-container ${theme}`}>
+      <footer className="footer">        <div className="footer_content">
           <ul className="footer_list-links">
             <li className="nav-item">
               <Link href={"/"}>

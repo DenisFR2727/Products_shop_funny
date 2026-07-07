@@ -1,8 +1,11 @@
-// app/layout.tsx
+import { AppThemeProvider } from "./providers/app-theme-provider";
+
 export default function RootLayout({ children }: any) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body>{children}</body>
+      <body>
+        <AppThemeProvider>{children}</AppThemeProvider>
+      </body>
     </html>
   );
 }

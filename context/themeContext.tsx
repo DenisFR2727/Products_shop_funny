@@ -1,6 +1,6 @@
 "use client";
 import "@/lib/features/language/i18n";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useLayoutEffect, useState } from "react";
 
 import {
   THEME_CLASSES,
@@ -26,16 +26,41 @@ function isThemeClass(value: unknown): value is ThemeClass {
   return value === THEME_LIGHT || value === THEME_DARK;
 }
 
+function readStoredTheme(): ThemeClass | null {
+  if (typeof window === "undefined") return null;
+
+  const storedTheme = localStorage.getItem("theme");
+  if (!storedTheme) return null;
+
+  try {
+    const parsedTheme = JSON.parse(storedTheme);
+    if (!isThemeClass(parsedTheme)) return null;
+
+    return parsedTheme;
+  } catch {
+    localStorage.removeItem("theme");
+    return null;
+  }
+}
+
 function applyThemeClass(theme: ThemeClass) {
   document.body.classList.remove(...THEME_CLASSES);
   document.body.classList.add(theme);
 
   const page = document.getElementById("page");
   const headers = document.getElementsByTagName("header");
+  const footerContainers = document.querySelectorAll<HTMLElement>(
+    ".footer-theme-container",
+  );
 
   for (const header of headers) {
     header.classList.remove(...THEME_CLASSES);
     header.classList.add(theme);
+  }
+
+  for (const footer of footerContainers) {
+    footer.classList.remove(...THEME_CLASSES);
+    footer.classList.add(theme);
   }
 
   if (page) {
@@ -54,19 +79,12 @@ export function ThemeContextProvider({
     THEME_FILTER_BTN[THEME_LIGHT],
   );
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
+  useLayoutEffect(() => {
+    const storedTheme = readStoredTheme();
     if (!storedTheme) return;
 
-    try {
-      const parsedTheme = JSON.parse(storedTheme);
-      if (!isThemeClass(parsedTheme)) return;
-
-      setTheme(parsedTheme);
-      setThemeFilterBtn(THEME_FILTER_BTN[parsedTheme]);
-    } catch {
-      localStorage.removeItem("theme");
-    }
+    setTheme(storedTheme);
+    setThemeFilterBtn(THEME_FILTER_BTN[storedTheme]);
   }, []);
 
   const toggleTheme = () => {

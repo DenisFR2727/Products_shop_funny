@@ -26,6 +26,22 @@ header {
   z-index: 0;
 }
 
+header.dark_theme {
+  .z-40 {
+    background: rgba(24, 24, 27, 0.45) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .z-30 {
+    background: rgba(24, 24, 27, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
 .navbar-backdrop {
   position: fixed;
   inset: 0;
@@ -290,4 +306,8 @@ header {
       font-size: 15px;
     }
   }
+}
+.header_login-nav {
+  position: relative;
+  right: 8px;
 }
