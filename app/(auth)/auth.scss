@@ -7,8 +7,11 @@ $hover-border-color: #007c89;
 }
 
 .auth-layout {
-  height: 100vh;
-  background: #3f3f46;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(20, 20, 28, 0.45), rgba(20, 20, 28, 0.45)),
+    url("/background/pexels-rahmadhimawan-38153320.jpg") center / cover
+      no-repeat;
 }
 .login__logo,
 .sign__logo {
