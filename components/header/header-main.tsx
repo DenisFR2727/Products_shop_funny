@@ -74,7 +74,7 @@ export default function HeaderMain() {
           />
         </NavbarContent>
         <NavbarContent
-          className="sm:hidden justify-center pr-3"
+          className="sm:hidden justify-center pr-3 logo-nav-mobile"
           justify="center"
         >
           <NavbarBrand>
@@ -87,8 +87,8 @@ export default function HeaderMain() {
             </Link>
           </NavbarBrand>
         </NavbarContent>
-        <NavbarContent className="hidden sm:flex gap-4 " justify="start">
-          <NavbarBrand>
+        <NavbarContent className="hidden sm:flex gap-4" justify="start">
+          <NavbarBrand className="header-brand">
             <Link href="/" className="font-bold text-inherit">
               <Image
                 className="logo_funny-shop"
@@ -133,7 +133,7 @@ export default function HeaderMain() {
             </NavLink>
           </NavbarItem>
         </NavbarContent>
-        <NavbarContent justify="end">
+        <NavbarContent justify="center">
           <NavbarItem>
             <Link href={`/cart`}>
               <div className="header-cart">
