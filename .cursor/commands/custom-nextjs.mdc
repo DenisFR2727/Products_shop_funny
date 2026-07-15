@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+---
+
+# Frontend Rules
+
+- Use TypeScript
+- Use React functional components
+- Use Next.js App Router
+- Use Redux Toolkit for global state
+- Use RTK Query for API requests
+- Follow Feature-Sliced Design
+- Prefer Server Components
+- Use 'use client' only when needed
+- Use strict typing
+- Avoid any
+- Write clean and readable code
+- Extract reusable logic into hooks
+- Use semantic HTML
+- Use Tailwind CSS
+- Use Shadcn UI when UI components are needed

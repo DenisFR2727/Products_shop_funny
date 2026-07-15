@@ -16,7 +16,10 @@ import NavLink from "./nav-link";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaUser } from "react-icons/fa";
 import { useAppSelector } from "@/lib/hooks";
-import { isCartItemsSelector } from "@/lib/selectors/cartSelectors";
+import {
+  favoriteSelector,
+  isCartItemsSelector,
+} from "@/lib/selectors/cartSelectors";
 import { THEME_LIGHT } from "@/config/theme";
 import { ThemeContext } from "@/context/themeContext";
 import { signOut, useSession } from "next-auth/react";
@@ -51,7 +54,7 @@ export default function HeaderMain() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { data: session, status } = useSession();
   const isCartItems = useAppSelector(isCartItemsSelector);
-  const isFavorite = useAppSelector((state) => state.cartReducer.favorite);
+  const isFavorite = useAppSelector(favoriteSelector);
   const { t } = useTranslation();
   const headerAvatarSrc =
     status === "authenticated"

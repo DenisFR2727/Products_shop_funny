@@ -8,7 +8,6 @@ import { useActionState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import loginAction from "@/actions/login/login";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import ButtonReturn from "../btn-return";
 
 export default function Login() {
@@ -29,7 +28,6 @@ export default function Login() {
     (value: string) => isNotEmpty(value) && hasMinLength(value, 6),
   );
   const focusInput = useRef<HTMLInputElement | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     if (state?.success && emailValue && passwordValue) {

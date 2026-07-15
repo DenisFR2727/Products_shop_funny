@@ -17,8 +17,8 @@ export const isCartItemsSelector = (state: RootState) => state.cartReducer.cart;
 const cartState = (state: RootState) => state.cartReducer;
 export const isShowProgressSelector = createSelector(
   [cartState],
-  (cart) => cart.showProgressModal
+  (cart) => cart.showProgressModal,
 );
 
 export const favoriteSelector = (state: RootState) =>
-  state.cartReducer.favorite ?? [];
+  Array.isArray(state.cartReducer.favorite) ? state.cartReducer.favorite : [];
