@@ -38,7 +38,7 @@ export const deleteTodoById = async (
   }
 
   try {
-    await deleteTodoTask(todoId);
+    await deleteTodoTask(todoId, session.userId);
     return { errors: null, deletedId: todoId };
   } catch (error) {
     console.error("Failed to delete todo:", error);

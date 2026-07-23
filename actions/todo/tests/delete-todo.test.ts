@@ -59,7 +59,8 @@ describe("actions/todo/delete-todo", () => {
   it("deletes todo for owner", async () => {
     const result = await deleteTodoById("13");
 
-    expect(mockedDeleteTodoTask).toHaveBeenCalledWith("13");
+    expect(mockedFetchTodoById).toHaveBeenCalledWith("13", "user-1");
+    expect(mockedDeleteTodoTask).toHaveBeenCalledWith("13", "user-1");
     expect(result).toEqual({ errors: null, deletedId: "13" });
   });
 

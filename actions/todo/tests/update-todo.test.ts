@@ -71,7 +71,8 @@ describe("actions/todo/update-todo", () => {
 
       const result = await updateTodoById("13", "  New title  ");
 
-      expect(mockedUpdateTodoPatch).toHaveBeenCalledWith("13", {
+      expect(mockedFetchTodoById).toHaveBeenCalledWith("13", "user-1");
+      expect(mockedUpdateTodoPatch).toHaveBeenCalledWith("13", "user-1", {
         title: "New title",
       });
       expect(result).toEqual({ errors: null, todo: updated });
@@ -138,7 +139,8 @@ describe("actions/todo/update-todo", () => {
 
       const result = await updateTodoCompletedById("13", true);
 
-      expect(mockedUpdateTodoPatch).toHaveBeenCalledWith("13", {
+      expect(mockedFetchTodoById).toHaveBeenCalledWith("13", "user-1");
+      expect(mockedUpdateTodoPatch).toHaveBeenCalledWith("13", "user-1", {
         completed: true,
       });
       expect(result).toEqual({ errors: null, todo: updated });

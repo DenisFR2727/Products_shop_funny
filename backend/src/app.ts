@@ -3,6 +3,7 @@ import express from "express";
 
 import { env } from "./config/env.js";
 import { reviewsRouter } from "./routes/reviews.routes.js";
+import { createTodosRouter } from "./routes/todos.routes.js";
 import { usersRouter } from "./routes/users.routes.js";
 import { errorHandler, notFound } from "./middleware/error-handler.js";
 
@@ -23,6 +24,7 @@ export function createApp() {
 
   app.use("/users", usersRouter);
   app.use("/reviews", reviewsRouter);
+  app.use("/todo", createTodosRouter(env.internalApiSecret));
 
   app.use(notFound);
   app.use(errorHandler);

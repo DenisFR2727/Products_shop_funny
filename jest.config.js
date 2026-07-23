@@ -6,6 +6,7 @@ const createJestConfig = nextJest({ dir: "./" });
 const customConfig = {
   testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testPathIgnorePatterns: ["<rootDir>/backend/"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
     "\\.(scss|sass|css)$": "identity-obj-proxy",

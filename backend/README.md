@@ -1,6 +1,7 @@
-# products_shop — Auth Backend
+# products_shop — Application Backend
 
-MongoDB + Mongoose (Express 5, TypeScript) backend that owns user **registration**, **login lookup**, and **profile/login update**. It replaces the MockAPI `/users` resource with the same REST contract, so the Next.js app only needs a base-URL change.
+MongoDB + Mongoose (Express 5, TypeScript) backend that owns users, reviews,
+and authenticated personal todo tasks.
 
 ## Stack
 
@@ -29,6 +30,7 @@ Requires a running MongoDB (local `mongodb://127.0.0.1:27017` or an Atlas URI).
 | `MONGODB_URI` | `mongodb://127.0.0.1:27017/products_shop` | Mongo connection string           |
 | `PORT`        | `4000`                                    | HTTP port                         |
 | `CORS_ORIGIN` | `http://localhost:3000`                   | Allowed origins (comma-separated) |
+| `INTERNAL_API_SECRET` | required | Shared secret for server-to-server todo requests |
 
 ## API
 
@@ -48,6 +50,25 @@ Mounted under `/users` (matches `API_ENDPOINTS.USERS`).
 | `GET`  | `/reviews` | —                           | array of reviews (newest first) |
 | `POST` | `/reviews` | `{ nameUser, text, date? }` | `201` created review            |
 
+### Personal todos (`/todo`)
+
+Todo routes are internal server-to-server endpoints. Every request requires
+`Authorization: Bearer <INTERNAL_API_SECRET>` and an `X-User-Id` derived from
+the verified NextAuth session. The backend never accepts ownership from a query
+string or JSON body.
+
+| Method   | Path        | Body                     | Response                           |
+| -------- | ----------- | ------------------------ | ---------------------------------- |
+| `GET`    | `/todo`     | —                        | Owner tasks, newest first          |
+| `POST`   | `/todo`     | `{ title }`              | `201` canonical created task       |
+| `GET`    | `/todo/:id` | —                        | Owner task or non-disclosing `404` |
+| `PATCH`  | `/todo/:id` | `{ title?, completed? }` | Canonical updated owner task       |
+| `DELETE` | `/todo/:id` | —                        | Canonical deleted owner task       |
+
+Todo documents are stored in the `todos` collection with a compound
+`{ userId: 1, createdAt: -1 }` index. Titles are trimmed and limited to 200
+characters. Missing and foreign tasks intentionally return the same `404`.
+
 ### Users notes
 
 - Passwords are hashed with `scrypt` in the `hash:salt` format — identical to the previous
@@ -65,6 +86,7 @@ The Next.js app points at this backend via `USERS_API_URL` (see `lib/api/config.
 # .env.local (Next.js root)
 USERS_API_URL=http://localhost:4000
 # REVIEWS_API_URL=http://localhost:4000  # optional; defaults to USERS_API_URL
+INTERNAL_API_SECRET=<same-strong-random-value-as-backend>
 ```
 
 Run both together from the project root:

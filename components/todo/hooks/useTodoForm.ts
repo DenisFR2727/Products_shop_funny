@@ -25,6 +25,12 @@ export default function useTodoForm({
     pendingOptimisticIdRef.current = null;
   }, [state.todo, onTodoCreated]);
 
+  useEffect(() => {
+    if (state.errors) {
+      pendingOptimisticIdRef.current = null;
+    }
+  }, [state.errors]);
+
   function composedAction(formData: FormData) {
     const raw = formData.get("title");
     const title = typeof raw === "string" ? raw.trim() : "";

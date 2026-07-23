@@ -22,7 +22,16 @@ export const API_USERS_CREATE = BACKEND_API_URL;
 
 export const API_REVIEWS_CREATE =
   process.env.REVIEWS_API_URL ?? BACKEND_API_URL;
-export const API_TODOS_CREATE = MOCKAPI_BASE_URL;
+export const API_TODOS_CREATE = BACKEND_API_URL;
+
+export function getInternalApiSecret(): string {
+  const secret = process.env.INTERNAL_API_SECRET?.trim();
+  if (!secret) {
+    throw new Error("Missing required environment variable: INTERNAL_API_SECRET");
+  }
+
+  return secret;
+}
 
 export const API_ENDPOINTS = {
   PRODUCTS: "/products",

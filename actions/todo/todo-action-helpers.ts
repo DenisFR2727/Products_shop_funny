@@ -32,7 +32,7 @@ export async function loadTodoForUser(
   userId: string,
 ): Promise<TodoActionOk<{ todo: Todo }> | TodoActionFail> {
   try {
-    const todo = await fetchTodoById(todoId);
+    const todo = await fetchTodoById(todoId, userId);
     if (todo.userId !== userId) {
       return { ok: false, errors: [...TODO_ERRORS.notFound] };
     }

@@ -23,7 +23,8 @@ export async function updateTodoById(
   return runTodoMutation(
     todoId,
     "update",
-    async () => updateTodoPatch(todoId, { title: validation.title }),
+    async (_todo, userId) =>
+      updateTodoPatch(todoId, userId, { title: validation.title }),
     "Failed to update todo:",
   );
 }
@@ -35,7 +36,8 @@ export async function updateTodoCompletedById(
   return runTodoMutation(
     todoId,
     "update",
-    async () => updateTodoPatch(todoId, { completed }),
+    async (_todo, userId) =>
+      updateTodoPatch(todoId, userId, { completed }),
     "Failed to update todo completed:",
   );
 }

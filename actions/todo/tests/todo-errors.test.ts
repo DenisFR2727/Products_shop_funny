@@ -27,6 +27,18 @@ describe("todo-errors", () => {
   });
 
   describe("mapTodoActionError", () => {
+    it("maps ApiError 400 to invalid task data", () => {
+      expect(mapTodoActionError(new ApiError(400, "invalid"))).toEqual([
+        ...TODO_ERRORS.invalidRequest,
+      ]);
+    });
+
+    it("maps ApiError 401 to authorization required", () => {
+      expect(mapTodoActionError(new ApiError(401, "unauthorized"))).toEqual([
+        ...TODO_ERRORS.authRequired,
+      ]);
+    });
+
     it("maps ApiError 404 to refresh message", () => {
       expect(mapTodoActionError(new ApiError(404, "missing"))).toEqual([
         ...TODO_ERRORS.notFoundRefresh,

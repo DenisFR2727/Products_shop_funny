@@ -30,10 +30,8 @@ const createTodo = async (
   }
 
   try {
-    const todo = await createTodoPost({
+    const todo = await createTodoPost(validation.userId, {
       title: validation.title,
-      userId: validation.userId,
-      createAt: new Date().toISOString(),
     });
 
     return { errors: null, todo };

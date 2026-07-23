@@ -4,6 +4,7 @@ import { ApiError } from "@/lib/api/error";
 export const TODO_ERRORS = {
   idRequired: ["Todo id is required"],
   authRequired: ["Authorization required"],
+  invalidRequest: ["Invalid task data"],
   notFound: ["Todo not found"],
   notFoundRefresh: ["Todo not found. Please refresh the list."],
   serverUnavailable: ["Server is unavailable. Please try again later."],
@@ -39,8 +40,17 @@ export function rejectOptimisticTodoId(
 }
 
 export function mapTodoActionError(error: unknown): string[] {
-  if (error instanceof ApiError && error.code === 404) {
-    return [...TODO_ERRORS.notFoundRefresh];
+  if (error instanceof ApiError) {
+    if (error.code === 400) {
+      return [...TODO_ERRORS.invalidRequest];
+    }
+    if (error.code === 401) {
+      return [...TODO_ERRORS.authRequired];
+    }
+    if (error.code === 404) {
+      return [...TODO_ERRORS.notFoundRefresh];
+    }
   }
+
   return [...TODO_ERRORS.serverUnavailable];
 }

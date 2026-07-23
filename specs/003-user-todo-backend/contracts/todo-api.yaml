@@ -1,0 +1,211 @@
+openapi: 3.1.0
+info:
+  title: Products Shop Todo API
+  version: 1.0.0
+  description: >
+    Internal server-to-server contract for owner-scoped todo operations.
+    Browser clients must not call these endpoints directly.
+servers:
+  - url: http://localhost:4000
+security:
+  - internalBearer: []
+paths:
+  /todo:
+    get:
+      summary: List todos for the authenticated actor
+      parameters:
+        - $ref: "#/components/parameters/ActorUserId"
+      responses:
+        "200":
+          description: Newest-first owner-scoped list; empty array when no tasks exist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/ServerError"
+    post:
+      summary: Create a todo for the authenticated actor
+      parameters:
+        - $ref: "#/components/parameters/ActorUserId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTodo"
+      responses:
+        "201":
+          description: Canonical persisted todo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "400":
+          $ref: "#/components/responses/InvalidRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /todo/{id}:
+    parameters:
+      - $ref: "#/components/parameters/TodoId"
+      - $ref: "#/components/parameters/ActorUserId"
+    get:
+      summary: Get one todo owned by the authenticated actor
+      responses:
+        "200":
+          description: Owner-scoped todo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/ServerError"
+    patch:
+      summary: Update title or completion for an owned todo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTodo"
+      responses:
+        "200":
+          description: Canonical updated todo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "400":
+          $ref: "#/components/responses/InvalidRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/ServerError"
+    delete:
+      summary: Delete an owned todo
+      responses:
+        "200":
+          description: Canonical deleted todo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/ServerError"
+components:
+  securitySchemes:
+    internalBearer:
+      type: http
+      scheme: bearer
+      description: Server-only INTERNAL_API_SECRET
+  parameters:
+    ActorUserId:
+      name: X-User-Id
+      in: header
+      required: true
+      description: User ID asserted by the trusted Next.js server after session verification
+      schema:
+        type: string
+        minLength: 1
+    TodoId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: "^[a-fA-F0-9]{24}$"
+  schemas:
+    Todo:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - userId
+        - createAt
+        - completed
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        userId:
+          type: string
+          minLength: 1
+        createAt:
+          type: string
+          format: date-time
+        completed:
+          type: boolean
+    CreateTodo:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+    UpdateTodo:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        completed:
+          type: boolean
+    Error:
+      type: object
+      additionalProperties: false
+      required:
+        - message
+      properties:
+        message:
+          type: string
+  responses:
+    InvalidRequest:
+      description: Invalid body, identifier, or task field
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: Missing or invalid internal authorization or actor identity
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Todo is absent or not owned by the actor
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    ServerError:
+      description: Unexpected persistence or server failure
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
